@@ -1,8 +1,7 @@
-export const createStore = () => ({
-  getState: () => ({
-    articles: {
-      status: "idle",
-      data: [],
-    },
-  }),
-});
+import { configureStore } from "@reduxjs/toolkit";
+import { articlesSlice } from "./articles/articles-slice";
+export const createStore = () => configureStore({
+  reducer: {
+    articles: articlesSlice.reducer
+  }
+})
