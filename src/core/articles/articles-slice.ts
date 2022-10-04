@@ -1,12 +1,19 @@
-import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
-import { fetchArticles } from "./actions/fecthArticles";
+import { createSlice, createEntityAdapter,EntityState } from "@reduxjs/toolkit";
+import { fetchArticles } from "./use-cases/fecthArticles";
 import { Article } from "./entities/article";
 
-const articlesAdapter = createEntityAdapter<Article>();
+export const articlesAdapter = createEntityAdapter<Article>();
 
-const initialState = {
+type InitialState = {
+  status:string;
+  data:  EntityState<Article>;
+  error?:string
+}
+
+const initialState:InitialState = {
   status: "idle",
   data: articlesAdapter.getInitialState(),
+  error:undefined
 };
 
 export const articlesSlice = createSlice({
@@ -14,9 +21,16 @@ export const articlesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchArticles.fulfilled, (state, action) => {
-      state.status = "success";
-      articlesAdapter.setAll(state.data, action.payload);
-    });
+    builder
+      .addCase(fetchArticles.fulfilled, (state, action) => {
+        state.status = "success";
+        articlesAdapter.setAll(state.data, action.payload);
+      })
+      .addCase(fetchArticles.pending, (state) => {
+        state.status = "pending";
+      }).addCase(fetchArticles.rejected,(state,action)=>{
+        state.status = "rejected";
+        state.error = action.error.message
+      })
   },
 });
