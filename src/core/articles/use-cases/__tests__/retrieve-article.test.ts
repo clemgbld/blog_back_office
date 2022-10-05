@@ -3,7 +3,7 @@ import { sutBuilder } from "../test-helper/sut-builder";
 
 describe("Retrieve articles", () => {
   it("should have no articles initially", () => {
-    const { status, expectedArticles } = sutBuilder([]).build();
+    const { status, expectedArticles } = sutBuilder().build();
 
     expect(status).toBe("idle");
     expect(expectedArticles).toEqual([]);
@@ -39,6 +39,7 @@ describe("Retrieve articles", () => {
         ],
       },
     ]);
+
     expect(status).toBe("success");
   });
 

@@ -10,13 +10,14 @@ import { retrieveArticles } from "../retrieveArticles";
 import { Article } from "../../entities/article";
 
 export const sutBuilder = (
-  existingArticles: Article[],
+  existingArticles: Article[] = [],
   error?: { status: number; message: string }
 ) => ({
   build: () => {
     const store = createStore({
       articlesService: inMemoryArticlesService(existingArticles, error),
     });
+
 
     return {
       status: articlesStatus(store),

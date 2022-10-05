@@ -10,7 +10,7 @@ describe("Post Article", () => {
   });
 
   it("should post an article an add it to the list of articles", async () => {
-    const { postArticleAsync } = sutBuilder([]).build();
+    const { postArticleAsync } = sutBuilder().build();
 
     const { status, expectedArticles } = await postArticleAsync(articleToPost);
 
@@ -31,7 +31,7 @@ describe("Post Article", () => {
   });
 
   it("should informs the user that the posting opertaion is loading", () => {
-    const { postArticle } = sutBuilder([]).build();
+    const { postArticle } = sutBuilder().build();
 
     const { status } = postArticle(articleToPost);
 

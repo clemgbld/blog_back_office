@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { configureStore, combineReducers,PreloadedState, } from "@reduxjs/toolkit";
 import { articlesSlice } from "./articles/articles-slice";
 import { InMemoryArticlesService } from "./articles/infrastructure/in-memory/InMemoryArticlesService";
 
@@ -10,8 +10,9 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 export const createStore = (services: {
   articlesService: InMemoryArticlesService;
-}) =>
+},preloadedState?:PreloadedState<RootState>) =>
   configureStore({
+    preloadedState,
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
@@ -22,3 +23,5 @@ export const createStore = (services: {
         },
       }),
   });
+
+  export type Store = ReturnType<typeof createStore>
