@@ -3,14 +3,14 @@ import { sutBuilder } from "../test-helper/sut-builder";
 
 describe("Retrieve articles", () => {
   it("should have no articles initially", () => {
-    const { status, expectedArticles } = sutBuilder().build();
+    const { status, expectedArticles } = sutBuilder({}).build();
 
     expect(status).toBe("idle");
     expect(expectedArticles).toEqual([]);
   });
 
   it("informs the user when the the articles are loading", async () => {
-    const { retrieveArticles } = sutBuilder([articleBuilder()]).build();
+    const { retrieveArticles } = sutBuilder({existingArticles:[articleBuilder()]}).build();
 
     const { status } = retrieveArticles();
 
@@ -18,7 +18,7 @@ describe("Retrieve articles", () => {
   });
 
   it("retrieves articles", async () => {
-    const { retrieveArticlesAsync } = sutBuilder([articleBuilder()]).build();
+    const { retrieveArticlesAsync } = sutBuilder({existingArticles:[articleBuilder()]}).build();
 
     const { status, expectedArticles } = await retrieveArticlesAsync();
 
@@ -44,10 +44,10 @@ describe("Retrieve articles", () => {
   });
 
   it("should infors the user when the articles retrieving failed", async () => {
-    const { retrieveArticlesAsync } = sutBuilder([], {
+    const { retrieveArticlesAsync } = sutBuilder({existingArticles:[],error: {
       status: 400,
       message: "something went wrong",
-    }).build();
+    }}).build();
 
     const { expectedErrorMsg, status } = await retrieveArticlesAsync();
 

@@ -10,7 +10,7 @@ describe("Post Article", () => {
   });
 
   it("should post an article an add it to the list of articles", async () => {
-    const { postArticleAsync } = sutBuilder().build();
+    const { postArticleAsync } = sutBuilder({}).build();
 
     const { status, expectedArticles } = await postArticleAsync(articleToPost);
 
@@ -31,7 +31,7 @@ describe("Post Article", () => {
   });
 
   it("should informs the user that the posting opertaion is loading", () => {
-    const { postArticle } = sutBuilder().build();
+    const { postArticle } = sutBuilder({}).build();
 
     const { status } = postArticle(articleToPost);
 
@@ -39,10 +39,10 @@ describe("Post Article", () => {
   });
 
   it("should informs the user when the posting operation failed", async () => {
-    const { postArticleAsync } = sutBuilder([], {
+    const { postArticleAsync } = sutBuilder({error:{
       status: 400,
       message: "something went wrong",
-    }).build();
+    }}).build();
 
     const { status, expectedErrorMsg } = await postArticleAsync(articleToPost);
 

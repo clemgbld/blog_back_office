@@ -3,8 +3,9 @@ import {
   createEntityAdapter,
   EntityState,
 } from "@reduxjs/toolkit";
-import { retrieveArticles } from "./use-cases/retrieveArticles";
-import { postArticle } from "./use-cases/postArticle";
+import { retrieveArticles } from "./use-cases/retrieve-articles";
+import { postArticle } from "./use-cases/post-article";
+import { updateArticle } from "./use-cases/update-article";
 import { Article } from "./entities/article";
 import { STATUS } from "../utils/status-constants";
 
@@ -47,6 +48,17 @@ export const articlesSlice = createSlice({
         state.status = STATUS.PENDING;
       })
       .addCase(postArticle.rejected, (state, action) => {
+        state.status = STATUS.REJECTED;
+        state.error = action.error.message;
+      })
+      .addCase(updateArticle.fulfilled, (state, action) => {
+        state.status = STATUS.SUCCESS;
+        articlesAdapter.setOne(state.data, action.payload);
+      })
+      .addCase(updateArticle.pending, (state, action) => {
+        state.status = STATUS.PENDING;
+      })
+      .addCase(updateArticle.rejected, (state, action) => {
         state.status = STATUS.REJECTED;
         state.error = action.error.message;
       });
