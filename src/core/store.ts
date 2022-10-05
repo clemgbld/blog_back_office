@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { articlesSlice } from "./articles/articles-slice";
-import { InMemoryArticlesService } from "./articles/infrastructure/in-memory/retrieveInMemoryArticles";
+import { InMemoryArticlesService } from "./articles/infrastructure/in-memory/InMemoryArticlesService";
 
 const rootReducer = combineReducers({
   [articlesSlice.name]: articlesSlice.reducer,

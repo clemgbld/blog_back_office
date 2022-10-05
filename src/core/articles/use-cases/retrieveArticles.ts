@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Article } from "../entities/article";
-import { InMemoryArticlesService } from "../infrastructure/in-memory/retrieveInMemoryArticles";
+import { InMemoryArticlesService } from "../infrastructure/in-memory/InMemoryArticlesService";
 
-export const fetchArticles = createAsyncThunk<
+export const retrieveArticles = createAsyncThunk<
   Article[],
   void,
   { extra: { deps: { articlesService: InMemoryArticlesService } } }
