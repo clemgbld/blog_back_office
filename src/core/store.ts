@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export const createStore = (deps: {
+export const createStore = (services: {
   articlesService: InMemoryArticlesService;
 }) =>
   configureStore({
@@ -17,7 +17,7 @@ export const createStore = (deps: {
       getDefaultMiddleware({
         thunk: {
           extraArgument: {
-            deps,
+            services,
           },
         },
       }),

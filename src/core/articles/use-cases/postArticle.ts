@@ -5,14 +5,14 @@ import { InMemoryArticlesService } from "../infrastructure/in-memory/InMemoryArt
 export const postArticle = createAsyncThunk<
   Article,
   Article,
-  { extra: { deps: { articlesService: InMemoryArticlesService } } }
+  { extra: { services: { articlesService: InMemoryArticlesService } } }
 >(
   "articles/postArticle",
   async (
     articleToPost,
     {
       extra: {
-        deps: { articlesService },
+        services: { articlesService },
       },
     }
   ) => {

@@ -5,14 +5,14 @@ import { InMemoryArticlesService } from "../infrastructure/in-memory/InMemoryArt
 export const retrieveArticles = createAsyncThunk<
   Article[],
   void,
-  { extra: { deps: { articlesService: InMemoryArticlesService } } }
+  { extra: { services: { articlesService: InMemoryArticlesService } } }
 >(
   "articles/fetchArticles",
   async (
     _,
     {
       extra: {
-        deps: { articlesService },
+        services: { articlesService },
       },
     }
   ) => articlesService.getArticles()

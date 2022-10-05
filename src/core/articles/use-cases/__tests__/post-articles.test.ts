@@ -37,4 +37,17 @@ describe("Post Article", () => {
 
     expect(status).toBe("pending");
   });
+
+  it("should informs the user when the posting operation failed", async () => {
+    const { postArticleAsync } = sutBuilder([], {
+      status: 400,
+      message: "something went wrong",
+    }).build();
+
+    const { status, expectedErrorMsg } = await postArticleAsync(articleToPost);
+
+    expect(status).toBe("rejected");
+
+    expect(expectedErrorMsg).toBe("something went wrong");
+  });
 });

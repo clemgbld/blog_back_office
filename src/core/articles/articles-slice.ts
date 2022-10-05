@@ -45,6 +45,10 @@ export const articlesSlice = createSlice({
       })
       .addCase(postArticle.pending, (state) => {
         state.status = STATUS.PENDING;
+      })
+      .addCase(postArticle.rejected, (state, action) => {
+        state.status = STATUS.REJECTED;
+        state.error = action.error.message;
       });
   },
 });
