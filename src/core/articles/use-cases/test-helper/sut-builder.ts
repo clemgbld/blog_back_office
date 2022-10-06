@@ -5,7 +5,7 @@ import {
   articlesStatus,
   articlesError,
 } from "../../selectors/selectors";
-import { inMemoryArticlesService } from "../../infrastructure/in-memory/InMemoryArticlesService";
+import { inMemoryArticlesService } from "../../infrastructure/in-memory-services/InMemoryArticlesService";
 import { postArticle, ArticleWithoutId } from "../post-article";
 import { retrieveArticles } from "../retrieve-articles";
 import { updateArticle } from "../update-article";
