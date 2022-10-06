@@ -17,8 +17,30 @@ describe("Delete Article", () => {
   it("should delete an article", async () => {
     const { deleteArticleAsync } = sutBuilder({ preloadedState }).build();
 
-    const { expectedArticles } = await deleteArticleAsync("1");
+    const { expectedArticles, status } = await deleteArticleAsync("1");
 
     expect(expectedArticles).toEqual([]);
+    expect(status).toBe("success");
+  });
+
+  it("should informs the user when the delete operation is loading", () => {
+    const { deleteArticle } = sutBuilder({ preloadedState }).build();
+
+    const { status } = deleteArticle("1");
+
+    expect(status).toBe("pending");
+  });
+
+  it("should informs the user when the delete operation failed", async () => {
+    const { deleteArticleAsync } = sutBuilder({
+      preloadedState,
+      error: { status: 400, message: "Something went wrong" },
+    }).build();
+
+    const { expectedErrorMsg, status } = await deleteArticleAsync("1");
+
+    expect(status).toBe("rejected");
+
+    expect(expectedErrorMsg).toBe("Something went wrong");
   });
 });

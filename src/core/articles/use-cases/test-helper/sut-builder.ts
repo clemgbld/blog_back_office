@@ -10,6 +10,7 @@ import { postArticle, ArticleWithoutId } from "../post-article";
 import { retrieveArticles } from "../retrieve-articles";
 import { updateArticle } from "../update-article";
 import { deleteArticle } from "../deleteArticle";
+import { deleteArticles } from "../deleteArticles";
 import { Article } from "../../entities/article";
 
 export const sutBuilder = ({
@@ -80,8 +81,35 @@ export const sutBuilder = ({
           expectedErrorMsg: articlesError(store),
         };
       },
+
+      deleteArticle: (id: string) => {
+        store.dispatch(deleteArticle(id));
+
+        return {
+          status: articlesStatus(store),
+        };
+      },
+
       deleteArticleAsync: async (id: string) => {
         await store.dispatch(deleteArticle(id));
+
+        return {
+          status: articlesStatus(store),
+          expectedArticles: allArticles(store),
+          expectedErrorMsg: articlesError(store),
+        };
+      },
+
+      deleteArticles: (ids: string[]) => {
+        store.dispatch(deleteArticles(ids));
+
+        return {
+          status: articlesStatus(store),
+        };
+      },
+
+      deleteArticlesAsync: async (ids: string[]) => {
+        await store.dispatch(deleteArticles(ids));
 
         return {
           status: articlesStatus(store),

@@ -6,6 +6,7 @@ export interface InMemoryArticlesService {
   postArticle: (article: ArticleWithoutId) => Promise<ArticleWithoutId>;
   updateArticle: (article: Article) => Promise<Article>;
   deleteArticle: (id: string) => Promise<string>;
+  deleteArticles: (ids: string[]) => Promise<string[]>;
 }
 
 const throwError = (error: { status: number; message: string }) => {
@@ -23,5 +24,8 @@ export const inMemoryArticlesService = (
     error ? throwError(error) : Promise.resolve(article),
   updateArticle: async (article: Article) =>
     error ? throwError(error) : Promise.resolve(article),
-  deleteArticle: async (id: string) => Promise.resolve(id),
+  deleteArticle: async (id: string) =>
+    error ? throwError(error) : Promise.resolve(id),
+  deleteArticles: async (ids: string[]) =>
+    error ? throwError(error) : Promise.resolve(ids),
 });
