@@ -9,6 +9,7 @@ import { inMemoryArticlesService } from "../../infrastructure/in-memory/InMemory
 import { postArticle, ArticleWithoutId } from "../post-article";
 import { retrieveArticles } from "../retrieve-articles";
 import { updateArticle } from "../update-article";
+import { deleteArticle } from "../deleteArticle";
 import { Article } from "../../entities/article";
 
 export const sutBuilder = ({
@@ -79,7 +80,9 @@ export const sutBuilder = ({
           expectedErrorMsg: articlesError(store),
         };
       },
-      deleteArticleAsync: async (article: Article) => {
+      deleteArticleAsync: async (id: string) => {
+        await store.dispatch(deleteArticle(id));
+
         return {
           status: articlesStatus(store),
           expectedArticles: allArticles(store),

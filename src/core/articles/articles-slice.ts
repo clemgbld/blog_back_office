@@ -6,6 +6,7 @@ import {
 import { retrieveArticles } from "./use-cases/retrieve-articles";
 import { postArticle } from "./use-cases/post-article";
 import { updateArticle } from "./use-cases/update-article";
+import { deleteArticle } from "./use-cases/deleteArticle";
 import { Article } from "./entities/article";
 import { STATUS } from "../utils/status-constants";
 
@@ -61,6 +62,9 @@ export const articlesSlice = createSlice({
       .addCase(updateArticle.rejected, (state, action) => {
         state.status = STATUS.REJECTED;
         state.error = action.error.message;
+      })
+      .addCase(deleteArticle.fulfilled, (state, action) => {
+        articlesAdapter.removeOne(state.data, action.payload);
       });
   },
 });
