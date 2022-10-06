@@ -1,18 +1,20 @@
-import { articleBuilder, contentBuilder } from "../builder/articleBuilder";
+import { contentBuilder } from "../builder/articleBuilder";
 import { sutBuilder } from "../test-helper/sut-builder";
 
 describe("Post Article", () => {
-  const articleToPost = articleBuilder({
-    id: "2",
+  const articleToPost = {
     title: "new article",
     date: 166480348787490,
     content: [contentBuilder({ children: [{ text: "new article posted." }] })],
-  });
+  };
 
   it("should post an article an add it to the list of articles", async () => {
     const { postArticleAsync } = sutBuilder({}).build();
 
-    const { status, expectedArticles } = await postArticleAsync(articleToPost);
+    const { status, expectedArticles } = await postArticleAsync(
+      articleToPost,
+      2
+    );
 
     expect(status).toBe("success");
     expect(expectedArticles).toEqual([
@@ -39,10 +41,12 @@ describe("Post Article", () => {
   });
 
   it("should informs the user when the posting operation failed", async () => {
-    const { postArticleAsync } = sutBuilder({error:{
-      status: 400,
-      message: "something went wrong",
-    }}).build();
+    const { postArticleAsync } = sutBuilder({
+      error: {
+        status: 400,
+        message: "something went wrong",
+      },
+    }).build();
 
     const { status, expectedErrorMsg } = await postArticleAsync(articleToPost);
 
