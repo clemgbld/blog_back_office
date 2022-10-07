@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { InMemoryArticlesService } from "../infrastructure/in-memory/InMemoryArticlesService";
+import { InMemoryArticlesService } from "../infrastructure/in-memory-services/InMemoryArticlesService";
 
 export const deleteArticles = createAsyncThunk<
   string[],

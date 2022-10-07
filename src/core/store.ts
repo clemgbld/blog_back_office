@@ -1,6 +1,6 @@
-import { configureStore, combineReducers,PreloadedState, } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { articlesSlice } from "./articles/articles-slice";
-import { InMemoryArticlesService } from "./articles/infrastructure/in-memory/InMemoryArticlesService";
+import { inMemoryArticlesService } from "./articles/infrastructure/in-memory-services/InMemoryArticlesService";
 
 const rootReducer = combineReducers({
   [articlesSlice.name]: articlesSlice.reducer,
@@ -8,9 +8,13 @@ const rootReducer = combineReducers({
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export const createStore = (services: {
-  articlesService: InMemoryArticlesService;
-},preloadedState?:PreloadedState<RootState>) =>
+export const createStore = ({
+  services = {
+    articlesService: inMemoryArticlesService([]),
+  },
+
+  preloadedState = {},
+}) =>
   configureStore({
     preloadedState,
     reducer: rootReducer,
@@ -24,4 +28,4 @@ export const createStore = (services: {
       }),
   });
 
-  export type Store = ReturnType<typeof createStore>
+export type Store = ReturnType<typeof createStore>;

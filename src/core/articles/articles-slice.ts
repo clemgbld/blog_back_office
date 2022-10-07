@@ -13,7 +13,7 @@ import { STATUS } from "../utils/status-constants";
 
 export const articlesAdapter = createEntityAdapter<Article>();
 
-type InitialState = {
+export type InitialState = {
   status: string;
   data: EntityState<Article>;
   error?: string;

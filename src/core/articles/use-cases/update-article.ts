@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Article } from "../entities/article";
-import { InMemoryArticlesService } from "../infrastructure/in-memory/InMemoryArticlesService";
+import { InMemoryArticlesService } from "../infrastructure/in-memory-services/InMemoryArticlesService";
 
 export const updateArticle = createAsyncThunk<
   Article,

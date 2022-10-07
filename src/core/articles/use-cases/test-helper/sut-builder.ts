@@ -23,12 +23,12 @@ export const sutBuilder = ({
   preloadedState?: PreloadedState<RootState>;
 }) => ({
   build: () => {
-    const store = createStore(
-      {
+    const store = createStore({
+      services: {
         articlesService: inMemoryArticlesService(existingArticles, error),
       },
-      preloadedState
-    );
+      preloadedState,
+    });
 
     return {
       status: articlesStatus(store),
