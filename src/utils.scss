@@ -1,0 +1,28 @@
+$laptop: 75em;
+$tablet: 59em;
+
+@mixin breakpoint-tablet {
+  @media (min-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin breakpoint-laptop {
+  @media (min-width: $laptop) {
+    @content;
+  }
+}
+
+@mixin flex--full-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-container($gap) {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}
+
+$shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.03);

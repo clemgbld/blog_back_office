@@ -1,0 +1,40 @@
+@import "./utils.scss";
+
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 50%;
+  overflow-x: hidden;
+  background-color: #333;
+
+  @include breakpoint-tablet {
+    font-size: 56.25%;
+  }
+
+  @include breakpoint-laptop {
+    font-size: 62.25%;
+  }
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: 1;
+  font-weight: 400;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+}
+
+ul {
+  list-style: none;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
