@@ -1,3 +1,4 @@
+import { Descendant } from "slate";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Article } from "../entities/article";
 import { InMemoryArticlesService } from "../infrastructure/in-memory-services/InMemoryArticlesService";
@@ -7,7 +8,7 @@ export interface ArticleWithoutId {
   topic?: string;
   title: string;
   date: number;
-  content: Record<string, string | Record<string, string>[]>[];
+  content: Descendant[];
 }
 
 export const postArticle = createAsyncThunk<
