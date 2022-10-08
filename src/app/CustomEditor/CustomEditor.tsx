@@ -1,6 +1,15 @@
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import isHotkey from "is-hotkey";
-import { Editable, withReact, useSlate, Slate } from "slate-react";
+import {
+  Editable,
+  withReact,
+  useSlate,
+  Slate,
+  useSelected,
+  useFocused,
+  useSlateStatic,
+  ReactEditor,
+} from "slate-react";
 import {
   Editor,
   Transforms,
@@ -9,6 +18,8 @@ import {
   Element as SlateElement,
 } from "slate";
 import { withHistory } from "slate-history";
+import { ImageElement } from "./custom-types";
+import { css } from "@emotion/css";
 import { Button, Icon, Toolbar } from "./Components";
 import classNames from "./CustomEditor.module.scss";
 
@@ -44,11 +55,12 @@ const CustomEditor = () => {
           <BlockButton format="center" icon="format_align_center" />
           <BlockButton format="right" icon="format_align_right" />
           <BlockButton format="justify" icon="format_align_justify" />
+          <InsertImageButton />
         </Toolbar>
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          placeholder="Enter some rich text…"
+          placeholder="Start a new article…"
           spellCheck
           autoFocus
           onKeyDown={(event) => {
@@ -132,52 +144,97 @@ const isMarkActive = (editor, format) => {
   return marks ? marks[format] === true : false;
 };
 
-const Element = ({ attributes, children, element }) => {
-  const style = { textAlign: element.align };
-  switch (element.type) {
+const Element = (props) => {
+  const style = { textAlign: props.element.align };
+  switch (props.element.type) {
     case "block-quote":
       return (
-        <blockquote style={style} {...attributes}>
-          {children}
+        <blockquote style={style} {...props.attributes}>
+          {props.children}
         </blockquote>
       );
     case "bulleted-list":
       return (
-        <ul style={style} {...attributes}>
-          {children}
+        <ul style={style} {...props.attributes}>
+          {props.children}
         </ul>
       );
     case "heading-one":
       return (
-        <h1 style={style} {...attributes}>
-          {children}
+        <h1 style={style} {...props.attributes}>
+          {props.children}
         </h1>
       );
     case "heading-two":
       return (
-        <h2 style={style} {...attributes}>
-          {children}
+        <h2 style={style} {...props.attributes}>
+          {props.children}
         </h2>
       );
     case "list-item":
       return (
-        <li style={style} {...attributes}>
-          {children}
+        <li style={style} {...props.attributes}>
+          {props.children}
         </li>
       );
     case "numbered-list":
       return (
-        <ol style={style} {...attributes}>
-          {children}
+        <ol style={style} {...props.attributes}>
+          {props.children}
         </ol>
       );
+    case "image":
+      return <Image {...props} />;
     default:
       return (
-        <p style={style} {...attributes}>
-          {children}
+        <p style={style} {...props.attributes}>
+          {props.children}
         </p>
       );
   }
+};
+
+const Image = ({ attributes, children, element }) => {
+  const editor = useSlateStatic();
+  const path = ReactEditor.findPath(editor, element);
+
+  const selected = useSelected();
+  const focused = useFocused();
+  return (
+    <div {...attributes}>
+      {children}
+      <div
+        contentEditable={false}
+        className={css`
+          position: relative;
+        `}
+      >
+        <img
+          alt=""
+          src={element.url}
+          className={css`
+            display: block;
+            max-width: 100%;
+            max-height: 20em;
+            box-shadow: ${selected && focused ? "0 0 0 3px #B4D5FF" : "none"};
+          `}
+        />
+        <Button
+          active
+          onClick={() => Transforms.removeNodes(editor, { at: path })}
+          className={css`
+            display: ${selected && focused ? "inline" : "none"};
+            position: absolute;
+            top: 0.5em;
+            left: 0.5em;
+            background-color: white;
+          `}
+        >
+          <Icon>delete</Icon>
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 const Leaf = ({ attributes, children, leaf }) => {
@@ -198,6 +255,45 @@ const Leaf = ({ attributes, children, leaf }) => {
   }
 
   return <span {...attributes}>{children}</span>;
+};
+
+const insertImage = (editor, url) => {
+  const text = { text: "" };
+  const image: ImageElement = { type: "image", url, children: [text] };
+  Transforms.insertNodes(editor, image);
+};
+
+const InsertImageButton = () => {
+  const editor = useSlateStatic();
+  const hiddenFileInput = useRef(null);
+
+  const handleClick = () => {
+    hiddenFileInput.current.click();
+  };
+
+  const handleChange = (event) => {
+    const url = event.target.files[0];
+    const fr = new FileReader();
+    fr.onload = function () {
+      insertImage(editor, fr.result);
+    };
+
+    fr.readAsDataURL(url);
+  };
+
+  return (
+    <>
+      <div onClick={handleClick}>
+        <Icon>image</Icon>
+      </div>
+      <input
+        type="file"
+        ref={hiddenFileInput}
+        onChange={handleChange}
+        style={{ display: "none" }}
+      />
+    </>
+  );
 };
 
 const BlockButton = ({ format, icon }) => {
@@ -237,36 +333,7 @@ const MarkButton = ({ format, icon }) => {
 const initialValue: Descendant[] = [
   {
     type: "paragraph",
-    children: [
-      { text: "This is editable " },
-      { text: "rich", bold: true },
-      { text: " text, " },
-      { text: "much", italic: true },
-      { text: " better than a " },
-      { text: "<textarea>", code: true },
-      { text: "!" },
-    ],
-  },
-  {
-    type: "paragraph",
-    children: [
-      {
-        text: "Since it's rich text, you can do things like turn a selection of text ",
-      },
-      { text: "bold", bold: true },
-      {
-        text: ", or add a semantically rendered block quote in the middle of the page, like this:",
-      },
-    ],
-  },
-  {
-    type: "block-quote",
-    children: [{ text: "A wise quote." }],
-  },
-  {
-    type: "paragraph",
-    align: "center",
-    children: [{ text: "Try it out for yourself!" }],
+    children: [{ text: "" }],
   },
 ];
 
