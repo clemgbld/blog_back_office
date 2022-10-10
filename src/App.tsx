@@ -1,7 +1,7 @@
-import CustomEditor from "./app/CustomEditor/CustomEditor";
+import CreateArticle from "./app/pages/CreateArticle/CreateArticle";
 
 function App() {
-  return <CustomEditor />;
+  return <CreateArticle />;
 }
 
 export default App;

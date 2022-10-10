@@ -9,21 +9,15 @@
 }
 
 html {
-  font-size: 50%;
   overflow-x: hidden;
   background-color: #eee;
-
-  @include breakpoint-tablet {
-    font-size: 56.25%;
-  }
-
-  @include breakpoint-laptop {
-    font-size: 62.25%;
-  }
 }
 
 body {
-  font-size: 1.6rem;
+  display: flex;
+  justify-content: center;
+
+  font-size: 1.8rem;
   line-height: 1;
   font-weight: 400;
   color: #222;
@@ -34,7 +28,28 @@ ul {
   list-style: none;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+td {
+  border: 1px solid;
+}
+
+.MuiSvgIcon-root {
+  font-size: 1.8rem !important;
+}
+
+.tippy-box[data-theme~="tomato"] {
+  background-color: tomato;
+  color: yellow;
+}
+
+.drag-button {
+  overflow: hidden;
+  padding: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border-style: none;
+  cursor: pointer;
+  outline: 0;
+
+  min-width: 1.8rem;
+  min-height: 1.8rem;
 }
