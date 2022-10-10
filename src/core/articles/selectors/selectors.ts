@@ -30,3 +30,17 @@ export const allTopics = createSelector<any[], string[]>(
     articles.map(({ topic }) => topic),
   (allTopics: string[]) => removeUndefinedAndDuplicate(allTopics)
 );
+
+const isVisible = (hide: boolean) => hide !== false;
+
+export const visibleArticles = createSelector(
+  (articles: ReturnType<typeof allArticles>) => articles,
+  (articles: ReturnType<typeof allArticles>) =>
+    articles.filter(({ hide }) => isVisible(hide))
+);
+
+export const hiddenArticles = createSelector(
+  (articles: ReturnType<typeof allArticles>) => articles,
+  (articles: ReturnType<typeof allArticles>) =>
+    articles.filter(({ hide }) => !isVisible(hide))
+);

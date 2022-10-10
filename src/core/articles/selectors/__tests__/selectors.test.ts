@@ -1,4 +1,9 @@
-import { allArticlesFormatted, allTopics } from "../selectors";
+import {
+  allArticlesFormatted,
+  allTopics,
+  visibleArticles,
+  hiddenArticles,
+} from "../selectors";
 import { articleBuilder } from "../../use-cases/builder/articleBuilder";
 
 const articles = [articleBuilder()];
@@ -58,5 +63,33 @@ describe("topics", () => {
       "Functional-Programing",
       "OOP",
     ]);
+  });
+});
+
+describe("Filter out hidden articles", () => {
+  it("should be able to select visible articles", () => {
+    const articles = [articleBuilder({ hide: true }), articleBuilder()];
+
+    expect(visibleArticles(articles)).toEqual(articles);
+  });
+
+  it("should filter out hidden articles", () => {
+    const articles = [articleBuilder({ hide: false })];
+
+    expect(visibleArticles(articles)).toEqual([]);
+  });
+});
+
+describe("Filter out visible articles", () => {
+  it("should be able to select hidden articles", () => {
+    const articles = [articleBuilder({ hide: false })];
+
+    expect(hiddenArticles(articles)).toEqual(articles);
+  });
+
+  it("should filter out visible articles", () => {
+    const articles = [articleBuilder({ hide: true }), articleBuilder()];
+
+    expect(hiddenArticles(articles)).toEqual([]);
   });
 });

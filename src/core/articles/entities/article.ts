@@ -30,14 +30,14 @@ import {
   TText,
   TTodoListItemElement,
   EElement,
-} from "@udecode/plate"
+} from "@udecode/plate";
 import { CSSProperties } from "styled-components";
 
 /**
  * Text
  */
 
- export type EmptyText = {
+export type EmptyText = {
   text: "";
 };
 
@@ -231,13 +231,13 @@ export type MyRootBlock =
 
 export type MyValue = MyRootBlock[];
 
-
 export interface Article {
   id: string;
   summary?: string;
   topic?: string;
   title: string;
   date: number;
+  hide?: boolean;
   content: MyValue;
 }
 
@@ -246,5 +246,6 @@ export interface ArticleWithoutId {
   topic?: string;
   title: string;
   date: number;
-  content: MyValue ;
+  hide?: boolean;
+  content: MyValue;
 }

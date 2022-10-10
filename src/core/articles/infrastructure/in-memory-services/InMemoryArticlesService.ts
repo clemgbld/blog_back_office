@@ -1,5 +1,6 @@
-import { Article,ArticleWithoutId } from "../../entities/article";
+import { Article, ArticleWithoutId } from "../../entities/article";
 
+const FAKE_ID = "546";
 
 export interface InMemoryArticlesService {
   getArticles: () => Promise<Article[]>;
@@ -20,8 +21,8 @@ export const inMemoryArticlesService = (
   getArticles: async () =>
     error ? throwError(error) : Promise.resolve(articles),
 
-  postArticle: async (article: ArticleWithoutId):Promise<Article> =>
-    error ? throwError(error) : Promise.resolve({ id:'546',...article}),
+  postArticle: async (article: ArticleWithoutId): Promise<Article> =>
+    error ? throwError(error) : Promise.resolve({ id: FAKE_ID, ...article }),
   updateArticle: async (article: Article) =>
     error ? throwError(error) : Promise.resolve(article),
   deleteArticle: async (id: string) =>
