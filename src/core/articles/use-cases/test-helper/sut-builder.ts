@@ -6,12 +6,12 @@ import {
   articlesError,
 } from "../../selectors/selectors";
 import { inMemoryArticlesService } from "../../infrastructure/in-memory-services/InMemoryArticlesService";
-import { postArticle, ArticleWithoutId } from "../post-article";
+import { postArticle } from "../post-article";
 import { retrieveArticles } from "../retrieve-articles";
 import { updateArticle } from "../update-article";
 import { deleteArticle } from "../deleteArticle";
 import { deleteArticles } from "../deleteArticles";
-import { Article } from "../../entities/article";
+import { Article,ArticleWithoutId } from "../../entities/article";
 
 export const sutBuilder = ({
   existingArticles = [],
@@ -48,17 +48,16 @@ export const sutBuilder = ({
           expectedErrorMsg: articlesError(store),
         };
       },
-      postArticle: (articleToPost: ArticleWithoutId, id?: number) => {
-        store.dispatch(postArticle({ articleToPost, id }));
+      postArticle: (articleToPost: ArticleWithoutId) => {
+        store.dispatch(postArticle( articleToPost));
         return {
           status: articlesStatus(store),
         };
       },
       postArticleAsync: async (
         articleToPost: ArticleWithoutId,
-        id?: number
       ) => {
-        await store.dispatch(postArticle({ articleToPost, id }));
+        await store.dispatch(postArticle(articleToPost));
         return {
           status: articlesStatus(store),
           expectedArticles: allArticles(store),

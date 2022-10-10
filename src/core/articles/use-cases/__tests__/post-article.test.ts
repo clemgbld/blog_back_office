@@ -12,14 +12,13 @@ describe("Post Article", () => {
     const { postArticleAsync } = sutBuilder({}).build();
 
     const { status, expectedArticles } = await postArticleAsync(
-      articleToPost,
-      2
+      articleToPost
     );
 
     expect(status).toBe("success");
     expect(expectedArticles).toEqual([
       {
-        id: "2",
+        id: "546",
         title: "new article",
         date: 166480348787490,
         content: [
