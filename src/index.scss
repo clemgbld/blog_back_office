@@ -9,11 +9,22 @@
 }
 
 html {
+  font-size: 50%;
   overflow-x: hidden;
   background-color: #eee;
+
+  @include breakpoint-tablet {
+    font-size: 56.25%;
+  }
+
+  @include breakpoint-laptop {
+    font-size: 80%;
+  }
 }
 
 body {
+  display: flex;
+  justify-content: center;
   display: flex;
   justify-content: center;
 
