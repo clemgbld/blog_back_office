@@ -2,11 +2,11 @@ import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../..";
 import { postArticle } from "../../../core/articles/use-cases/post-article";
-import { MyValue } from "../../RichTextEditor/config/typescript";
-import RichTextEditor from "../../RichTextEditor/RichTextEditor";
+import { MyValue } from "../../Article/RichTextEditor/config/typescript";
+import RichTextEditor from "../../Article/RichTextEditor/RichTextEditor";
 import classNames from "./CreateArticle.module.scss";
 
-interface Inputvalues {
+export interface Inputvalues {
   title: string;
   topic: string;
   description: string;
@@ -16,7 +16,7 @@ interface Inputvalues {
 const CreateArticle = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const [articleContent, setArticleContent] = useState<MyValue>([
+  const [content, setContent] = useState<MyValue>([
     { type: "h1", children: [{ text: "" }] },
   ]);
 
@@ -36,7 +36,7 @@ const CreateArticle = () => {
         topic: inputValues.topic,
         hide: inputValues.hide,
         date: Date.now(),
-        content: articleContent,
+        content,
       })
     );
   };
@@ -45,7 +45,7 @@ const CreateArticle = () => {
     setInputValues({ ...inputValues, [name]: value });
 
   const handleValueChange = useCallback((content: MyValue) => {
-    setArticleContent(content);
+    setContent(content);
   }, []);
 
   return (
@@ -113,10 +113,7 @@ const CreateArticle = () => {
         </div>
 
         <div className={classNames["create-page_editor-container"]}>
-          <RichTextEditor
-            initialValue={articleContent}
-            onChange={handleValueChange}
-          />
+          <RichTextEditor initialValue={content} onChange={handleValueChange} />
         </div>
         <div className={classNames["create-page_button-container"]}>
           <div className={classNames["create-page_button-flex"]}>
@@ -126,7 +123,7 @@ const CreateArticle = () => {
               Cancel
             </button>
             <button
-              disabled={!!!articleContent[0].children[0].text}
+              disabled={!!!content[0].children[0].text}
               className={`${classNames["create-page_button"]} ${classNames["create-page_button--valid"]}`}
             >
               Save

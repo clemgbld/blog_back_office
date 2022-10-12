@@ -15,8 +15,5 @@ export const postArticle = createAsyncThunk<
         services: { articlesService },
       },
     }
-  ) => {
-    console.log(articleToPost);
-    return await articlesService.postArticle(articleToPost);
-  }
+  ) => await articlesService.postArticle(articleToPost)
 );
