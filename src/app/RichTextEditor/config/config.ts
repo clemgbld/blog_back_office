@@ -54,7 +54,7 @@ export const CONFIG: {
   editableProps: {
     spellCheck: false,
     autoFocus: false,
-    placeholder: "Type…",
+    placeholder: "",
     style: {
       padding: "15px",
     },
