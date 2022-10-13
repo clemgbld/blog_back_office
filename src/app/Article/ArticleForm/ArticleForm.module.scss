@@ -1,0 +1,38 @@
+.form {
+  &_flex {
+    display: flex;
+    gap: 1.6rem;
+  }
+
+  &_checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+    color: #c5f6fa;
+  }
+
+  &_checkbox {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  &_editor-container {
+    padding: 1.5rem;
+    margin-bottom: 1.6rem;
+    background-color: #fff;
+    color: #000;
+  }
+
+  &_button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  &_button-flex {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+}

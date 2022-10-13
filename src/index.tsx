@@ -6,6 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { inMemoryArticlesService } from "./core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import { createStore } from "./core/store";
+import Header from "./app/UI/Header/Header";
 
 const store = createStore({
   services: { articlesService: inMemoryArticlesService([]) },
@@ -13,13 +14,17 @@ const store = createStore({
 
 export type AppDispatch = typeof store.dispatch;
 
+export type RootState = ReturnType<typeof store.getState>;
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <Header>
+        <App />
+      </Header>
     </React.StrictMode>
   </Provider>
 );

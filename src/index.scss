@@ -11,7 +11,7 @@
 html {
   font-size: 50%;
   overflow-x: hidden;
-  background-color: #eee;
+  background-color: #212529;
 
   @include breakpoint-tablet {
     font-size: 56.25%;
@@ -27,6 +27,8 @@ body {
   justify-content: center;
   display: flex;
   justify-content: center;
+  padding-top: 12rem;
+
   color: #fff;
 
   font-size: 1.8rem;
@@ -34,6 +36,10 @@ body {
   font-weight: 400;
 
   font-family: "Open Sans", sans-serif;
+}
+
+#root {
+  width: 100%;
 }
 
 ul {
@@ -64,4 +70,12 @@ td {
 
   min-width: 1.8rem;
   min-height: 1.8rem;
+}
+
+.page_form-layout {
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
