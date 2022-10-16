@@ -20,6 +20,8 @@ const CreateArticle = () => {
     { type: "h1", children: [{ text: "" }] },
   ]);
 
+  console.log(content);
+
   const [inputValues, setInputValues] = useState<Inputvalues>({
     title: "",
     topic: "",
