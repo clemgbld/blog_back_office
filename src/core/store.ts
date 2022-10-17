@@ -1,9 +1,11 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { articlesSlice } from "./articles/articles-slice";
+import { uiSlice } from "./UI/ui-slice";
 import { inMemoryArticlesService } from "./articles/infrastructure/in-memory-services/InMemoryArticlesService";
 
 const rootReducer = combineReducers({
   [articlesSlice.name]: articlesSlice.reducer,
+  [uiSlice.name]: uiSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

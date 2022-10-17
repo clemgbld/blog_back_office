@@ -11,8 +11,6 @@ const CreateArticle = () => {
   const { inputValues, setInputValues, content, setContent } =
     useArticlesForm();
 
-  console.log(content);
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     await dispatch(
