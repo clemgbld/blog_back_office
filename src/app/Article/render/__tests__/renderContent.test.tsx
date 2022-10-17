@@ -81,6 +81,18 @@ describe("renderContent", () => {
     expect(pElement.children[0].tagName).toBe("BR");
   });
 
+  it("should be able to render a code_line", () => {
+    const content = [
+      { type: "code_line", id: 1, children: [{ text: "a line of code" }] },
+    ];
+
+    render(renderContent(content));
+
+    const codeLineElement = screen.getByText("a line of code");
+
+    expect(codeLineElement.tagName).toBe("P");
+  });
+
   describe("style", () => {
     it("create an element without any styling when not specify", () => {
       const content = [{ type: "h1", id: 1, children: [{ text: "Title" }] }];

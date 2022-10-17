@@ -134,7 +134,7 @@ const buildStyle = (content: any) => {
 const buildType = (content: any) => {
   if (content.type === "media_embed") return "iframe";
 
-  if (content.type === "lic") return "p";
+  if (["lic", "code_line"].includes(content.type)) return "p";
 
   return content.type;
 };

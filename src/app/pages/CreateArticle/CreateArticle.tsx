@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useArticleForm } from "../../article/hooks/use-article-form";
 import { AppDispatch } from "../../..";
 import { postArticle } from "../../../core/articles/use-cases/post-article";
-import { MyValue } from "../../article/RichTextEditor/config/typescript";
 import ArticleForm from "../../article/ArticleForm/ArticleForm";
 import Title from "../../UI/Title/Title";
 
@@ -16,18 +15,7 @@ export interface Inputvalues {
 const CreateArticle = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const [content, setContent] = useState<MyValue>([
-    { type: "h1", children: [{ text: "" }] },
-  ]);
-
-  console.log(content);
-
-  const [inputValues, setInputValues] = useState<Inputvalues>({
-    title: "",
-    topic: "",
-    description: "",
-    hide: false,
-  });
+  const { inputValues, setInputValues, content, setContent } = useArticleForm();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

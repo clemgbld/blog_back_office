@@ -1,14 +1,12 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useArticleForm } from "../../article/hooks/use-article-form";
 import { RootState } from "../../../core/store";
 import { articlesSelectors } from "../../../core/articles/selectors/selectors";
 import { AppDispatch } from "../../..";
 import { updateArticle } from "../../../core/articles/use-cases/update-article";
-import { MyValue } from "../../article/RichTextEditor/config/typescript";
 import ArticleForm from "../../article/ArticleForm/ArticleForm";
 import Title from "../../UI/Title/Title";
-import { Inputvalues } from "../CreateArticle/CreateArticle";
 
 const UpdateArticle = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -19,14 +17,15 @@ const UpdateArticle = () => {
     articlesSelectors.selectById(state, id)
   );
 
-  const [content, setContent] = useState<MyValue>(articleToUpdate.content);
-
-  const [inputValues, setInputValues] = useState<Inputvalues>({
-    title: articleToUpdate.title,
-    topic: articleToUpdate.topic || "",
-    description: articleToUpdate.summary || "",
-    hide: articleToUpdate.hide || false,
-  });
+  const { inputValues, setInputValues, content, setContent } = useArticleForm(
+    {
+      title: articleToUpdate.title,
+      topic: articleToUpdate.topic || "",
+      description: articleToUpdate.summary || "",
+      hide: articleToUpdate.hide || false,
+    },
+    articleToUpdate.content
+  );
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
