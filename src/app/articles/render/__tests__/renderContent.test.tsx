@@ -196,6 +196,39 @@ describe("renderContent", () => {
       expect(img.src).toBe("https://my-url/");
     });
 
+    it("should render an image with an alt even when there is no caption", () => {
+      const content = [
+        {
+          type: "img",
+          id: 1,
+          url: "https://my-url",
+          children: [{ text: "" }],
+        },
+      ];
+
+      render(<div>{renderContent(content)}</div>);
+
+      expect(screen.getByAltText("")).toBeInTheDocument();
+    });
+
+    it("should be able to add a with to an element and convert it to rem", () => {
+      const content = [
+        {
+          type: "img",
+          id: 1,
+          url: "https://my-url",
+          width: 424,
+          children: [{ text: "" }],
+        },
+      ];
+
+      render(<div>{renderContent(content)}</div>);
+
+      const imgElement = screen.getByAltText("");
+
+      expect(imgElement.style.width).toBe("42.4rem");
+    });
+
     it("should be able to build a link", () => {
       const content = [
         {

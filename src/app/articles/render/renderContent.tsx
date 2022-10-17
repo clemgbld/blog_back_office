@@ -7,8 +7,11 @@ const buildSpecificProps = (content: any) => {
     props = { ...props, key: content.id };
   }
 
-  if (content.caption?.length > 0) {
-    props = { ...props, alt: content.caption[0] };
+  if (content.type === "img") {
+    props = {
+      ...props,
+      alt: content.caption?.length > 0 ? content.caption[0] : "",
+    };
   }
 
   if (content.url) {
@@ -86,6 +89,10 @@ const buildStyle = (content: any) => {
 
   if (content.indent) {
     style = { ...style, marginLeft: `${content.indent * 2.5}rem` };
+  }
+
+  if (content.width) {
+    style = { ...style, width: `${content.width / 10}rem` };
   }
 
   if (!content.children) return style;

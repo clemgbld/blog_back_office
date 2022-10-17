@@ -111,7 +111,7 @@ export interface MyBlockElement
   extends TElement,
     MyIndentListProps,
     MyLineHeightProps {
-  id?: string;
+  id?: any;
 }
 
 /**

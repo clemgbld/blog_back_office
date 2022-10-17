@@ -153,7 +153,7 @@ export interface MyBlockElement
   extends TElement,
     MyIndentListProps,
     MyLineHeightProps {
-  id?: string;
+  id?: string | number;
 }
 
 /**
@@ -327,17 +327,17 @@ export const getMyEditor = (editor: MyEditor) =>
   getTEditor<MyValue, MyEditor>(editor);
 export const useMyEditorRef = () => useEditorRef<MyValue, MyEditor>();
 export const useMyEditorState = () => useEditorState<MyValue, MyEditor>();
-export const useMyPlateEditorRef = (id?: string) =>
+export const useMyPlateEditorRef = (id?: any) =>
   usePlateEditorRef<MyValue, MyEditor>(id);
-export const getMyPlateEditorRef = (id?: string) =>
+export const getMyPlateEditorRef = (id?: any) =>
   getPlateEditorRef<MyValue, MyEditor>(id);
-export const useMyPlateEditorState = (id?: string) =>
+export const useMyPlateEditorState = (id?: any) =>
   usePlateEditorState<MyValue, MyEditor>(id);
-export const useMyPlateSelectors = (id?: string) =>
+export const useMyPlateSelectors = (id?: any) =>
   usePlateSelectors<MyValue, MyEditor>(id);
-export const getMyPlateSelectors = (id?: string) =>
+export const getMyPlateSelectors = (id?: any) =>
   getPlateSelectors<MyValue, MyEditor>(id);
-export const getMyPlateActions = (id?: string) =>
+export const getMyPlateActions = (id?: any) =>
   getPlateActions<MyValue, MyEditor>(id);
 
 /**
