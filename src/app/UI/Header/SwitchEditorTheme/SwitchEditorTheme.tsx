@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { LightMode } from "@styled-icons/material/LightMode";
 import { DarkMode } from "@styled-icons/material/DarkMode";
+import { EDITOR_THEME_MODE } from "./constants";
 import classNames from "./SwitchEditorTheme.module.scss";
 
 type SwitchEditorThemeProps = {
@@ -10,7 +11,7 @@ type SwitchEditorThemeProps = {
 
 const SwitchEditorTheme: FC<SwitchEditorThemeProps> = ({ mode, onClick }) => (
   <div className={classNames.button} data-testid={mode} onClick={onClick}>
-    {mode === "light-mode" ? <LightMode /> : <DarkMode />}
+    {mode === EDITOR_THEME_MODE.LIGHT ? <LightMode /> : <DarkMode />}
   </div>
 );
 

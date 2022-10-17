@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../..";
 import toggleEditorTheme from "../../../core/UI/use-cases/toggle-theme";
 import SwitchEditorTheme from "./SwitchEditorTheme/SwitchEditorTheme";
+import { EDITOR_THEME_MODE } from "./SwitchEditorTheme/constants";
 import classNames from "./Header.module.scss";
 
 type HeaderProps = {
@@ -28,12 +29,12 @@ const Header: FC<HeaderProps> = ({ children }) => {
         </div>
         {editorThemeMode ? (
           <SwitchEditorTheme
-            mode="light-mode"
+            mode={EDITOR_THEME_MODE.LIGHT}
             onClick={() => dispatch(toggleEditorTheme())}
           />
         ) : (
           <SwitchEditorTheme
-            mode="dark-mode"
+            mode={EDITOR_THEME_MODE.DARK}
             onClick={() => dispatch(toggleEditorTheme())}
           />
         )}
