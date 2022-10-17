@@ -1,21 +1,15 @@
 import { useDispatch } from "react-redux";
-import { useArticleForm } from "../../article/hooks/use-article-form";
+import { useArticlesForm } from "../../articles/hooks/use-articles-form";
 import { AppDispatch } from "../../..";
 import { postArticle } from "../../../core/articles/use-cases/post-article";
-import ArticleForm from "../../article/ArticleForm/ArticleForm";
+import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import Title from "../../UI/Title/Title";
-
-export interface Inputvalues {
-  title: string;
-  topic: string;
-  description: string;
-  hide: boolean;
-}
 
 const CreateArticle = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { inputValues, setInputValues, content, setContent } = useArticleForm();
+  const { inputValues, setInputValues, content, setContent } =
+    useArticlesForm();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -34,7 +28,7 @@ const CreateArticle = () => {
   return (
     <div className="page_form-layout">
       <Title title="Create a new article" />
-      <ArticleForm
+      <ArticlesForm
         onSubmit={handleSubmit}
         content={content}
         setContent={setContent}

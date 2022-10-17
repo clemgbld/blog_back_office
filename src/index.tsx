@@ -6,7 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { inMemoryArticlesService } from "./core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import { createStore } from "./core/store";
-import Header from "./app/UI/Header/Header";
+import Header from "./app/articles/Header/Header";
 
 const store = createStore({
   services: { articlesService: inMemoryArticlesService([]) },

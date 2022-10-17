@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useArticleForm } from "../../article/hooks/use-article-form";
+import { useArticlesForm } from "../../articles/hooks/use-articles-form";
 import { RootState } from "../../../core/store";
 import { articlesSelectors } from "../../../core/articles/selectors/selectors";
 import { AppDispatch } from "../../..";
 import { updateArticle } from "../../../core/articles/use-cases/update-article";
-import ArticleForm from "../../article/ArticleForm/ArticleForm";
+import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import Title from "../../UI/Title/Title";
 
 const UpdateArticle = () => {
@@ -17,7 +17,7 @@ const UpdateArticle = () => {
     articlesSelectors.selectById(state, id)
   );
 
-  const { inputValues, setInputValues, content, setContent } = useArticleForm(
+  const { inputValues, setInputValues, content, setContent } = useArticlesForm(
     {
       title: articleToUpdate.title,
       topic: articleToUpdate.topic || "",
@@ -45,7 +45,7 @@ const UpdateArticle = () => {
   return (
     <div className="page_form-layout">
       <Title title="Update an existing article" />
-      <ArticleForm
+      <ArticlesForm
         onSubmit={handleSubmit}
         content={content}
         setContent={setContent}

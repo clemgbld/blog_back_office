@@ -1,26 +1,26 @@
 import { useCallback, FC } from "react";
 import { MyValue } from "../RichTextEditor/config/typescript";
 import RichTextEditor from "../RichTextEditor/RichTextEditor";
-import { Inputvalues } from "../../pages/CreateArticle/CreateArticle";
+import { InputValues } from "../hooks/use-articles-form";
 import ArticleInput from "./ArticleInput/ArticleInput";
 import Button from "../../UI/Button/Button";
 import classNames from "./ArticleForm.module.scss";
 
-type ArticleFormProps = {
+type ArticlesFormProps = {
   onSubmit: (e: any) => Promise<void>;
 
   content: MyValue;
 
   setContent: React.Dispatch<React.SetStateAction<MyValue>>;
 
-  inputValues: Inputvalues;
+  inputValues: InputValues;
 
-  setInputValues: React.Dispatch<React.SetStateAction<Inputvalues>>;
+  setInputValues: React.Dispatch<React.SetStateAction<InputValues>>;
 
   validateButtonLabel: string;
 };
 
-const ArticleForm: FC<ArticleFormProps> = ({
+const ArticlesForm: FC<ArticlesFormProps> = ({
   onSubmit,
   content,
   setContent,
@@ -92,4 +92,4 @@ const ArticleForm: FC<ArticleFormProps> = ({
   );
 };
 
-export default ArticleForm;
+export default ArticlesForm;

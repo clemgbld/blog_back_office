@@ -1,14 +1,14 @@
 import { useState, useId } from "react";
 import { MyValue } from "../RichTextEditor/config/typescript";
 
-interface InputValues {
+export interface InputValues {
   title: string;
   topic: string;
   description: string;
   hide: boolean;
 }
 
-export const useArticleForm = (
+export const useArticlesForm = (
   formValues: InputValues = {
     title: "",
     topic: "",

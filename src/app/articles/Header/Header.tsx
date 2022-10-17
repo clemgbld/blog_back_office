@@ -8,7 +8,15 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ children }) => {
   return (
     <>
-      <nav className={classNames.nav}></nav>
+      <nav className={classNames.nav}>
+        <div>
+          <img
+            className={classNames.nav_img}
+            src="/app-logo.png"
+            alt="logo app"
+          />
+        </div>
+      </nav>
       {children}
     </>
   );

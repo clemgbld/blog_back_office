@@ -12,4 +12,11 @@
   background-color: rgba(33, 37, 41, 0.7);
   backdrop-filter: blur(3px);
   box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.03);
+
+  &_img {
+    width: 10rem;
+    height: 9.7rem;
+    background-color: rgba(33, 37, 41, 0.7);
+    object-fit: cover;
+  }
 }
