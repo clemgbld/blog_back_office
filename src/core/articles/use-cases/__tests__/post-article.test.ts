@@ -5,15 +5,14 @@ describe("Post Article", () => {
   const articleToPost = {
     title: "new article",
     date: 166480348787490,
+    lightMode: true,
     content: [contentBuilder({ children: [{ text: "new article posted." }] })],
   };
 
   it("should post an article an add it to the list of articles", async () => {
     const { postArticleAsync } = sutBuilder({}).build();
 
-    const { status, expectedArticles } = await postArticleAsync(
-      articleToPost
-    );
+    const { status, expectedArticles } = await postArticleAsync(articleToPost);
 
     expect(status).toBe("success");
     expect(expectedArticles).toEqual([
@@ -21,6 +20,8 @@ describe("Post Article", () => {
         id: "546",
         title: "new article",
         date: 166480348787490,
+        lightMode: true,
+        timeToRead: "7 min read",
         content: [
           {
             type: "paragraph",

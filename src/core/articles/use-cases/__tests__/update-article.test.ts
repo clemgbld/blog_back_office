@@ -32,7 +32,9 @@ describe("Update Article", () => {
     );
 
     expect(status).toBe("success");
-    expect(expectedArticles).toEqual([updatedArticle]);
+    expect(expectedArticles).toEqual([
+      { ...updatedArticle, timeToRead: "7 min read" },
+    ]);
   });
 
   it("should inform the user that the updating operation is loading", () => {

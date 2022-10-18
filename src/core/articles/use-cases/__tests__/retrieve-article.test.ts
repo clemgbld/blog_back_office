@@ -10,7 +10,9 @@ describe("Retrieve articles", () => {
   });
 
   it("informs the user when the the articles are loading", async () => {
-    const { retrieveArticles } = sutBuilder({existingArticles:[articleBuilder()]}).build();
+    const { retrieveArticles } = sutBuilder({
+      existingArticles: [articleBuilder()],
+    }).build();
 
     const { status } = retrieveArticles();
 
@@ -18,7 +20,9 @@ describe("Retrieve articles", () => {
   });
 
   it("retrieves articles", async () => {
-    const { retrieveArticlesAsync } = sutBuilder({existingArticles:[articleBuilder()]}).build();
+    const { retrieveArticlesAsync } = sutBuilder({
+      existingArticles: [articleBuilder()],
+    }).build();
 
     const { status, expectedArticles } = await retrieveArticlesAsync();
 
@@ -27,6 +31,8 @@ describe("Retrieve articles", () => {
         id: "1",
         title: "article 1",
         date: 166480348787489,
+        lightMode: true,
+        timeToRead: "2 min read",
         content: [
           {
             type: "paragraph",
@@ -44,10 +50,13 @@ describe("Retrieve articles", () => {
   });
 
   it("should infors the user when the articles retrieving failed", async () => {
-    const { retrieveArticlesAsync } = sutBuilder({existingArticles:[],error: {
-      status: 400,
-      message: "something went wrong",
-    }}).build();
+    const { retrieveArticlesAsync } = sutBuilder({
+      existingArticles: [],
+      error: {
+        status: 400,
+        message: "something went wrong",
+      },
+    }).build();
 
     const { expectedErrorMsg, status } = await retrieveArticlesAsync();
 

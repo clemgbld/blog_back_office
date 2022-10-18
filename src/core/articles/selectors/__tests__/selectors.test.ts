@@ -15,6 +15,8 @@ describe("normalize all articles", () => {
         id: "1",
         title: "article 1",
         date: "20/07/7245",
+        lightMode: true,
+        timeToRead: "2 min read",
         content: [
           {
             type: "paragraph",

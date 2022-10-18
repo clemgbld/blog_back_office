@@ -1,3 +1,3 @@
-import { toggleEditorTheme } from "../ui-slice";
+import { uiSlice } from "../ui-slice";
 
-export default toggleEditorTheme;
+export const { toggleEditorTheme } = uiSlice.actions;

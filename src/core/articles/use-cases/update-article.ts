@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Article } from "../entities/article";
+import { Article, ArticleWithoutTimeToRead } from "../entities/article";
 import { InMemoryArticlesService } from "../infrastructure/in-memory-services/InMemoryArticlesService";
 
 export const updateArticle = createAsyncThunk<
   Article,
-  Article,
+  ArticleWithoutTimeToRead,
   { extra: { services: { articlesService: InMemoryArticlesService } } }
 >(
   "articles/updateArticle",
@@ -15,8 +15,5 @@ export const updateArticle = createAsyncThunk<
         services: { articlesService },
       },
     }
-  ) => {
-    await articlesService.updateArticle(updatedArticle);
-    return updatedArticle;
-  }
+  ) => await articlesService.updateArticle(updatedArticle)
 );

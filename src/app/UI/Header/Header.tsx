@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../..";
-import toggleEditorTheme from "../../../core/UI/use-cases/toggle-theme";
+import { toggleEditorTheme } from "../../../core/UI/use-cases/toggle-theme";
 import SwitchEditorTheme from "./SwitchEditorTheme/SwitchEditorTheme";
 import { EDITOR_THEME_MODE } from "./SwitchEditorTheme/constants";
 import classNames from "./Header.module.scss";
@@ -13,7 +13,7 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ children }) => {
   const dispatch: AppDispatch = useDispatch();
 
-  const editorThemeMode = useSelector<RootState, boolean>(
+  const isEditorInLightMode = useSelector<RootState, boolean>(
     ({ ui: { isEditorInLightMode } }) => isEditorInLightMode
   );
 
@@ -27,7 +27,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
             alt="logo app"
           />
         </div>
-        {editorThemeMode ? (
+        {isEditorInLightMode ? (
           <SwitchEditorTheme
             mode={EDITOR_THEME_MODE.LIGHT}
             onClick={() => dispatch(toggleEditorTheme())}

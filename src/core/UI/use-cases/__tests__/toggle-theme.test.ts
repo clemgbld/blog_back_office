@@ -1,5 +1,5 @@
 import { createStore } from "../../../store";
-import toggleEditorTheme from "../toggle-theme";
+import { toggleEditorTheme } from "../toggle-theme";
 
 describe("UI theme", () => {
   it("should be light mode initially", () => {

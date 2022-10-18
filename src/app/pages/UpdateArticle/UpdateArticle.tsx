@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useArticlesForm } from "../../articles/hooks/use-articles-form";
@@ -5,10 +6,12 @@ import { RootState } from "../../../core/store";
 import { articlesSelectors } from "../../../core/articles/selectors/selectors";
 import { AppDispatch } from "../../..";
 import { updateArticle } from "../../../core/articles/use-cases/update-article";
+import { setTheme } from "../../../core/UI/use-cases/set-theme";
 import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import Title from "../../UI/Title/Title";
 
 const UpdateArticle = () => {
+  const [onMount, setOnMount] = useState(false);
   const dispatch: AppDispatch = useDispatch();
 
   const { id } = useParams();
@@ -16,6 +19,16 @@ const UpdateArticle = () => {
   const articleToUpdate = useSelector((state: RootState) =>
     articlesSelectors.selectById(state, id)
   );
+
+  const isEditorInLightMode = useSelector<RootState, boolean>(
+    ({ ui: { isEditorInLightMode } }) => isEditorInLightMode
+  );
+
+  useEffect(() => {
+    if (onMount) return;
+    dispatch(setTheme(articleToUpdate.lightMode));
+    setOnMount(true);
+  }, [dispatch, articleToUpdate, onMount]);
 
   const { inputValues, setInputValues, content, setContent } = useArticlesForm(
     {
@@ -37,6 +50,7 @@ const UpdateArticle = () => {
         topic: inputValues.topic,
         hide: inputValues.hide,
         date: articleToUpdate.date,
+        lightMode: isEditorInLightMode,
         content,
       })
     );

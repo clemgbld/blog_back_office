@@ -1,4 +1,5 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../core/store";
 import { useArticlesForm } from "../../articles/hooks/use-articles-form";
 import { AppDispatch } from "../../..";
 import { postArticle } from "../../../core/articles/use-cases/post-article";
@@ -11,6 +12,10 @@ const CreateArticle = () => {
   const { inputValues, setInputValues, content, setContent } =
     useArticlesForm();
 
+  const isEditorInLightMode = useSelector<RootState, boolean>(
+    ({ ui: { isEditorInLightMode } }) => isEditorInLightMode
+  );
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     await dispatch(
@@ -20,6 +25,7 @@ const CreateArticle = () => {
         topic: inputValues.topic,
         hide: inputValues.hide,
         date: Date.now(),
+        lightMode: isEditorInLightMode,
         content,
       })
     );

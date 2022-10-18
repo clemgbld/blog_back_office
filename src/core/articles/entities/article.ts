@@ -239,6 +239,8 @@ export interface Article {
   date: number;
   hide?: boolean;
   content: MyValue;
+  lightMode: boolean;
+  timeToRead: string;
 }
 
 export interface ArticleWithoutId {
@@ -247,5 +249,17 @@ export interface ArticleWithoutId {
   title: string;
   date: number;
   hide?: boolean;
+  lightMode: boolean;
+  content: MyValue;
+}
+
+export interface ArticleWithoutTimeToRead {
+  id: string;
+  summary?: string;
+  topic?: string;
+  title: string;
+  date: number;
+  hide?: boolean;
+  lightMode: boolean;
   content: MyValue;
 }

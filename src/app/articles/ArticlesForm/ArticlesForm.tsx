@@ -1,4 +1,6 @@
 import { useCallback, FC } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../..";
 import { MyValue } from "../RichTextEditor/config/typescript";
 import RichTextEditor from "../RichTextEditor/RichTextEditor";
 import { InputValues } from "../hooks/use-articles-form";
@@ -39,6 +41,10 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
     [setContent]
   );
 
+  const isEditorInLightMode = useSelector<RootState, boolean>(
+    ({ ui: { isEditorInLightMode } }) => isEditorInLightMode
+  );
+
   return (
     <form onSubmit={onSubmit}>
       <div className={classNames.form_flex}>
@@ -73,7 +79,13 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
           onChange={handleCheckBoxChange}
         />
       </div>
-      <div className={classNames["form_editor-container"]}>
+      <div
+        className={
+          isEditorInLightMode
+            ? classNames["form_editor-container"]
+            : classNames["form_editor-container--dark"]
+        }
+      >
         <RichTextEditor initialValue={content} onChange={handleValueChange} />
       </div>
       <div>

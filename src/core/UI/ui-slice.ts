@@ -11,7 +11,8 @@ export const uiSlice = createSlice({
     toggleEditorTheme: (state) => {
       state.isEditorInLightMode = !state.isEditorInLightMode;
     },
+    setTheme: (state, action) => {
+      state.isEditorInLightMode = action.payload;
+    },
   },
 });
-
-export const { toggleEditorTheme } = uiSlice.actions;

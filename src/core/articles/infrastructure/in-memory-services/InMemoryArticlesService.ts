@@ -1,11 +1,17 @@
-import { Article, ArticleWithoutId } from "../../entities/article";
+import {
+  Article,
+  ArticleWithoutId,
+  ArticleWithoutTimeToRead,
+} from "../../entities/article";
 
 const FAKE_ID = "546";
+
+const FAKE_TIME_TO_READ = "7 min read";
 
 export interface InMemoryArticlesService {
   getArticles: () => Promise<Article[]>;
   postArticle: (article: ArticleWithoutId) => Promise<Article>;
-  updateArticle: (article: Article) => Promise<Article>;
+  updateArticle: (article: ArticleWithoutTimeToRead) => Promise<Article>;
   deleteArticle: (id: string) => Promise<string>;
   deleteArticles: (ids: string[]) => Promise<string[]>;
 }
@@ -22,9 +28,17 @@ export const inMemoryArticlesService = (
     error ? throwError(error) : Promise.resolve(articles),
 
   postArticle: async (article: ArticleWithoutId): Promise<Article> =>
-    error ? throwError(error) : Promise.resolve({ id: FAKE_ID, ...article }),
+    error
+      ? throwError(error)
+      : Promise.resolve({
+          timeToRead: FAKE_TIME_TO_READ,
+          id: FAKE_ID,
+          ...article,
+        }),
   updateArticle: async (article: Article) =>
-    error ? throwError(error) : Promise.resolve(article),
+    error
+      ? throwError(error)
+      : Promise.resolve({ ...article, timeToRead: FAKE_TIME_TO_READ }),
   deleteArticle: async (id: string) =>
     error ? throwError(error) : Promise.resolve(id),
   deleteArticles: async (ids: string[]) =>
