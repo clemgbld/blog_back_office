@@ -1,6 +1,6 @@
 import { Article } from "../../../core/articles/entities/article";
 
-export const fakeArticle1: Article = {
+export const fakeArticle1: any = {
   id: "1",
   summary:
     "Redundant re-renders are a common issue in React. If not taken seriously, this issue can quickly worsen the performance of your application.",
@@ -21,6 +21,7 @@ export const fakeArticle1: Article = {
     },
     {
       type: "img",
+      caption: ["caption 1"],
       id: 2,
       url: "https://isamatov.com/images/react-avoid-redundant-renders/React%20Performance-%20How%20to%20avoid%20redundant%20re-renders.png",
       children: [{ text: "" }],
@@ -56,7 +57,7 @@ export const fakeArticle2: Article = {
   title:
     "Reclaiming Responsibility From Best Practices in Software Development",
   lightMode: false,
-  timeToRead: "7 min read",
+  timeToRead: "5 min read",
   content: [
     {
       type: "h1",

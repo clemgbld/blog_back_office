@@ -7,9 +7,12 @@ import reportWebVitals from "./reportWebVitals";
 import { inMemoryArticlesService } from "./core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import { createStore } from "./core/store";
 import Header from "./app/UI/Header/Header";
+import { fakeArticle1, fakeArticle2 } from "./app/articles/fixtures/articles";
 
 const store = createStore({
-  services: { articlesService: inMemoryArticlesService([]) },
+  services: {
+    articlesService: inMemoryArticlesService([fakeArticle1, fakeArticle2]),
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

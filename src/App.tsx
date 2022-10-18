@@ -1,7 +1,7 @@
-import CreateArticle from "./app/pages/CreateArticle/CreateArticle";
+import Home from "./app/pages/Home/Home";
 
 function App() {
-  return <CreateArticle />;
+  return <Home />;
 }
 
 export default App;
