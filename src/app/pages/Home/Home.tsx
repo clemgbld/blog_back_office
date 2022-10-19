@@ -19,9 +19,12 @@ const Home = () => {
     useSelector(articlesSelectors.selectAll)
   );
 
+  const articlesStatus = useSelector(({ articles: { status } }) => status);
+
   return (
     <div>
       <h1>Dashboard</h1>
+      {articlesStatus === "pending" && <div role="progressbar" />}
       <div>
         {articles.map(({ title, id, summary, timeToRead, date, content }) => (
           <div key={id}>

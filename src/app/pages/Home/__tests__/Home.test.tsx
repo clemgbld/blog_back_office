@@ -7,12 +7,13 @@ import {
   fakeArticle2,
 } from "../../../articles/fixtures/articles";
 import Home from "../Home";
+import { Article } from "../../../../core/articles/entities/article";
 
 describe("Home", () => {
-  it("should sucessfully fecth articles", async () => {
+  const renderHome = (articles: Article[]) => {
     const store = createStore({
       services: {
-        articlesService: inMemoryArticlesService([fakeArticle1, fakeArticle2]),
+        articlesService: inMemoryArticlesService(articles),
       },
     });
 
@@ -21,6 +22,10 @@ describe("Home", () => {
         <Home />
       </Provider>
     );
+  };
+
+  it("should sucessfully fecth articles", async () => {
+    renderHome([fakeArticle1, fakeArticle2]);
 
     await screen.findByText(
       "React Performance: How to avoid redundant re-renders"
@@ -35,10 +40,18 @@ describe("Home", () => {
 
     expect(screen.getByText("17/10/2022")).toBeInTheDocument();
 
+    expect(screen.getByText("React")).toBeInTheDocument();
+
     const imgEl: any = screen.getByAltText("caption 1");
 
     expect(imgEl.src).toBe(
       "https://isamatov.com/images/react-avoid-redundant-renders/React%20Performance-%20How%20to%20avoid%20redundant%20re-renders.png"
     );
+  });
+
+  it("should display a loding indicator while the article fetching operation is loading", () => {
+    renderHome([fakeArticle1, fakeArticle2]);
+
+    expect(screen.getByRole("progressbar")).toBeInTheDocument();
   });
 });
