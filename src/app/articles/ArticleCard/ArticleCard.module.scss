@@ -1,0 +1,59 @@
+.card {
+  max-width: 75rem;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1rem;
+
+  font-size: 1.6rem;
+
+  width: 100rem;
+  border-bottom: 1px solid #ccc;
+
+  &__img--container {
+    max-width: 15rem;
+    width: 100%;
+  }
+
+  &__img {
+    max-width: 15rem;
+    height: 7rem;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__title {
+    font-size: 2rem;
+    color: #c5f6fa;
+    margin-bottom: 1rem;
+  }
+
+  &__tag--container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &__tag {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  &__icon {
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+  }
+
+  &__summary {
+    font-size: 1.3rem;
+    line-height: 1.5;
+  }
+}

@@ -6,7 +6,9 @@ import {
   articlesSelectors,
   allArticlesFormatted,
 } from "../../../core/articles/selectors/selectors";
-import { selectFirstImg } from "../../../core/articles/selectors/select-first-img/select-first-img";
+import { STATUS } from "../../../core/utils/status-constants";
+import ArticleCard from "../../articles/ArticleCard/ArticleCard";
+import Title from "../../UI/Title/Title";
 
 const Home = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -22,28 +24,23 @@ const Home = () => {
   const articlesStatus = useSelector(({ articles: { status } }) => status);
 
   return (
-    <div>
-      <h1>Dashboard</h1>
-      {articlesStatus === "pending" && <div role="progressbar" />}
+    <div className="page_form-layout">
+      <Title title="Dashboard" />
+      {articlesStatus === STATUS.PENDING && <div role="progressbar" />}
       <div>
-        {articles.map(({ title, id, summary, timeToRead, date, content }) => (
-          <div key={id}>
-            <div>
-              <img
-                src={selectFirstImg(content).src}
-                alt={selectFirstImg(content).alt}
-              />
-            </div>
-            <div>
-              <h2>{title}</h2>
-              <div>
-                <span>{date}</span>
-                <span>{timeToRead}</span>
-              </div>
-              <p>{summary}</p>
-            </div>
-          </div>
-        ))}
+        {articles.map(
+          ({ title, summary, timeToRead, date, content, topic, id }) => (
+            <ArticleCard
+              key={id}
+              title={title}
+              summary={summary}
+              timeToRead={timeToRead}
+              date={date}
+              content={content}
+              topic={topic}
+            />
+          )
+        )}
       </div>
     </div>
   );
