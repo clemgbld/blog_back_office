@@ -12,6 +12,7 @@ type ArticleCardProps = {
   date: string;
   content: any;
   topic?: string;
+  lightMode: boolean;
 };
 
 const ArticleCard: FC<ArticleCardProps> = ({
@@ -21,14 +22,23 @@ const ArticleCard: FC<ArticleCardProps> = ({
   date,
   content,
   topic,
+  lightMode,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { src, alt } = selectFirstImg(content);
 
+  const handleCloseModal = () => setIsOpen(false);
+
   return (
     <>
-      {isOpen && <ArticleModal content={content} />}
+      {isOpen && (
+        <ArticleModal
+          content={content}
+          lightMode={lightMode}
+          onClose={handleCloseModal}
+        />
+      )}
       <figure
         onClick={() => setIsOpen(true)}
         role="contentinfo"

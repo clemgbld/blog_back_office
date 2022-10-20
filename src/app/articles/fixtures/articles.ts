@@ -15,6 +15,7 @@ export const fakeArticle1: any = {
       id: 1,
       children: [
         {
+          color: "#000",
           text: "Redundant re-renders are a common issue in React. If not taken seriously, this issue can quickly worsen the performance of your application.",
         },
       ],
@@ -22,6 +23,7 @@ export const fakeArticle1: any = {
     {
       type: "img",
       caption: ["caption 1"],
+      width: 424,
       id: 2,
       url: "https://isamatov.com/images/react-avoid-redundant-renders/React%20Performance-%20How%20to%20avoid%20redundant%20re-renders.png",
       children: [{ text: "" }],
@@ -36,6 +38,7 @@ export const fakeArticle1: any = {
       id: 3,
       children: [
         {
+          color: "#000",
           text: "Redundant re-renders are a common issue in React. If not taken seriously, this issue can quickly worsen the performance of your application.",
         },
       ],
@@ -64,6 +67,7 @@ export const fakeArticle2: Article = {
       id: 1,
       children: [
         {
+          color: "#08fdd8",
           text: "Reclaiming Responsibility From Best Practices in Software Development",
         },
       ],
@@ -85,6 +89,7 @@ export const fakeArticle2: Article = {
       children: [
         {
           text: "What happens when you blindly follow the best practice without understanding why? You end up with software that is not optimized for your needs or environment.",
+          color: "#c5f6fa",
         },
       ],
     },
@@ -92,6 +97,17 @@ export const fakeArticle2: Article = {
       type: "p",
       id: 54,
       children: [{ text: "" }],
+    },
+    {
+      type: "p",
+      id: 7,
+      children: [
+        {
+          text: "fake text",
+          color: "#c5f6fa",
+          align: "left",
+        },
+      ],
     },
   ],
 };

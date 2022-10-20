@@ -178,6 +178,7 @@ function renderElement(content: any, i: number) {
   if (shouldRenderBr(content)) {
     return createElement("p", buildProps(content), createElement("br"));
   }
+
   return createElement(
     buildType(content),
     buildProps(content),

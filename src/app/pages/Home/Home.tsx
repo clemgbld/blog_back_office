@@ -29,7 +29,16 @@ const Home = () => {
       {articlesStatus === STATUS.PENDING && <div role="progressbar" />}
       <div>
         {articles.map(
-          ({ title, summary, timeToRead, date, content, topic, id }) => (
+          ({
+            title,
+            summary,
+            timeToRead,
+            date,
+            content,
+            topic,
+            id,
+            lightMode,
+          }) => (
             <ArticleCard
               key={id}
               title={title}
@@ -38,6 +47,7 @@ const Home = () => {
               date={date}
               content={content}
               topic={topic}
+              lightMode={lightMode}
             />
           )
         )}

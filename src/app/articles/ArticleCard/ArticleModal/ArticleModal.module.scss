@@ -1,0 +1,18 @@
+@mixin modal-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem;
+  max-width: 100rem;
+  width: 100%;
+}
+
+.modal {
+  @include modal-layout;
+  background-color: #fff;
+
+  &--dark-theme {
+    @include modal-layout;
+    background-color: #212529;
+  }
+}
