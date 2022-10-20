@@ -3,8 +3,7 @@ import { selectFirstImg } from "../../../core/articles/selectors/select-first-im
 import { Coffee } from "@styled-icons/material";
 import { CalendarToday } from "@styled-icons/material";
 import classNames from "./ArticleCard.module.scss";
-import Modal from "../../UI/Modal/Modal";
-import { renderContent } from "../render/renderContent";
+import ArticleModal from "./ArticleModal/ArticleModal";
 
 type ArticleCardProps = {
   title: string;
@@ -29,11 +28,7 @@ const ArticleCard: FC<ArticleCardProps> = ({
 
   return (
     <>
-      {isOpen && (
-        <Modal>
-          <div>{renderContent(content)}</div>
-        </Modal>
-      )}
+      {isOpen && <ArticleModal content={content} />}
       <figure
         onClick={() => setIsOpen(true)}
         role="contentinfo"
