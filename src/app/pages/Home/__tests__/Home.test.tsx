@@ -49,9 +49,13 @@ describe("Home", () => {
     );
   });
 
-  it("should display a loding indicator while the article fetching operation is loading", () => {
+  it("should display a loding indicator while the article fetching operation is loading", async () => {
     renderHome([fakeArticle1, fakeArticle2]);
 
     expect(screen.getByRole("progressbar")).toBeInTheDocument();
+
+    await screen.findByText(
+      "React Performance: How to avoid redundant re-renders"
+    );
   });
 });
