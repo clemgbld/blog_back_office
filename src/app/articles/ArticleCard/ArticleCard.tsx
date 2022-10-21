@@ -1,9 +1,10 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { selectFirstImg } from "../../../core/articles/selectors/select-first-img/select-first-img";
 import { Coffee } from "@styled-icons/material";
 import { CalendarToday } from "@styled-icons/material";
-import classNames from "./ArticleCard.module.scss";
+import { useModal } from "../../UI/Modal/hooks/useModal";
 import ArticleModal from "./ArticleModal/ArticleModal";
+import classNames from "./ArticleCard.module.scss";
 
 type ArticleCardProps = {
   title: string;
@@ -24,11 +25,9 @@ const ArticleCard: FC<ArticleCardProps> = ({
   topic,
   lightMode,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const { src, alt } = selectFirstImg(content);
 
-  const handleCloseModal = () => setIsOpen(false);
+  const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
   return (
     <>
@@ -40,7 +39,7 @@ const ArticleCard: FC<ArticleCardProps> = ({
         />
       )}
       <figure
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpenModal}
         role="contentinfo"
         className={classNames.card}
       >

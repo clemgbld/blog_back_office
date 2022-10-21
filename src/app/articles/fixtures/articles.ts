@@ -74,6 +74,7 @@ export const fakeArticle2: Article = {
     },
     {
       type: "img",
+      width: 424,
       id: 2,
       url: "https://isamatov.com/images/challenging-software-development-best-practices/challenging%20software%20development%20best%20practices.png",
       children: [{ text: "" }],
@@ -101,11 +102,11 @@ export const fakeArticle2: Article = {
     {
       type: "p",
       id: 7,
+      align: "right",
       children: [
         {
           text: "fake text",
           color: "#c5f6fa",
-          align: "left",
         },
       ],
     },

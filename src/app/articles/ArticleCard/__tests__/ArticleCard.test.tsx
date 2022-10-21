@@ -47,42 +47,84 @@ describe("ArticleContent", () => {
     );
   });
 
-  it("should render the content of the article in the modal", () => {
-    const { title, timeToRead, content, topic, summary } = fakeArticle1;
+  describe("article modal preview", () => {
+    const openModal = () => userEvent.click(screen.getByRole("contentinfo"));
 
-    renderArticleCard({
-      title,
-      timeToRead,
-      content,
-      topic,
-      summary,
-      lightMode: true,
+    const closeModalWithClickOn = (dataTestId: string) =>
+      userEvent.click(screen.getByTestId(dataTestId));
+
+    const setUpDarkModeModal = () => {
+      const { title, timeToRead, content, topic, summary } = fakeArticle2;
+
+      renderArticleCard({
+        title,
+        timeToRead,
+        content,
+        topic,
+        summary,
+        lightMode: false,
+      });
+    };
+
+    it("should render the content of the article in the modal", () => {
+      const { title, timeToRead, content, topic, summary } = fakeArticle1;
+
+      renderArticleCard({
+        title,
+        timeToRead,
+        content,
+        topic,
+        summary,
+        lightMode: true,
+      });
+
+      openModal();
+
+      expect(
+        screen.getAllByText(
+          "Redundant re-renders are a common issue in React. If not taken seriously, this issue can quickly worsen the performance of your application."
+        )[0]
+      ).toBeInTheDocument();
     });
 
-    userEvent.click(screen.getByRole("contentinfo"));
+    it("should be able to close the modal", () => {
+      setUpDarkModeModal();
 
-    expect(
-      screen.getAllByText(
-        "Redundant re-renders are a common issue in React. If not taken seriously, this issue can quickly worsen the performance of your application."
-      )[0]
-    ).toBeInTheDocument();
-  });
+      openModal();
+      closeModalWithClickOn("close-modal");
 
-  it("should be able to close the modal", () => {
-    const { title, timeToRead, content, topic, summary } = fakeArticle2;
-
-    renderArticleCard({
-      title,
-      timeToRead,
-      content,
-      topic,
-      summary,
-      lightMode: false,
+      expect(screen.queryByText("fake text")).not.toBeInTheDocument();
     });
 
-    userEvent.click(screen.getByRole("contentinfo"));
-    userEvent.click(screen.getByTestId("close-modal"));
+    it("should be able to close the modal by clicking on the overlay", () => {
+      setUpDarkModeModal();
+      openModal();
+      closeModalWithClickOn("modal-overlay");
 
-    expect(screen.queryByText("fake text")).not.toBeInTheDocument();
+      expect(screen.queryByText("fake text")).not.toBeInTheDocument();
+    });
+
+    it("should be able to close the modal my hitting the Escape key", () => {
+      setUpDarkModeModal();
+      openModal();
+      userEvent.keyboard("[Escape]");
+
+      expect(screen.queryByText("fake text")).not.toBeInTheDocument();
+    });
+
+    it("should not close the modal when the user hit another key than the escape key", () => {
+      setUpDarkModeModal();
+      openModal();
+      userEvent.keyboard("foo");
+
+      expect(screen.getByText("fake text")).toBeInTheDocument();
+    });
+
+    it("should close the modal when the user click on the modal content and not the overlay", () => {
+      setUpDarkModeModal();
+      openModal();
+      closeModalWithClickOn("modal");
+      expect(screen.getByText("fake text")).toBeInTheDocument();
+    });
   });
 });
