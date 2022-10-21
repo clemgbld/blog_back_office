@@ -83,6 +83,10 @@ const buildStyle = (content: any) => {
     style = { ...style, fontFamily: "monospace" };
   }
 
+  if (content.type === "img") {
+    style = { ...style, objectFit: "cover" };
+  }
+
   if (content.strikethrough) {
     style = { ...style, textDecoration: "line-through" };
   }

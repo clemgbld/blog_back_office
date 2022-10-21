@@ -229,6 +229,24 @@ describe("renderContent", () => {
       expect(imgElement.style.width).toBe("42.4rem");
     });
 
+    it("should add object fit cover to the style of the element when it is an img", () => {
+      const content = [
+        {
+          type: "img",
+          id: 1,
+          url: "https://my-url",
+          width: 424,
+          children: [{ text: "" }],
+        },
+      ];
+
+      render(<div>{renderContent(content)}</div>);
+
+      const imgElement = screen.getByAltText("");
+
+      expect(imgElement.style.objectFit).toBe("cover");
+    });
+
     it("should be able to build a link", () => {
       const content = [
         {
