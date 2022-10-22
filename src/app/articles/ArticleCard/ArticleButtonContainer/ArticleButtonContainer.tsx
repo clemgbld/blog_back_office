@@ -12,7 +12,11 @@ const ArticleButtonContainer: FC<ArticleButtonContainerProps> = ({
 }) => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
-  const openModalHandler = compose(handleOpenModal, stopPropagation);
+  const modalHandler = (fn: () => void) => compose(fn, stopPropagation);
+
+  const openModalHandler = modalHandler(handleOpenModal);
+
+  const closeModalHandler = modalHandler(handleCloseModal);
 
   const validateHandler = async () => {
     await onValidate();
@@ -23,6 +27,7 @@ const ArticleButtonContainer: FC<ArticleButtonContainerProps> = ({
     <div>
       {isOpen && (
         <div>
+          <button onClick={closeModalHandler}>cancel</button>
           <button onClick={validateHandler}>validate</button>
         </div>
       )}

@@ -67,7 +67,7 @@ describe("Home", () => {
   });
 
   describe("delete articles", () => {
-    it("should be able to delete an article", async () => {
+    const openDeleteModal = async () => {
       renderHome([fakeArticle1, fakeArticle2]);
 
       await fetchArticles();
@@ -75,12 +75,24 @@ describe("Home", () => {
       const deleteArticleButton = screen.getAllByText("Delete")[0];
 
       userEvent.click(deleteArticleButton);
+    };
+
+    it("should be able to delete an article", async () => {
+      await openDeleteModal();
       userEvent.click(screen.getByText("validate"));
       await waitFor(() =>
         expect(screen.queryByText("React")).not.toBeInTheDocument()
       );
 
       expect(screen.queryByText("validate")).not.toBeInTheDocument();
+    });
+
+    it("should be able close the modal properly", async () => {
+      await openDeleteModal();
+      userEvent.click(screen.getByText("cancel"));
+
+      expect(screen.queryByText("cancel")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
     });
   });
 });
