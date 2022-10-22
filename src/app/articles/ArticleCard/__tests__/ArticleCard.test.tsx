@@ -23,7 +23,7 @@ describe("ArticleContent", () => {
       <Provider store={store}>
         <>
           <div id="modal"></div>
-          <ArticleCard {...props} date={"17/09/2022"} />
+          <ArticleCard {...props} id={"1"} date={"17/09/2022"} />
         </>
       </Provider>
     );

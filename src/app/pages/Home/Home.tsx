@@ -41,6 +41,7 @@ const Home = () => {
           }) => (
             <ArticleCard
               key={id}
+              id={id}
               title={title}
               summary={summary}
               timeToRead={timeToRead}

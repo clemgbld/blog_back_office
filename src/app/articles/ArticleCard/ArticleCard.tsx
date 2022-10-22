@@ -1,12 +1,17 @@
 import { FC } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../..";
+import { deleteArticle } from "../../../core/articles/use-cases/deleteArticle";
 import { selectFirstImg } from "../../../core/articles/selectors/select-first-img/select-first-img";
 import { Coffee } from "@styled-icons/material";
 import { CalendarToday } from "@styled-icons/material";
 import { useModal } from "../../UI/Modal/hooks/useModal";
 import ArticleModal from "./ArticleModal/ArticleModal";
+import ArticleButtonContainer from "./ArticleButtonContainer/ArticleButtonContainer";
 import classNames from "./ArticleCard.module.scss";
 
 type ArticleCardProps = {
+  id: string;
   title: string;
   summary?: string;
   timeToRead: string;
@@ -17,6 +22,7 @@ type ArticleCardProps = {
 };
 
 const ArticleCard: FC<ArticleCardProps> = ({
+  id,
   title,
   summary,
   timeToRead,
@@ -28,6 +34,10 @@ const ArticleCard: FC<ArticleCardProps> = ({
   const { src, alt } = selectFirstImg(content);
 
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const deleteArticleHandler = async () => await dispatch(deleteArticle(id));
 
   return (
     <>
@@ -43,8 +53,11 @@ const ArticleCard: FC<ArticleCardProps> = ({
         role="contentinfo"
         className={classNames.card}
       >
-        <div className={classNames["card__img--container"]}>
-          <img className={classNames.card__img} src={src} alt={alt} />
+        <div>
+          <div className={classNames["card__img--container"]}>
+            <img className={classNames.card__img} src={src} alt={alt} />
+          </div>
+          <ArticleButtonContainer onValidate={deleteArticleHandler} />
         </div>
         <figcaption>
           <h2 className={classNames.card__title}>{title}</h2>
