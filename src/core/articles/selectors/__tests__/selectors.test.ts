@@ -4,7 +4,7 @@ import {
   visibleArticles,
   hiddenArticles,
 } from "../selectors";
-import { articleBuilder } from "../../use-cases/builder/articleBuilder";
+import { articleBuilder } from "../../use-cases/builder/article-builder";
 
 const articles = [articleBuilder()];
 

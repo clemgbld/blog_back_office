@@ -91,8 +91,9 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
       <div>
         <div className={classNames["form_button-container"]}>
           <div className={classNames["form_button-flex"]}>
-            <Button label={"Cancel"} />
+            <Button className={classNames.form__button} label={"Cancel"} />
             <Button
+              className={classNames.form__button}
               label={validateButtonLabel}
               type={"submit"}
               disabled={!!!content[0].children[0].text}

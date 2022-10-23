@@ -1,5 +1,5 @@
 import { sutBuilder } from "../test-helper/sut-builder";
-import { articleBuilder, contentBuilder } from "../builder/articleBuilder";
+import { articleBuilder, contentBuilder } from "../builder/article-builder";
 
 describe("Update Article", () => {
   const preloadedState = {

@@ -1,3 +1,11 @@
+@mixin modal-layout {
+  display: flex;
+  flex-direction: column;
+  padding: 5rem;
+  max-width: 100rem;
+  width: 100%;
+}
+
 .card {
   max-width: 75rem;
   width: 100%;
@@ -17,16 +25,32 @@
     cursor: pointer;
   }
 
+  &__modal {
+    @include modal-layout;
+    background-color: #fff;
+
+    &--dark-theme {
+      background-color: #212529;
+    }
+  }
+
   &__img--container {
-    max-width: 15rem;
+    max-width: 20rem;
     width: 100%;
   }
 
   &__img {
-    max-width: 15rem;
+    max-width: inherit;
     height: 7rem;
-    width: 100%;
+    width: inherit;
     object-fit: cover;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
   }
 
   &__title {

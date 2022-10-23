@@ -120,7 +120,7 @@ describe("ArticleContent", () => {
       expect(screen.getByText("fake text")).toBeInTheDocument();
     });
 
-    it("should close the modal when the user click on the modal content and not the overlay", () => {
+    it("should not close the modal when the user click on the modal content and not the overlay", () => {
       setUpDarkModeModal();
       openModal();
       closeModalWithClickOn("modal");

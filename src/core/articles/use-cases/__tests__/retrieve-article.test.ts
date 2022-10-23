@@ -1,4 +1,4 @@
-import { articleBuilder } from "../builder/articleBuilder";
+import { articleBuilder } from "../builder/article-builder";
 import { sutBuilder } from "../test-helper/sut-builder";
 
 describe("Retrieve articles", () => {

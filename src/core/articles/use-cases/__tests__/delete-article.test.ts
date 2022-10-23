@@ -1,5 +1,5 @@
 import { sutBuilder } from "../test-helper/sut-builder";
-import { articleBuilder } from "../builder/articleBuilder";
+import { articleBuilder } from "../builder/article-builder";
 
 describe("Delete Article", () => {
   const preloadedState = {

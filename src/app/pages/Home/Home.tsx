@@ -23,10 +23,12 @@ const Home = () => {
 
   const articlesStatus = useSelector(({ articles: { status } }) => status);
 
+  if (articlesStatus === STATUS.PENDING) return <div role="progressbar" />;
+
   return (
     <div className="page_form-layout">
       <Title title="Dashboard" />
-      {articlesStatus === STATUS.PENDING && <div role="progressbar" />}
+      {articles.length === 0 && <p>No article yet...</p>}
       <div>
         {articles.map(
           ({
@@ -38,10 +40,12 @@ const Home = () => {
             topic,
             id,
             lightMode,
+            hide,
           }) => (
             <ArticleCard
               key={id}
               id={id}
+              hide={hide}
               title={title}
               summary={summary}
               timeToRead={timeToRead}

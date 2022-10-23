@@ -9,6 +9,7 @@ import {
 import Home from "../Home";
 import { Article } from "../../../../core/articles/entities/article";
 import userEvent from "@testing-library/user-event";
+import { isType } from "@udecode/plate";
 
 describe("Home", () => {
   const renderHome = (articles: Article[]) => {
@@ -33,6 +34,14 @@ describe("Home", () => {
       "React Performance: How to avoid redundant re-renders"
     );
 
+  it("should display a fallback text when there is no articles", async () => {
+    renderHome([]);
+
+    const fallbackText = await screen.findByText("No article yet...");
+
+    expect(fallbackText).toBeInTheDocument();
+  });
+
   describe("get articles", () => {
     it("should sucessfully fecth articles", async () => {
       renderHome([fakeArticle1, fakeArticle2]);
@@ -55,6 +64,7 @@ describe("Home", () => {
       expect(imgEl.src).toBe(
         "https://isamatov.com/images/react-avoid-redundant-renders/React%20Performance-%20How%20to%20avoid%20redundant%20re-renders.png"
       );
+      expect(screen.queryByText("No article yet...")).not.toBeInTheDocument();
     });
 
     it("should display a loding indicator while the article fetching operation is loading", async () => {
@@ -66,33 +76,58 @@ describe("Home", () => {
     });
   });
 
-  describe("delete articles", () => {
-    const openDeleteModal = async () => {
+  const openModal = (action: string) => async () => {
+    renderHome([fakeArticle1, fakeArticle2]);
+
+    await fetchArticles();
+
+    const button = screen.getAllByText(action)[0];
+
+    userEvent.click(button);
+  };
+  describe("article actions", () => {
+    describe("delete articles", () => {
+      const openDeleteModal = openModal("Delete");
+
+      it("should be able to delete an article", async () => {
+        await openDeleteModal();
+        expect(
+          screen.getByText("Are you sure you want to delete this article ?")
+        ).toBeInTheDocument();
+        userEvent.click(screen.getByText("validate"));
+        await waitFor(() =>
+          expect(screen.queryByText("React")).not.toBeInTheDocument()
+        );
+
+        expect(screen.queryByText("validate")).not.toBeInTheDocument();
+      });
+
+      it("should be able close the modal properly", async () => {
+        await openDeleteModal();
+        userEvent.click(screen.getByText("cancel"));
+
+        expect(screen.queryByText("cancel")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("toggle hide status", () => {
+    it("should have 2 buttons Hide", async () => {
       renderHome([fakeArticle1, fakeArticle2]);
-
       await fetchArticles();
-
-      const deleteArticleButton = screen.getAllByText("Delete")[0];
-
-      userEvent.click(deleteArticleButton);
-    };
-
-    it("should be able to delete an article", async () => {
-      await openDeleteModal();
-      userEvent.click(screen.getByText("validate"));
-      await waitFor(() =>
-        expect(screen.queryByText("React")).not.toBeInTheDocument()
-      );
-
-      expect(screen.queryByText("validate")).not.toBeInTheDocument();
+      expect(screen.getAllByText("Hide").length).toBe(2);
     });
 
-    it("should be able close the modal properly", async () => {
-      await openDeleteModal();
-      userEvent.click(screen.getByText("cancel"));
+    const openToggleStatusModal = openModal("Hide");
 
-      expect(screen.queryByText("cancel")).not.toBeInTheDocument();
-      expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
+    it("should toggle the status to false", async () => {
+      await openToggleStatusModal();
+      userEvent.click(screen.getByText("validate"));
+      await waitFor(() => {
+        expect(screen.getAllByText("Publish").length).toBe(1);
+      });
+      expect(screen.getAllByText("Hide").length).toBe(1);
     });
   });
 });

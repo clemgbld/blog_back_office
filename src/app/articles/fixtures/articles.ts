@@ -61,6 +61,8 @@ export const fakeArticle2: Article = {
     "Reclaiming Responsibility From Best Practices in Software Development",
   lightMode: false,
   timeToRead: "5 min read",
+
+  hide: false,
   content: [
     {
       type: "h1",

@@ -10,8 +10,8 @@ import { postArticle } from "../post-article";
 import { retrieveArticles } from "../retrieve-articles";
 import { updateArticle } from "../update-article";
 import { deleteArticle } from "../deleteArticle";
-import { deleteArticles } from "../deleteArticles";
-import { Article,ArticleWithoutId } from "../../entities/article";
+import { toggleHideStatus } from "../toogle-hide-status";
+import { Article, ArticleWithoutId } from "../../entities/article";
 
 export const sutBuilder = ({
   existingArticles = [],
@@ -49,14 +49,12 @@ export const sutBuilder = ({
         };
       },
       postArticle: (articleToPost: ArticleWithoutId) => {
-        store.dispatch(postArticle( articleToPost));
+        store.dispatch(postArticle(articleToPost));
         return {
           status: articlesStatus(store),
         };
       },
-      postArticleAsync: async (
-        articleToPost: ArticleWithoutId,
-      ) => {
+      postArticleAsync: async (articleToPost: ArticleWithoutId) => {
         await store.dispatch(postArticle(articleToPost));
         return {
           status: articlesStatus(store),
@@ -98,22 +96,10 @@ export const sutBuilder = ({
           expectedErrorMsg: articlesError(store),
         };
       },
-
-      deleteArticles: (ids: string[]) => {
-        store.dispatch(deleteArticles(ids));
-
+      toggleHideStatusAsync: async (id: string) => {
+        await store.dispatch(toggleHideStatus(id));
         return {
-          status: articlesStatus(store),
-        };
-      },
-
-      deleteArticlesAsync: async (ids: string[]) => {
-        await store.dispatch(deleteArticles(ids));
-
-        return {
-          status: articlesStatus(store),
           expectedArticles: allArticles(store),
-          expectedErrorMsg: articlesError(store),
         };
       },
     };

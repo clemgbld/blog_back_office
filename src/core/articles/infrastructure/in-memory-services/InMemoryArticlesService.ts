@@ -13,7 +13,6 @@ export interface InMemoryArticlesService {
   postArticle: (article: ArticleWithoutId) => Promise<Article>;
   updateArticle: (article: ArticleWithoutTimeToRead) => Promise<Article>;
   deleteArticle: (id: string) => Promise<string>;
-  deleteArticles: (ids: string[]) => Promise<string[]>;
 }
 
 const throwError = (error: { status: number; message: string }) => {
@@ -41,6 +40,4 @@ export const inMemoryArticlesService = (
       : Promise.resolve({ ...article, timeToRead: FAKE_TIME_TO_READ }),
   deleteArticle: async (id: string) =>
     error ? throwError(error) : Promise.resolve(id),
-  deleteArticles: async (ids: string[]) =>
-    error ? throwError(error) : Promise.resolve(ids),
 });

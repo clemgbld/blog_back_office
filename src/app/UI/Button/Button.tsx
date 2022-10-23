@@ -6,6 +6,7 @@ type ButtonProps = {
   disabled?: boolean;
   onClick?: (e: any) => void;
   type?: "button" | "submit" | "reset";
+  className?: string;
 };
 
 const Button: FC<ButtonProps> = ({
@@ -13,10 +14,11 @@ const Button: FC<ButtonProps> = ({
   disabled = false,
   onClick = (e: any) => {},
   type = "button",
+  className = "",
 }) => {
   return (
     <button
-      className={classNames.button}
+      className={`${className} ${classNames.button}`}
       type={type}
       disabled={disabled}
       onClick={onClick}

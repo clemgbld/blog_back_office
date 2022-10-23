@@ -262,4 +262,5 @@ export interface ArticleWithoutTimeToRead {
   hide?: boolean;
   lightMode: boolean;
   content: MyValue;
+  timeToRead?: string;
 }
