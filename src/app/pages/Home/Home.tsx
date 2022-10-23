@@ -12,6 +12,7 @@ import ArticleCard from "../../articles/ArticleCard/ArticleCard";
 import Title from "../../UI/Title/Title";
 import { pipe } from "ramda";
 import classNames from "./Home.module.scss";
+import { Article } from "../../../core/articles/entities/article";
 
 const Home = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -24,7 +25,9 @@ const Home = () => {
     ({ ui: { searchTerms } }: RootState) => searchTerms
   );
 
-  const handleArticles = pipe(
+  const handleArticles: (
+    articles: Article[]
+  ) => ReturnType<typeof allArticlesFormatted> = pipe(
     allArticlesFormatted,
     searchSelector(searchTerms)
   );
