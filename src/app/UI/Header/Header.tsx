@@ -27,6 +27,11 @@ const Header: FC<HeaderProps> = ({ children }) => {
             alt="logo app"
           />
         </div>
+        <input
+          placeholder="search"
+          className={classNames.nav_search}
+          type="text"
+        />
         {isEditorInLightMode ? (
           <SwitchEditorTheme
             mode={EDITOR_THEME_MODE.LIGHT}

@@ -21,4 +21,44 @@
     background-color: rgba(33, 37, 41, 0.7);
     object-fit: cover;
   }
+
+  &_search {
+    max-width: 30rem;
+    width: 100%;
+    border: none;
+    background: #2b2b2b;
+    height: 5rem;
+    font-size: 1.6rem;
+    color: #08fdd8;
+    padding: 0.5rem 2rem;
+    font-family: "Open Sans", sans-serif;
+    margin-bottom: 1rem;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:active,
+    &:-webkit-autofill:focus {
+      background-color: #2b2b2b !important;
+      color: #08fdd8 !important;
+      box-shadow: 0 0 0 1000px #2b2b2b inset !important;
+      -webkit-box-shadow: 0 0 0 1000px #2b2b2b inset !important;
+      -webkit-text-fill-color: #08fdd8 !important;
+    }
+
+    &::npm-internal-autofill-selected {
+      background: #2b2b2b;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.1rem rgb(8, 253, 216);
+      transition-timing-function: ease-in;
+      transition: all 0.3s ease-in;
+    }
+  }
 }

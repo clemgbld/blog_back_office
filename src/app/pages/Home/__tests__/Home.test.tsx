@@ -9,7 +9,6 @@ import {
 import Home from "../Home";
 import { Article } from "../../../../core/articles/entities/article";
 import userEvent from "@testing-library/user-event";
-import { isType } from "@udecode/plate";
 
 describe("Home", () => {
   const renderHome = (articles: Article[]) => {

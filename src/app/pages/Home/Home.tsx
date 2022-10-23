@@ -9,6 +9,7 @@ import {
 import { STATUS } from "../../../core/utils/status-constants";
 import ArticleCard from "../../articles/ArticleCard/ArticleCard";
 import Title from "../../UI/Title/Title";
+import classNames from "./Home.module.scss";
 
 const Home = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -29,7 +30,7 @@ const Home = () => {
     <div className="page_form-layout">
       <Title title="Dashboard" />
       {articles.length === 0 && <p>No article yet...</p>}
-      <div>
+      <div className={classNames.home__articles}>
         {articles.map(
           ({
             title,
