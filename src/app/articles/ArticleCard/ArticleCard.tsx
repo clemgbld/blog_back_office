@@ -62,6 +62,7 @@ const ArticleCard: FC<ArticleCardProps> = ({
         </DefaultModal>
       )}
       <figure
+        data-testid="article"
         onClick={handleOpenModal}
         role="contentinfo"
         className={classNames.card}

@@ -7,6 +7,7 @@ import {
   fakeArticle2,
 } from "../../../articles/fixtures/articles";
 import Home from "../Home";
+import Header from "../../../UI/Header/Header";
 import { Article } from "../../../../core/articles/entities/article";
 import userEvent from "@testing-library/user-event";
 
@@ -22,7 +23,9 @@ describe("Home", () => {
       <Provider store={store}>
         <>
           <div id="modal"></div>
-          <Home />
+          <Header>
+            <Home />
+          </Header>
         </>
       </Provider>
     );
@@ -127,6 +130,18 @@ describe("Home", () => {
         expect(screen.getAllByText("Publish").length).toBe(1);
       });
       expect(screen.getAllByText("Hide").length).toBe(1);
+    });
+  });
+
+  describe("search functionality", () => {
+    it("should filter in only the first article", async () => {
+      renderHome([fakeArticle1, fakeArticle2]);
+
+      await fetchArticles();
+
+      userEvent.type(screen.getByRole("textbox"), "React");
+
+      expect(screen.getAllByTestId("article").length).toBe(1);
     });
   });
 });

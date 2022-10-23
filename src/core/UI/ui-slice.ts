@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isEditorInLightMode: true,
+  searchTerms: "",
 };
 
 export const uiSlice = createSlice({
@@ -13,6 +14,9 @@ export const uiSlice = createSlice({
     },
     setTheme: (state, action) => {
       state.isEditorInLightMode = action.payload;
+    },
+    updateSearchTerms: (state, action) => {
+      state.searchTerms = action.payload;
     },
   },
 });

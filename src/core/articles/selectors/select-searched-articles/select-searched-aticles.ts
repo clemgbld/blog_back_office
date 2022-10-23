@@ -1,10 +1,6 @@
 import { Article } from "../../entities/article";
 import { compose } from "@reduxjs/toolkit";
-
-type SearchSelectorProps = {
-  articles: Article[];
-  searchTerms: string;
-};
+import { curry } from "ramda";
 
 const extractTextField = (str: string) =>
   str.match(/"(text)":("([^""]+)"|\[[^[]+])/gim);
@@ -22,16 +18,15 @@ const extractTextFromContent = compose(
   JSON.stringify
 );
 
-export const searchSelector = ({
-  articles,
-  searchTerms,
-}: SearchSelectorProps) =>
-  searchTerms.length < 3
-    ? articles
-    : articles.filter(
-        ({ timeToRead, title, summary = "", content }) =>
-          isSearchvalueInText(title, searchTerms) ||
-          isSearchvalueInText(timeToRead, searchTerms) ||
-          isSearchvalueInText(summary, searchTerms) ||
-          isSearchvalueInText(extractTextFromContent(content), searchTerms)
-      );
+export const searchSelector = curry(
+  (searchTerms: string, articles: Article[]) =>
+    searchTerms.length < 3
+      ? articles
+      : articles.filter(
+          ({ timeToRead, title, summary = "", content }) =>
+            isSearchvalueInText(title, searchTerms) ||
+            isSearchvalueInText(timeToRead, searchTerms) ||
+            isSearchvalueInText(summary, searchTerms) ||
+            isSearchvalueInText(extractTextFromContent(content), searchTerms)
+        )
+);

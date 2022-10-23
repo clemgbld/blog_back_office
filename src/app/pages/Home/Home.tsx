@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch } from "../../..";
+import { AppDispatch, RootState } from "../../..";
 import { retrieveArticles } from "../../../core/articles/use-cases/retrieve-articles";
 import {
   articlesSelectors,
   allArticlesFormatted,
 } from "../../../core/articles/selectors/selectors";
+import { searchSelector } from "../../../core/articles/selectors/select-searched-articles/select-searched-aticles";
 import { STATUS } from "../../../core/utils/status-constants";
 import ArticleCard from "../../articles/ArticleCard/ArticleCard";
 import Title from "../../UI/Title/Title";
+import { pipe } from "ramda";
 import classNames from "./Home.module.scss";
 
 const Home = () => {
@@ -18,9 +20,16 @@ const Home = () => {
     dispatch(retrieveArticles());
   }, [dispatch]);
 
-  const articles = allArticlesFormatted(
-    useSelector(articlesSelectors.selectAll)
+  const searchTerms = useSelector(
+    ({ ui: { searchTerms } }: RootState) => searchTerms
   );
+
+  const handleArticles = pipe(
+    allArticlesFormatted,
+    searchSelector(searchTerms)
+  );
+
+  const articles = handleArticles(useSelector(articlesSelectors.selectAll));
 
   const articlesStatus = useSelector(({ articles: { status } }) => status);
 

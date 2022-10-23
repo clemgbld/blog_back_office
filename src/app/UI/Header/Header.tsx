@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../..";
+import { updateSearchTerms } from "../../../core/UI/use-cases/update-search-terms";
 import { toggleEditorTheme } from "../../../core/UI/use-cases/toggle-theme";
 import SwitchEditorTheme from "./SwitchEditorTheme/SwitchEditorTheme";
 import { EDITOR_THEME_MODE } from "./SwitchEditorTheme/constants";
@@ -31,6 +32,9 @@ const Header: FC<HeaderProps> = ({ children }) => {
           placeholder="search"
           className={classNames.nav_search}
           type="text"
+          onChange={({ target: { value } }) =>
+            dispatch(updateSearchTerms(value))
+          }
         />
         {isEditorInLightMode ? (
           <SwitchEditorTheme
