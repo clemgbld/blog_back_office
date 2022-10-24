@@ -34,13 +34,13 @@ export const allTopics = createSelector<any[], string[]>(
 );
 
 export const selectArticlesBasedOnTopic = curry(
-  (currentTopic: string, articles: Article[]) =>
-    currentTopic === "all articles"
+  (currentTopics: string[], articles: Article[]) =>
+    currentTopics.includes("all articles")
       ? articles
-      : articles.filter(({ topic }) => topic === currentTopic)
+      : articles.filter(({ topic }) => currentTopics.includes(topic))
 );
 
-const isHidden = (hide: boolean) => hide === false;
+const isHidden = (hide: boolean) => hide === true;
 
 export const selectArticlesWithHideStatus = curry(
   (status: string, articles: Article[]) => {

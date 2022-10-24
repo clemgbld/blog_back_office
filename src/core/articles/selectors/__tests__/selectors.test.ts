@@ -70,19 +70,36 @@ describe("topics", () => {
   describe("select articles based on the current topic", () => {
     it("should select all articles when there is the topic all articles", () => {
       expect(
-        selectArticlesBasedOnTopic("all articles", [
-          articleBuilder({ topic: "react" }),
-        ])
+        selectArticlesBasedOnTopic(
+          ["all articles"],
+          [articleBuilder({ topic: "react" })]
+        )
       ).toEqual([articleBuilder({ topic: "react" })]);
     });
 
     it("should select articles based on topic", () => {
       expect(
-        selectArticlesBasedOnTopic("react", [
-          articleBuilder({ topic: "react" }),
-          articleBuilder(),
-        ])
+        selectArticlesBasedOnTopic(
+          ["react"],
+          [articleBuilder({ topic: "react" }), articleBuilder()]
+        )
       ).toEqual([articleBuilder({ topic: "react" })]);
+    });
+
+    it("should select articles based on topics", () => {
+      expect(
+        selectArticlesBasedOnTopic(
+          ["react", "vue"],
+          [
+            articleBuilder({ topic: "react" }),
+            articleBuilder({ topic: "vue" }),
+            articleBuilder(),
+          ]
+        )
+      ).toEqual([
+        articleBuilder({ topic: "react" }),
+        articleBuilder({ topic: "vue" }),
+      ]);
     });
   });
 });
@@ -98,9 +115,9 @@ describe("select articles based on hide status", () => {
     expect(
       selectArticlesWithHideStatus("hidden", [
         articleBuilder(),
-        articleBuilder({ hide: false }),
+        articleBuilder({ hide: true }),
       ])
-    ).toEqual([articleBuilder({ hide: false })]);
+    ).toEqual([articleBuilder({ hide: true })]);
   });
 
   it("should be only publish articles for publish articles", () => {
@@ -110,6 +127,6 @@ describe("select articles based on hide status", () => {
         articleBuilder({ hide: false }),
         articleBuilder({ hide: true }),
       ])
-    ).toEqual([articleBuilder(), articleBuilder({ hide: true })]);
+    ).toEqual([articleBuilder(), articleBuilder({ hide: false })]);
   });
 });

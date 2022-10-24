@@ -1,6 +1,11 @@
 .home {
   &__articles {
+    max-width: 75rem;
+    width: 100%;
     padding-right: 1rem;
     border-right: solid 1px #08fdd8;
+  }
+  &__empty {
+    margin-bottom: 1.6rem;
   }
 }
