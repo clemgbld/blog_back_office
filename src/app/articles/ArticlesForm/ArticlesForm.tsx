@@ -1,11 +1,13 @@
-import { useCallback, FC } from "react";
+import React, { useCallback, FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../..";
 import { MyValue } from "../RichTextEditor/config/typescript";
+import { validateTopic } from "../../../core/articles/validation/validateTopic";
 import RichTextEditor from "../RichTextEditor/RichTextEditor";
 import { InputValues } from "../hooks/use-articles-form";
 import ArticleInput from "./ArticleInput/ArticleInput";
 import Button from "../../UI/Button/Button";
+import { pipe } from "ramda";
 import classNames from "./ArticleForm.module.scss";
 
 type ArticlesFormProps = {
@@ -20,6 +22,10 @@ type ArticlesFormProps = {
   setInputValues: React.Dispatch<React.SetStateAction<InputValues>>;
 
   validateButtonLabel: string;
+
+  isTopicError: boolean;
+
+  setIsTopicError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ArticlesForm: FC<ArticlesFormProps> = ({
@@ -29,9 +35,18 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
   inputValues,
   setInputValues,
   validateButtonLabel,
+  isTopicError,
+  setIsTopicError,
 }) => {
-  const handleInputChange = ({ target: { name, value } }) =>
+  const handleInputChange = ({ target: { name, value } }) => {
     setInputValues({ ...inputValues, [name]: value });
+    return value;
+  };
+
+  const handleTopicValidation = (value: string) =>
+    setIsTopicError(!validateTopic(value));
+
+  const handleTopicChange = pipe(handleInputChange, handleTopicValidation);
 
   const handleCheckBoxChange = () =>
     setInputValues({ ...inputValues, hide: !inputValues.hide });
@@ -54,12 +69,19 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
           id="title"
           onChange={handleInputChange}
         />
-        <ArticleInput
-          label={"Topic: "}
-          isRequired
-          id="topic"
-          onChange={handleInputChange}
-        />
+        <div className={classNames.form__container}>
+          <ArticleInput
+            label={"Topic: "}
+            isRequired
+            id="topic"
+            onChange={handleTopicChange}
+          />
+          {isTopicError && (
+            <p className={classNames.form__error}>
+              Please Provide a valid topic
+            </p>
+          )}
+        </div>
       </div>
       <ArticleInput
         label={"Description: "}

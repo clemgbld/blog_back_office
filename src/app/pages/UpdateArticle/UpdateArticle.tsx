@@ -12,6 +12,7 @@ import Title from "../../UI/Title/Title";
 
 const UpdateArticle = () => {
   const [onMount, setOnMount] = useState(false);
+  const [isTopicError, setIsTopicError] = useState(false);
   const dispatch: AppDispatch = useDispatch();
 
   const { id } = useParams();
@@ -42,6 +43,7 @@ const UpdateArticle = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (isTopicError === true) return;
     await dispatch(
       updateArticle({
         id: articleToUpdate.id,
@@ -66,6 +68,8 @@ const UpdateArticle = () => {
         inputValues={inputValues}
         setInputValues={setInputValues}
         validateButtonLabel="Update"
+        isTopicError={isTopicError}
+        setIsTopicError={setIsTopicError}
       />
     </div>
   );

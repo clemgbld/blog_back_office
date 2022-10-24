@@ -3,6 +3,8 @@ import { articlesAdapter } from "../articles-slice";
 import { RootState, Store } from "../../store";
 import { formatDateDDMMYYYY } from "../../utils/date/format-date";
 import { removeUndefinedAndDuplicate } from "../../utils/helper";
+import { curry } from "ramda";
+import { Article } from "../entities/article";
 
 export const articlesSelectors = articlesAdapter.getSelectors<RootState>(
   (state) => state.articles.data
@@ -31,16 +33,21 @@ export const allTopics = createSelector<any[], string[]>(
   (allTopics: string[]) => removeUndefinedAndDuplicate(allTopics)
 );
 
-const isVisible = (hide: boolean) => hide !== false;
-
-export const visibleArticles = createSelector(
-  (articles: ReturnType<typeof allArticles>) => articles,
-  (articles: ReturnType<typeof allArticles>) =>
-    articles.filter(({ hide }) => isVisible(hide))
+export const selectArticlesBasedOnTopic = curry(
+  (currentTopic: string, articles: Article[]) =>
+    currentTopic === "all articles"
+      ? articles
+      : articles.filter(({ topic }) => topic === currentTopic)
 );
 
-export const hiddenArticles = createSelector(
-  (articles: ReturnType<typeof allArticles>) => articles,
-  (articles: ReturnType<typeof allArticles>) =>
-    articles.filter(({ hide }) => !isVisible(hide))
+const isHidden = (hide: boolean) => hide === false;
+
+export const selectArticlesWithHideStatus = curry(
+  (status: string, articles: Article[]) => {
+    if (status === "all articles") return articles;
+
+    return status === "hidden"
+      ? articles.filter(({ hide }) => isHidden(hide))
+      : articles.filter(({ hide }) => !isHidden(hide));
+  }
 );

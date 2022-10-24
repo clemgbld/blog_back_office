@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../core/store";
 import { useArticlesForm } from "../../articles/hooks/use-articles-form";
@@ -9,6 +10,8 @@ import Title from "../../UI/Title/Title";
 const CreateArticle = () => {
   const dispatch: AppDispatch = useDispatch();
 
+  const [isTopicError, setIsTopicError] = useState(false);
+
   const { inputValues, setInputValues, content, setContent } =
     useArticlesForm();
 
@@ -18,6 +21,7 @@ const CreateArticle = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (isTopicError === true) return;
     await dispatch(
       postArticle({
         title: inputValues.title,
@@ -41,6 +45,8 @@ const CreateArticle = () => {
         inputValues={inputValues}
         setInputValues={setInputValues}
         validateButtonLabel="Save"
+        isTopicError={isTopicError}
+        setIsTopicError={setIsTopicError}
       />
     </div>
   );

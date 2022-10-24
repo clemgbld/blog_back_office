@@ -1,8 +1,8 @@
 import {
   allArticlesFormatted,
   allTopics,
-  visibleArticles,
-  hiddenArticles,
+  selectArticlesWithHideStatus,
+  selectArticlesBasedOnTopic,
 } from "../selectors";
 import { articleBuilder } from "../../use-cases/builder/article-builder";
 
@@ -66,32 +66,50 @@ describe("topics", () => {
       "OOP",
     ]);
   });
+
+  describe("select articles based on the current topic", () => {
+    it("should select all articles when there is the topic all articles", () => {
+      expect(
+        selectArticlesBasedOnTopic("all articles", [
+          articleBuilder({ topic: "react" }),
+        ])
+      ).toEqual([articleBuilder({ topic: "react" })]);
+    });
+
+    it("should select articles based on topic", () => {
+      expect(
+        selectArticlesBasedOnTopic("react", [
+          articleBuilder({ topic: "react" }),
+          articleBuilder(),
+        ])
+      ).toEqual([articleBuilder({ topic: "react" })]);
+    });
+  });
 });
 
-describe("Filter out hidden articles", () => {
-  it("should be able to select visible articles", () => {
-    const articles = [articleBuilder({ hide: true }), articleBuilder()];
-
-    expect(visibleArticles(articles)).toEqual(articles);
+describe("select articles based on hide status", () => {
+  it("should be the same articles for all articles", () => {
+    expect(
+      selectArticlesWithHideStatus("all articles", [articleBuilder()])
+    ).toEqual([articleBuilder()]);
   });
 
-  it("should filter out hidden articles", () => {
-    const articles = [articleBuilder({ hide: false })];
-
-    expect(visibleArticles(articles)).toEqual([]);
-  });
-});
-
-describe("Filter out visible articles", () => {
-  it("should be able to select hidden articles", () => {
-    const articles = [articleBuilder({ hide: false })];
-
-    expect(hiddenArticles(articles)).toEqual(articles);
+  it("should be only hidden articles for hidden articles", () => {
+    expect(
+      selectArticlesWithHideStatus("hidden", [
+        articleBuilder(),
+        articleBuilder({ hide: false }),
+      ])
+    ).toEqual([articleBuilder({ hide: false })]);
   });
 
-  it("should filter out visible articles", () => {
-    const articles = [articleBuilder({ hide: true }), articleBuilder()];
-
-    expect(hiddenArticles(articles)).toEqual([]);
+  it("should be only publish articles for publish articles", () => {
+    expect(
+      selectArticlesWithHideStatus("publish", [
+        articleBuilder(),
+        articleBuilder({ hide: false }),
+        articleBuilder({ hide: true }),
+      ])
+    ).toEqual([articleBuilder(), articleBuilder({ hide: true })]);
   });
 });
