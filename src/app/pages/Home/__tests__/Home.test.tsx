@@ -11,7 +11,7 @@ import Header from "../../../UI/Header/Header";
 import { Article } from "../../../../core/articles/entities/article";
 import userEvent from "@testing-library/user-event";
 
-describe.skip("Home", () => {
+describe("Home", () => {
   const renderHome = (articles: Article[]) => {
     const store = createStore({
       services: {
@@ -181,7 +181,8 @@ describe.skip("Home", () => {
 
       await fetchArticles();
       userEvent.click(screen.getAllByText("React")[1]);
-      userEvent.click(screen.getAllByText("Craftmanship")[1]);
+
+      userEvent.click(screen.getAllByText("all articles")[0]);
 
       expect(screen.queryAllByTestId("article").length).toBe(2);
     });

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../..";
 import { retrieveArticles } from "../../../core/articles/use-cases/retrieve-articles";
+import { handleSelectedTopics } from "../../../core/articles/use-cases/handle-selected-topics";
 import {
   articlesSelectors,
   allArticlesFormatted,
@@ -30,7 +31,7 @@ const Home = () => {
   );
 
   const [currentHideStatus, setCurrentHideStatus] = useState("all articles");
-  const [currentTopic, setCurrentTopic] = useState(["all articles"]);
+  const [currentTopics, setCurrentTopics] = useState(["all articles"]);
 
   const handleArticles: (
     articles: Article[]
@@ -38,7 +39,7 @@ const Home = () => {
     allArticlesFormatted,
     searchSelector(searchTerms),
     selectArticlesWithHideStatus(currentHideStatus),
-    selectArticlesBasedOnTopic(currentTopic)
+    selectArticlesBasedOnTopic(currentTopics)
   );
 
   const articlesFromStore = useSelector(articlesSelectors.selectAll);
@@ -87,7 +88,10 @@ const Home = () => {
         <div>
           <div>
             {[ALL_ARTICLES, ...allTopics(articlesFromStore)].map((topic) => (
-              <div onClick={() => setCurrentTopic(topic)} key={topic}>
+              <div
+                onClick={() => setCurrentTopics(handleSelectedTopics(topic))}
+                key={topic}
+              >
                 {topic}
               </div>
             ))}
