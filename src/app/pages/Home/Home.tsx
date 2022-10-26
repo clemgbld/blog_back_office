@@ -95,7 +95,11 @@ const Home = () => {
                 onClick={() => setCurrentTopics(handleSelectedTopics(topic))}
                 key={topic}
                 label={topic}
-                className={classNames.home__button}
+                className={
+                  currentTopics.includes(topic)
+                    ? `${classNames["home__button--active"]} ${classNames.home__button}`
+                    : classNames.home__button
+                }
               />
             ))}
           </div>
@@ -106,7 +110,11 @@ const Home = () => {
                 key={name}
                 onClick={() => setCurrentHideStatus(handleHideStatus(name))}
                 label={name}
-                className={classNames.home__button}
+                className={
+                  currentHideStatus === name
+                    ? `${classNames["home__button--active"]} ${classNames.home__button}`
+                    : classNames.home__button
+                }
               />
             ))}
           </div>
