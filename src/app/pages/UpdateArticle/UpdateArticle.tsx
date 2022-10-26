@@ -9,6 +9,7 @@ import { updateArticle } from "../../../core/articles/use-cases/update-article";
 import { setTheme } from "../../../core/UI/use-cases/set-theme";
 import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import Title from "../../UI/Title/Title";
+import { ROUTES } from "../../routing/constants";
 
 const UpdateArticle = () => {
   const [onMount, setOnMount] = useState(false);
@@ -59,7 +60,7 @@ const UpdateArticle = () => {
       })
     );
 
-    navigate("/");
+    navigate(ROUTES.HOME);
   };
 
   return (

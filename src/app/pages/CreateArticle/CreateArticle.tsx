@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../core/store";
 import { useArticlesForm } from "../../articles/hooks/use-articles-form";
 import { AppDispatch } from "../../..";
 import { postArticle } from "../../../core/articles/use-cases/post-article";
 import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import Title from "../../UI/Title/Title";
+import { ROUTES } from "../../routing/constants";
 
 const CreateArticle = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -18,6 +20,8 @@ const CreateArticle = () => {
   const isEditorInLightMode = useSelector<RootState, boolean>(
     ({ ui: { isEditorInLightMode } }) => isEditorInLightMode
   );
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -33,6 +37,7 @@ const CreateArticle = () => {
         content,
       })
     );
+    navigate(ROUTES.HOME);
   };
 
   return (

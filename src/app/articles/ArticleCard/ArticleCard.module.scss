@@ -28,8 +28,10 @@
   &__modal {
     @include modal-layout;
     background-color: #fff;
+    color: #000;
 
     &--dark-theme {
+      color: #fff;
       background-color: #212529;
     }
   }

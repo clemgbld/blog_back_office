@@ -29,7 +29,7 @@ const Home = () => {
   useEffect(() => {
     if (articlesFromStore.length > 0) return;
     dispatch(retrieveArticles());
-  }, [dispatch, articlesFromStore]);
+  }, [dispatch, articlesFromStore.length]);
 
   const searchTerms = useSelector(
     ({ ui: { searchTerms } }: RootState) => searchTerms

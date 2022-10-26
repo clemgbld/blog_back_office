@@ -9,6 +9,8 @@ import ArticleInput from "./ArticleInput/ArticleInput";
 import Button from "../../UI/Button/Button";
 import { pipe } from "ramda";
 import classNames from "./ArticleForm.module.scss";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../routing/constants";
 
 type ArticlesFormProps = {
   onSubmit: (e: any) => Promise<void>;
@@ -60,6 +62,8 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
     ({ ui: { isEditorInLightMode } }) => isEditorInLightMode
   );
 
+  const navigate = useNavigate();
+
   return (
     <form onSubmit={onSubmit}>
       <div className={classNames.form_flex}>
@@ -74,7 +78,6 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
           <ArticleInput
             value={inputValues.topic}
             label={"Topic: "}
-            isRequired
             id="topic"
             onChange={handleTopicChange}
           />
@@ -116,7 +119,11 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
       <div>
         <div className={classNames["form_button-container"]}>
           <div className={classNames["form_button-flex"]}>
-            <Button className={classNames.form__button} label={"Cancel"} />
+            <Button
+              onClick={() => navigate(ROUTES.HOME)}
+              className={classNames.form__button}
+              label={"Cancel"}
+            />
             <Button
               className={classNames.form__button}
               label={validateButtonLabel}

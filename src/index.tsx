@@ -6,7 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { inMemoryArticlesService } from "./core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import { createStore } from "./core/store";
-import Header from "./app/UI/Header/Header";
+
 import { fakeArticle1, fakeArticle2 } from "./app/articles/fixtures/articles";
 
 const store = createStore({
@@ -25,9 +25,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <React.StrictMode>
-      <Header>
-        <App />
-      </Header>
+      <App />
     </React.StrictMode>
   </Provider>
 );

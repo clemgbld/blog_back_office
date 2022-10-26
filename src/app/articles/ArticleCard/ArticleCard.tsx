@@ -11,6 +11,7 @@ import { useModal } from "../../UI/Modal/hooks/useModal";
 import { renderContent } from "../render/renderContent";
 import ArticleButtonContainer from "./ArticleButtonContainer/ArticleButtonContainer";
 import DefaultModal from "../../UI/Modal/DefaultModal/DefaultModal";
+import { ROUTES } from "../../routing/constants";
 import classNames from "./ArticleCard.module.scss";
 
 type ArticleCardProps = {
@@ -81,7 +82,7 @@ const ArticleCard: FC<ArticleCardProps> = ({
               action={hide ? "Publish" : "Hide"}
               onValidate={toggleHideStatusHandler}
             />
-            <Link to={`update/${id}`}>Modify</Link>
+            <Link to={`${ROUTES.UPDATE}/${id}`}>Modify</Link>
           </div>
         </div>
         <figcaption>
