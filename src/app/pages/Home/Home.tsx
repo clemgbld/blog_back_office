@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../..";
 import { retrieveArticles } from "../../../core/articles/use-cases/retrieve-articles";
 import { handleSelectedTopics } from "../../../core/articles/use-cases/handle-selected-topics";
+import { handleHideStatus } from "../../../core/articles/use-cases/handle-hide-status";
 import {
   articlesSelectors,
   allArticlesFormatted,
@@ -13,6 +14,7 @@ import {
 import { searchSelector } from "../../../core/articles/selectors/select-searched-articles/select-searched-aticles";
 import { STATUS } from "../../../core/utils/status-constants";
 import ArticleCard from "../../articles/ArticleCard/ArticleCard";
+import Button from "../../UI/Button/Button";
 import Title from "../../UI/Title/Title";
 import { pipe } from "ramda";
 import { HIDE_STATUS_TAGS, ALL_ARTICLES } from "./constants";
@@ -56,7 +58,7 @@ const Home = () => {
       {articlesToDisplay.length === 0 && (
         <p className={classNames.home__empty}>No article yet...</p>
       )}
-      <div>
+      <div className={articlesToDisplay.length ? classNames.home__box : ""}>
         <div className={classNames.home__articles}>
           {articlesToDisplay.map(
             ({
@@ -86,21 +88,28 @@ const Home = () => {
           )}
         </div>
         <div>
-          <div>
+          <h2 className={classNames.home__title}>Topic filter</h2>
+          <div className={classNames.home__grid}>
             {[ALL_ARTICLES, ...allTopics(articlesFromStore)].map((topic) => (
-              <div
+              <Button
                 onClick={() => setCurrentTopics(handleSelectedTopics(topic))}
                 key={topic}
-              >
-                {topic}
-              </div>
+                label={topic}
+                className={classNames.home__button}
+              />
             ))}
           </div>
-          {HIDE_STATUS_TAGS.map((name) => (
-            <div key={name} onClick={() => setCurrentHideStatus(name)}>
-              {name}
-            </div>
-          ))}
+          <h2 className={classNames.home__title}>Hidden status filter</h2>
+          <div className={classNames.home__grid}>
+            {HIDE_STATUS_TAGS.map((name) => (
+              <Button
+                key={name}
+                onClick={() => setCurrentHideStatus(handleHideStatus(name))}
+                label={name}
+                className={classNames.home__button}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
