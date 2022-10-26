@@ -64,6 +64,7 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
     <form onSubmit={onSubmit}>
       <div className={classNames.form_flex}>
         <ArticleInput
+          value={inputValues.title}
           label={"Title: "}
           isRequired
           id="title"
@@ -71,6 +72,7 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
         />
         <div className={classNames.form__container}>
           <ArticleInput
+            value={inputValues.topic}
             label={"Topic: "}
             isRequired
             id="topic"
@@ -84,6 +86,7 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
         </div>
       </div>
       <ArticleInput
+        value={inputValues.description}
         label={"Description: "}
         id="description"
         onChange={handleInputChange}

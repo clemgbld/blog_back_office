@@ -3,8 +3,8 @@ import { MyValue } from "../RichTextEditor/config/typescript";
 
 export interface InputValues {
   title: string;
-  topic: string;
-  description: string;
+  topic?: string;
+  description?: string;
   hide: boolean;
 }
 

@@ -13,6 +13,7 @@ type ArticleInputProps = {
     };
   }) => void;
   label: string;
+  value: string;
 };
 
 const ArticleInput: FC<ArticleInputProps> = ({
@@ -20,6 +21,7 @@ const ArticleInput: FC<ArticleInputProps> = ({
   id,
   onChange,
   label,
+  value,
 }) => {
   return (
     <div className={classNames["input-container"]}>
@@ -30,6 +32,7 @@ const ArticleInput: FC<ArticleInputProps> = ({
         {label}
       </label>
       <input
+        value={value}
         className={classNames["input-container_input"]}
         required={isRequired}
         id={id}

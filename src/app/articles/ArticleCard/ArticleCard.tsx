@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { AppDispatch } from "../../..";
 import { deleteArticle } from "../../../core/articles/use-cases/deleteArticle";
 import { toggleHideStatus } from "../../../core/articles/use-cases/toogle-hide-status";
@@ -80,6 +81,7 @@ const ArticleCard: FC<ArticleCardProps> = ({
               action={hide ? "Publish" : "Hide"}
               onValidate={toggleHideStatusHandler}
             />
+            <Link to={`update/${id}`}>Modify</Link>
           </div>
         </div>
         <figcaption>

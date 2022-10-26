@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createStore } from "../../../../core/store";
 import { inMemoryArticlesService } from "../../../../core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import {
@@ -21,12 +22,21 @@ describe("Home", () => {
 
     render(
       <Provider store={store}>
-        <>
-          <div id="modal"></div>
-          <Header>
-            <Home />
-          </Header>
-        </>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <div id="modal"></div>
+                  <Header>
+                    <Home />
+                  </Header>
+                </>
+              }
+            ></Route>
+          </Routes>
+        </BrowserRouter>
       </Provider>
     );
   };
@@ -61,7 +71,7 @@ describe("Home", () => {
 
       expect(screen.getAllByText("React").length).toBe(2);
 
-      const imgEl: any = screen.getByAltText("caption 1");
+      const imgEl: any = screen.getAllByAltText("")[0];
 
       expect(imgEl.src).toBe(
         "https://isamatov.com/images/react-avoid-redundant-renders/React%20Performance-%20How%20to%20avoid%20redundant%20re-renders.png"

@@ -1,5 +1,6 @@
 /* eslint-disable testing-library/no-node-access */
 import { render, screen } from "@testing-library/react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { createStore } from "../../../../core/store";
 import { Provider } from "react-redux";
@@ -21,10 +22,19 @@ describe("ArticleContent", () => {
 
     const { container } = render(
       <Provider store={store}>
-        <>
-          <div id="modal"></div>
-          <ArticleCard {...props} id={"1"} date={"17/09/2022"} />
-        </>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <div id="modal"></div>
+                  <ArticleCard {...props} id={"1"} date={"17/09/2022"} />
+                </>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
       </Provider>
     );
 

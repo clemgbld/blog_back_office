@@ -22,7 +22,7 @@ export const fakeArticle1: any = {
     },
     {
       type: "img",
-      caption: ["caption 1"],
+      // caption: ["caption 1"],
       width: 424,
       id: 2,
       url: "https://isamatov.com/images/react-avoid-redundant-renders/React%20Performance-%20How%20to%20avoid%20redundant%20re-renders.png",
