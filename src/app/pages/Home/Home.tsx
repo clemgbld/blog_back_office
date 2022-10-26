@@ -24,9 +24,12 @@ import { Article } from "../../../core/articles/entities/article";
 const Home = () => {
   const dispatch: AppDispatch = useDispatch();
 
+  const articlesFromStore = useSelector(articlesSelectors.selectAll);
+
   useEffect(() => {
+    if (articlesFromStore.length > 0) return;
     dispatch(retrieveArticles());
-  }, [dispatch]);
+  }, [dispatch, articlesFromStore]);
 
   const searchTerms = useSelector(
     ({ ui: { searchTerms } }: RootState) => searchTerms
@@ -43,8 +46,6 @@ const Home = () => {
     selectArticlesWithHideStatus(currentHideStatus),
     selectArticlesBasedOnTopic(currentTopics)
   );
-
-  const articlesFromStore = useSelector(articlesSelectors.selectAll);
 
   const articlesToDisplay = handleArticles(articlesFromStore);
 

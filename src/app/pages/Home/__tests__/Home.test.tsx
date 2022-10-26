@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createStore } from "../../../../core/store";
+
 import { inMemoryArticlesService } from "../../../../core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import {
   fakeArticle1,
@@ -13,8 +14,9 @@ import { Article } from "../../../../core/articles/entities/article";
 import userEvent from "@testing-library/user-event";
 
 describe("Home", () => {
-  const renderHome = (articles: Article[]) => {
+  const renderHome = (articles: Article[], preloadedState: any = undefined) => {
     const store = createStore({
+      preloadedState,
       services: {
         articlesService: inMemoryArticlesService(articles),
       },
@@ -195,6 +197,26 @@ describe("Home", () => {
       userEvent.click(screen.getAllByText("all articles")[0]);
 
       expect(screen.queryAllByTestId("article").length).toBe(2);
+    });
+
+    it("renders articles directly from store", () => {
+      renderHome([], {
+        articles: {
+          status: "idle",
+          data: {
+            ids: ["1"],
+            entities: {
+              "1": fakeArticle1,
+            },
+          },
+        },
+        ui: {
+          isEditorInLightMode: true,
+          searchTerms: "",
+        },
+      });
+
+      expect(screen.getByText("7 min read")).toBeInTheDocument();
     });
   });
 });

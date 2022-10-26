@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useArticlesForm } from "../../articles/hooks/use-articles-form";
 import { RootState } from "../../../core/store";
 import { articlesSelectors } from "../../../core/articles/selectors/selectors";
@@ -41,6 +41,8 @@ const UpdateArticle = () => {
     articleToUpdate.content
   );
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (isTopicError === true) return;
@@ -56,6 +58,8 @@ const UpdateArticle = () => {
         content,
       })
     );
+
+    navigate("/");
   };
 
   return (
