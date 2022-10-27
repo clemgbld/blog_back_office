@@ -40,14 +40,12 @@ export const selectArticlesBasedOnTopic = curry(
       : articles.filter(({ topic }) => currentTopics.includes(topic))
 );
 
-const isHidden = (hide: boolean) => hide === true;
-
 export const selectArticlesWithHideStatus = curry(
   (status: string, articles: Article[]) => {
     if (status === "all articles") return articles;
 
     return status === "hidden"
-      ? articles.filter(({ hide }) => isHidden(hide))
-      : articles.filter(({ hide }) => !isHidden(hide));
+      ? articles.filter(({ hide }) => hide)
+      : articles.filter(({ hide }) => !hide);
   }
 );

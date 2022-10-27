@@ -11,6 +11,10 @@ import {
   allTopics,
   selectArticlesBasedOnTopic,
 } from "../../../core/articles/selectors/selectors";
+import {
+  countArticlesInTopic,
+  countArticlesByHideStatus,
+} from "../../../core/articles/selectors/count-selector/count-selector";
 import { searchSelector } from "../../../core/articles/selectors/select-searched-articles/select-searched-aticles";
 import { STATUS } from "../../../core/utils/status-constants";
 import ArticleCard from "../../articles/ArticleCard/ArticleCard";
@@ -95,7 +99,10 @@ const Home = () => {
               <Button
                 onClick={() => setCurrentTopics(handleSelectedTopics(topic))}
                 key={topic}
-                label={topic}
+                label={`${topic} ${countArticlesInTopic(
+                  topic,
+                  articlesFromStore
+                )}`}
                 className={
                   currentTopics.includes(topic)
                     ? `${classNames["home__button--active"]} ${classNames.home__button}`
@@ -110,7 +117,10 @@ const Home = () => {
               <Button
                 key={name}
                 onClick={() => setCurrentHideStatus(handleHideStatus(name))}
-                label={name}
+                label={`${name} ${countArticlesByHideStatus(
+                  name,
+                  articlesFromStore
+                )}`}
                 className={
                   currentHideStatus === name
                     ? `${classNames["home__button--active"]} ${classNames.home__button}`

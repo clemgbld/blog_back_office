@@ -71,7 +71,7 @@ describe("Home", () => {
 
       expect(screen.getByText("17/10/2022")).toBeInTheDocument();
 
-      expect(screen.getAllByText("React").length).toBe(2);
+      expect(screen.getByText("React 1")).toBeInTheDocument();
 
       const imgEl: any = screen.getAllByAltText("")[0];
 
@@ -163,8 +163,8 @@ describe("Home", () => {
 
       await fetchArticles();
 
-      expect(screen.getAllByText("all articles").length).toBe(2);
-      expect(screen.getByText("published")).toBeInTheDocument();
+      expect(screen.getAllByText("all articles 2").length).toBe(2);
+      expect(screen.getByText("published 2")).toBeInTheDocument();
     });
 
     it("should be able to filter by hidden status", async () => {
@@ -172,7 +172,7 @@ describe("Home", () => {
 
       await fetchArticles();
 
-      userEvent.click(screen.getByText("hidden"));
+      userEvent.click(screen.getByText("hidden 1"));
 
       expect(screen.queryAllByTestId("article").length).toBe(1);
     });
@@ -182,19 +182,19 @@ describe("Home", () => {
       renderHome([fakeArticle1, fakeArticle2]);
 
       await fetchArticles();
-      userEvent.click(screen.getAllByText("React")[1]);
+      userEvent.click(screen.getByText("React 1"));
 
       expect(screen.queryAllByTestId("article").length).toBe(1);
-      expect(screen.getByText("Craftmanship")).toBeInTheDocument();
+      expect(screen.getByText("Craftmanship 1")).toBeInTheDocument();
     });
 
     it("should be able to select multiple topics", async () => {
       renderHome([fakeArticle1, fakeArticle2]);
 
       await fetchArticles();
-      userEvent.click(screen.getAllByText("React")[1]);
+      userEvent.click(screen.getByText("React 1"));
 
-      userEvent.click(screen.getAllByText("all articles")[0]);
+      userEvent.click(screen.getAllByText("all articles 2")[0]);
 
       expect(screen.queryAllByTestId("article").length).toBe(2);
     });
