@@ -82,7 +82,12 @@ const ArticleCard: FC<ArticleCardProps> = ({
               action={hide ? "Publish" : "Hide"}
               onValidate={toggleHideStatusHandler}
             />
-            <Link to={`${ROUTES.UPDATE}/${id}`}>Modify</Link>
+            <Link
+              className={`${classNames.card__button} button`}
+              to={`${ROUTES.UPDATE}/${id}`}
+            >
+              Modify
+            </Link>
           </div>
         </div>
         <figcaption>

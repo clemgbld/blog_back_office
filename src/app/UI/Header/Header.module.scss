@@ -62,4 +62,25 @@
       transition: all 0.3s ease-in;
     }
   }
+
+  &__link {
+    text-decoration: none;
+
+    &:visited {
+      text-decoration: none;
+    }
+
+    &:hover {
+      text-decoration: none;
+      color: #08fdd8;
+    }
+
+    &:active {
+      text-decoration: none;
+    }
+
+    color: #c5f6fa;
+
+    transition: all 3ms ease-out;
+  }
 }

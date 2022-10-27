@@ -75,3 +75,39 @@ td {
   align-items: center;
   justify-content: center;
 }
+
+.button {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid 1px #08fdd8;
+  background-color: inherit;
+
+  color: #08fdd8;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:after {
+    background: #c5f6fa;
+    z-index: 5;
+  }
+
+  &:hover {
+    box-shadow: inset 22rem 0 0 0 #08fdd8;
+    color: #212529;
+  }
+  &:disabled:hover,
+  &:disabled:active {
+    border: solid 1px #ff6b6b;
+    box-shadow: inset 22rem 0 0 0 #ff6b6b !important;
+    cursor: not-allowed !important;
+  }
+
+  &:disabled:hover::after {
+    background: #ffc9c9;
+    z-index: 5;
+  }
+}

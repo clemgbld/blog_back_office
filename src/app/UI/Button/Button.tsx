@@ -1,5 +1,4 @@
 import { FC } from "react";
-import classNames from "./Button.module.scss";
 
 type ButtonProps = {
   label: string;
@@ -18,7 +17,7 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`${className} ${classNames.button}`}
+      className={`${className} button`}
       type={type}
       disabled={disabled}
       onClick={onClick}

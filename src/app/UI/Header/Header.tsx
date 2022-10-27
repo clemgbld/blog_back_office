@@ -57,7 +57,9 @@ const Header: FC<HeaderProps> = ({ children }) => {
         )}
 
         {pathname === ROUTES.HOME && (
-          <Link to="/create">Create an article</Link>
+          <Link className={classNames.nav__link} to="/create">
+            Create an article
+          </Link>
         )}
       </nav>
       {children}
