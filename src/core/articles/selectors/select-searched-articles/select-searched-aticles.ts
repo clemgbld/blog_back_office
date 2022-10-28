@@ -19,7 +19,7 @@ const extractTextFromContent = compose(
 );
 
 export const searchSelector = curry(
-  (searchTerms: string, articles: Article[]) =>
+  (searchTerms: string, articles: Article[]): Article[] =>
     searchTerms.length < 3
       ? articles
       : articles.filter(

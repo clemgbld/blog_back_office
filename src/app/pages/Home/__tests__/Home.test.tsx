@@ -219,4 +219,31 @@ describe("Home", () => {
       expect(screen.getByText("7 min read")).toBeInTheDocument();
     });
   });
+
+  describe("sort by date", () => {
+    it("should sort the articles by ASC", async () => {
+      renderHome([fakeArticle1, fakeArticle2]);
+
+      await fetchArticles();
+
+      userEvent.click(screen.getByText("ASC"));
+      const firstArticle = screen.getAllByTestId("title")[0];
+      expect(firstArticle.textContent).toBe(
+        "Reclaiming Responsibility From Best Practices in Software Development"
+      );
+    });
+
+    it("should sort the articles by DESC", async () => {
+      renderHome([fakeArticle1, fakeArticle2]);
+
+      await fetchArticles();
+
+      userEvent.click(screen.getByText("ASC"));
+      userEvent.click(screen.getByText("DESC"));
+      const firstArticle = screen.getAllByTestId("title")[0];
+      expect(firstArticle.textContent).toBe(
+        "React Performance: How to avoid redundant re-renders"
+      );
+    });
+  });
 });

@@ -11,6 +11,7 @@ import {
   allTopics,
   selectArticlesBasedOnTopic,
 } from "../../../core/articles/selectors/selectors";
+import { sortByDate } from "../../../core/articles/selectors/sort-by-date/sort-by-date";
 import {
   countArticlesInTopic,
   countArticlesByHideStatus,
@@ -41,14 +42,16 @@ const Home = () => {
 
   const [currentHideStatus, setCurrentHideStatus] = useState("all articles");
   const [currentTopics, setCurrentTopics] = useState(["all articles"]);
+  const [isDesc, setIsDesc] = useState(true);
 
   const handleArticles: (
     articles: Article[]
   ) => ReturnType<typeof allArticlesFormatted> = pipe(
-    allArticlesFormatted,
+    sortByDate(isDesc),
     searchSelector(searchTerms),
     selectArticlesWithHideStatus(currentHideStatus),
-    selectArticlesBasedOnTopic(currentTopics)
+    selectArticlesBasedOnTopic(currentTopics),
+    allArticlesFormatted
   );
 
   const articlesToDisplay = handleArticles(articlesFromStore);
@@ -128,6 +131,27 @@ const Home = () => {
                 }
               />
             ))}
+          </div>
+          <h2 className={classNames.home__title}>Sort by Date</h2>
+          <div className={classNames.home__grid}>
+            <Button
+              label={"DESC"}
+              onClick={() => setIsDesc(true)}
+              className={
+                isDesc === true
+                  ? `${classNames["home__button--active"]} ${classNames.home__button}`
+                  : classNames.home__button
+              }
+            />
+            <Button
+              label={"ASC"}
+              onClick={() => setIsDesc(false)}
+              className={
+                isDesc === false
+                  ? `${classNames["home__button--active"]} ${classNames.home__button}`
+                  : classNames.home__button
+              }
+            />
           </div>
         </div>
       </div>

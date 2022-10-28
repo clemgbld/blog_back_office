@@ -91,7 +91,9 @@ const ArticleCard: FC<ArticleCardProps> = ({
           </div>
         </div>
         <figcaption>
-          <h2 className={classNames.card__title}>{title}</h2>
+          <h2 data-testid="title" className={classNames.card__title}>
+            {title}
+          </h2>
           <div className={classNames["card__tag--container"]}>
             <div className={classNames.card__tag}>
               <div className={classNames.card__icon}>

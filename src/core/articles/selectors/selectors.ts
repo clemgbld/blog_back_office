@@ -19,8 +19,8 @@ export const articlesStatus = (store: Store) =>
 export const articlesError = (store: Store) => store.getState().articles.error;
 
 export const allArticlesFormatted = createSelector(
-  (articles: ReturnType<typeof allArticles>) => articles,
-  (articles: ReturnType<typeof allArticles>) =>
+  (articles: any) => articles,
+  (articles: any) =>
     articles.map((article) => ({
       ...article,
       date: formatDateDDMMYYYY(new Date(article.date)),
@@ -34,14 +34,14 @@ export const allTopics = createSelector<any[], string[]>(
 );
 
 export const selectArticlesBasedOnTopic = curry(
-  (currentTopics: string[], articles: Article[]) =>
+  (currentTopics: string[], articles: Article[]): Article[] =>
     currentTopics.includes("all articles")
       ? articles
       : articles.filter(({ topic }) => currentTopics.includes(topic))
 );
 
 export const selectArticlesWithHideStatus = curry(
-  (status: string, articles: Article[]) => {
+  (status: string, articles: Article[]): Article[] => {
     if (status === "all articles") return articles;
 
     return status === "hidden"
