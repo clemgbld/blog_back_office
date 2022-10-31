@@ -13,7 +13,7 @@ function App() {
           path={ROUTES.HOME}
           element={
             <Header>
-              <Home />
+              <Home articlesPerPages={1} />
             </Header>
           }
         />

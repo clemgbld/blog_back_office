@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../..";
 import { retrieveArticles } from "../../../core/articles/use-cases/retrieve-articles";
@@ -11,6 +11,10 @@ import {
   allTopics,
   selectArticlesBasedOnTopic,
 } from "../../../core/articles/selectors/selectors";
+import {
+  calcNumPages,
+  selectArticlesOnPage,
+} from "../../../core/articles/selectors/pagination/pagination";
 import { sortByDate } from "../../../core/articles/selectors/sort-by-date/sort-by-date";
 import {
   countArticlesInTopic,
@@ -22,11 +26,15 @@ import ArticleCard from "../../articles/ArticleCard/ArticleCard";
 import Button from "../../UI/Button/Button";
 import Title from "../../UI/Title/Title";
 import { pipe } from "ramda";
-import { HIDE_STATUS_TAGS, ALL_ARTICLES } from "./constants";
+import { HIDE_STATUS_TAGS, ALL_ARTICLES, ARTICLES_PER_PAGE } from "./constants";
 import classNames from "./Home.module.scss";
 import { Article } from "../../../core/articles/entities/article";
 
-const Home = () => {
+type HomeProps = {
+  articlesPerPages?: number;
+};
+
+const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
   const dispatch: AppDispatch = useDispatch();
 
   const articlesFromStore = useSelector(articlesSelectors.selectAll);
@@ -43,6 +51,7 @@ const Home = () => {
   const [currentHideStatus, setCurrentHideStatus] = useState("all articles");
   const [currentTopics, setCurrentTopics] = useState(["all articles"]);
   const [isDesc, setIsDesc] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleArticles: (
     articles: Article[]
@@ -51,11 +60,17 @@ const Home = () => {
     searchSelector(searchTerms),
     selectArticlesWithHideStatus(currentHideStatus),
     selectArticlesBasedOnTopic(currentTopics),
+
     allArticlesFormatted
   );
 
-  const articlesToDisplay = handleArticles(articlesFromStore);
+  const articles = handleArticles(articlesFromStore);
 
+  const articlesToDisplay = selectArticlesOnPage(
+    currentPage,
+    articlesPerPages,
+    articles
+  );
   const articlesStatus = useSelector(({ articles: { status } }) => status);
 
   if (articlesStatus === STATUS.PENDING) return <div role="progressbar" />;
@@ -154,6 +169,21 @@ const Home = () => {
             />
           </div>
         </div>
+      </div>
+      <div className={classNames["home__page-container"]}>
+        {calcNumPages(articlesPerPages, articles).map((numPage) => (
+          <button
+            className={
+              numPage === currentPage
+                ? `${classNames["home__page-button"]} ${classNames["home__page-button--active"]}`
+                : classNames["home__page-button"]
+            }
+            onClick={() => setCurrentPage(numPage)}
+            key={numPage}
+          >
+            {numPage}
+          </button>
+        ))}
       </div>
     </div>
   );

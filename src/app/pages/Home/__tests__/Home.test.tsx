@@ -14,7 +14,11 @@ import { Article } from "../../../../core/articles/entities/article";
 import userEvent from "@testing-library/user-event";
 
 describe("Home", () => {
-  const renderHome = (articles: Article[], preloadedState: any = undefined) => {
+  const renderHome = (
+    articles: Article[],
+    preloadedState: any = undefined,
+    pages: number | undefined = undefined
+  ) => {
     const store = createStore({
       preloadedState,
       services: {
@@ -32,7 +36,7 @@ describe("Home", () => {
                 <>
                   <div id="modal"></div>
                   <Header>
-                    <Home />
+                    <Home articlesPerPages={pages} />
                   </Header>
                 </>
               }
@@ -244,6 +248,28 @@ describe("Home", () => {
       expect(firstArticle.textContent).toBe(
         "React Performance: How to avoid redundant re-renders"
       );
+    });
+  });
+
+  describe("pagination feature", () => {
+    it("should be able to go to the next page", async () => {
+      renderHome([fakeArticle1, fakeArticle2], undefined, 1);
+
+      await fetchArticles();
+
+      userEvent.click(screen.getByText("2"));
+
+      expect(screen.getAllByTestId("article").length).toBe(1);
+    });
+
+    it("should be able to adapt the number of pages withe other filter", async () => {
+      renderHome([fakeArticle1, fakeArticle2], undefined, 1);
+
+      await fetchArticles();
+
+      userEvent.click(screen.getByText("React 1"));
+
+      expect(screen.queryByText("2")).not.toBeInTheDocument();
     });
   });
 });

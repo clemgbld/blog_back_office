@@ -35,4 +35,25 @@
     row-gap: 1rem;
     margin-bottom: 1.6rem;
   }
+
+  &__page-container {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
+  &__page-button {
+    all: unset;
+    cursor: pointer;
+    color: #c5f6fa;
+    transition: all 0.3s ease-out;
+    &:hover {
+      color: #08fdd8;
+      transform: scale(1.1);
+    }
+    &--active {
+      color: #08fdd8;
+      transform: scale(1.1);
+    }
+  }
 }
