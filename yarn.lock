@@ -1751,6 +1751,13 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@sinonjs/fake-timers@^9.1.2":
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-9.1.2.tgz#4eaab737fab77332ab132d396a3c0d364bd0ea8c"
+  integrity sha512-BPS4ynJW/o92PUR4wgriz2Ud5gpST5vz6GQfMixEDK0Z8ZCUv2M7SkBLykH56T++Xs+8ln9zTGbOvNGIe02/jw==
+  dependencies:
+    "@sinonjs/commons" "^1.7.0"
+
 "@styled-icons/boxicons-regular@^10.46.0":
   version "10.46.0"
   resolved "https://registry.yarnpkg.com/@styled-icons/boxicons-regular/-/boxicons-regular-10.46.0.tgz#4b1cbccaec01cae908194ba289343573949a9612"
@@ -2283,6 +2290,11 @@
   dependencies:
     "@types/mime" "*"
     "@types/node" "*"
+
+"@types/sinonjs__fake-timers@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@types/sinonjs__fake-timers/-/sinonjs__fake-timers-8.1.2.tgz#bf2e02a3dbd4aecaf95942ecd99b7402e03fad5e"
+  integrity sha512-9GcLXF0/v3t80caGs5p2rRfkB+a8VBGLJZVih6CNFkx8IZ994wiKKLSRs9nuFwk1HevWs/1mnUmkApGrSGsShA==
 
 "@types/sockjs@^0.3.33":
   version "0.3.33"

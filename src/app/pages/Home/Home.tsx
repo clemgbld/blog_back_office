@@ -61,7 +61,6 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
     searchSelector(searchTerms),
     selectArticlesWithHideStatus(currentHideStatus),
     selectArticlesBasedOnTopic(currentTopics),
-
     allArticlesFormatted
   );
 
