@@ -12,8 +12,8 @@ import {
   selectArticlesBasedOnTopic,
 } from "../../../core/articles/selectors/selectors";
 import {
-  calcNumPages,
   selectArticlesOnPage,
+  shycronisePaginationWithOtherFilters,
 } from "../../../core/articles/selectors/pagination/pagination";
 import { sortByDate } from "../../../core/articles/selectors/sort-by-date/sort-by-date";
 import {
@@ -23,6 +23,7 @@ import {
 import { searchSelector } from "../../../core/articles/selectors/select-searched-articles/select-searched-aticles";
 import { STATUS } from "../../../core/utils/status-constants";
 import ArticleCard from "../../articles/ArticleCard/ArticleCard";
+import PaginationFooter from "../../articles/PaginationFooter/PaginationFooter";
 import Button from "../../UI/Button/Button";
 import Title from "../../UI/Title/Title";
 import { pipe } from "ramda";
@@ -71,6 +72,10 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
     articlesPerPages,
     articles
   );
+
+  useEffect(() => {
+    setCurrentPage(shycronisePaginationWithOtherFilters(articlesToDisplay));
+  }, [articlesToDisplay]);
 
   const articlesStatus = useSelector(({ articles: { status } }) => status);
 
@@ -171,23 +176,12 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
           </div>
         </div>
       </div>
-      {calcNumPages(articlesPerPages, articles).length > 1 && (
-        <div className={classNames["home__page-container"]}>
-          {calcNumPages(articlesPerPages, articles).map((numPage) => (
-            <button
-              className={
-                numPage === currentPage
-                  ? `${classNames["home__page-button"]} ${classNames["home__page-button--active"]}`
-                  : classNames["home__page-button"]
-              }
-              onClick={() => setCurrentPage(numPage)}
-              key={numPage}
-            >
-              {numPage}
-            </button>
-          ))}
-        </div>
-      )}
+      <PaginationFooter
+        currentPage={currentPage}
+        articlesPerPages={articlesPerPages}
+        articles={articles}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };

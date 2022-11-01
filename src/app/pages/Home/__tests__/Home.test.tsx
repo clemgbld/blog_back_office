@@ -279,5 +279,16 @@ describe("Home", () => {
 
       expect(screen.queryByText("1")).not.toBeInTheDocument();
     });
+
+    it("should automaticly go to the previous page when there is no article due to the other filter", async () => {
+      renderHome([fakeArticle1, fakeArticle2], undefined, 1);
+
+      await fetchArticles();
+
+      userEvent.click(screen.getByText("2"));
+      userEvent.click(screen.getByText("React 1"));
+
+      expect(screen.getAllByTestId("article").length).toBe(1);
+    });
   });
 });
