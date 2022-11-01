@@ -271,5 +271,13 @@ describe("Home", () => {
 
       expect(screen.queryByText("2")).not.toBeInTheDocument();
     });
+
+    it("should not paginate articles when there is only only one page", async () => {
+      renderHome([fakeArticle1, fakeArticle2]);
+
+      await fetchArticles();
+
+      expect(screen.queryByText("1")).not.toBeInTheDocument();
+    });
   });
 });

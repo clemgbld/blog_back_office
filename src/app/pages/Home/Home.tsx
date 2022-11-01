@@ -71,6 +71,7 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
     articlesPerPages,
     articles
   );
+
   const articlesStatus = useSelector(({ articles: { status } }) => status);
 
   if (articlesStatus === STATUS.PENDING) return <div role="progressbar" />;
@@ -170,21 +171,23 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
           </div>
         </div>
       </div>
-      <div className={classNames["home__page-container"]}>
-        {calcNumPages(articlesPerPages, articles).map((numPage) => (
-          <button
-            className={
-              numPage === currentPage
-                ? `${classNames["home__page-button"]} ${classNames["home__page-button--active"]}`
-                : classNames["home__page-button"]
-            }
-            onClick={() => setCurrentPage(numPage)}
-            key={numPage}
-          >
-            {numPage}
-          </button>
-        ))}
-      </div>
+      {calcNumPages(articlesPerPages, articles).length > 1 && (
+        <div className={classNames["home__page-container"]}>
+          {calcNumPages(articlesPerPages, articles).map((numPage) => (
+            <button
+              className={
+                numPage === currentPage
+                  ? `${classNames["home__page-button"]} ${classNames["home__page-button--active"]}`
+                  : classNames["home__page-button"]
+              }
+              onClick={() => setCurrentPage(numPage)}
+              key={numPage}
+            >
+              {numPage}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
