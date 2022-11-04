@@ -24,8 +24,8 @@ const ArticleButtonContainer: FC<ArticleButtonContainerProps> = ({
   const closeModalHandler = modalHandler(handleCloseModal);
 
   const validateHandler = async () => {
-    handleCloseModal();
     await onValidate();
+    handleCloseModal();
   };
 
   return (

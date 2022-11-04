@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { useDispatch } from "react-redux";
+import { FC, useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch } from "../../..";
 import { deleteArticle } from "../../../core/articles/use-cases/deleteArticle";
@@ -11,10 +11,9 @@ import { useModal } from "../../UI/Modal/hooks/useModal";
 import { renderContent } from "../render/renderContent";
 import ArticleButtonContainer from "./ArticleButtonContainer/ArticleButtonContainer";
 import DefaultModal from "../../UI/Modal/DefaultModal/DefaultModal";
-
+import { ClockContext } from "../../context/ClockContext";
 import { ROUTES } from "../../routing/constants";
 import classNames from "./ArticleCard.module.scss";
-import { Clock, createClock } from "../../../core/infastructure/create-clock";
 
 type ArticleCardProps = {
   id: string;
@@ -26,7 +25,6 @@ type ArticleCardProps = {
   topic?: string;
   lightMode: boolean;
   hide?: boolean;
-  clock?: Clock;
 };
 
 const ArticleCard: FC<ArticleCardProps> = ({
@@ -39,13 +37,28 @@ const ArticleCard: FC<ArticleCardProps> = ({
   topic,
   lightMode,
   hide = false,
-  clock = createClock.create(),
 }) => {
   const { src, alt } = selectFirstImg(content);
 
+  const clock = useContext(ClockContext);
+
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
+  const [showNotification, setShowNotification] = useState(true);
+
   const dispatch: AppDispatch = useDispatch();
+
+  const errorMessage = useSelector(({ articles: { error } }) => error);
+
+  useEffect(() => {
+    if (!errorMessage) return;
+    const showNotificationFor = async () => {
+      await clock.waitAsync(5000);
+      setShowNotification(false);
+    };
+    showNotificationFor();
+    return () => clock.cancel();
+  }, [errorMessage, clock]);
 
   const deleteArticleHandler = async () => {
     await dispatch(deleteArticle(id));
@@ -56,6 +69,7 @@ const ArticleCard: FC<ArticleCardProps> = ({
 
   return (
     <>
+      {errorMessage && showNotification && <div>{errorMessage}</div>}
       {isOpen && (
         <DefaultModal onClose={handleCloseModal}>
           <div

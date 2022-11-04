@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ClockContext } from "../../../context/ClockContext";
 import { createStore } from "../../../../core/store";
 
 import { inMemoryArticlesService } from "../../../../core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
@@ -38,21 +39,23 @@ describe("Home", () => {
 
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <div id="modal"></div>
-                  <Header>
-                    <Home articlesPerPages={pages} clock={clock} />
-                  </Header>
-                </>
-              }
-            ></Route>
-          </Routes>
-        </BrowserRouter>
+        <ClockContext.Provider value={clock}>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <div id="modal"></div>
+                    <Header>
+                      <Home articlesPerPages={pages} />
+                    </Header>
+                  </>
+                }
+              ></Route>
+            </Routes>
+          </BrowserRouter>
+        </ClockContext.Provider>
       </Provider>
     );
   };
@@ -128,12 +131,6 @@ describe("Home", () => {
           expect(screen.queryByText("React")).not.toBeInTheDocument()
         );
 
-        // await waitFor(() => {
-        //   expect(
-        //     screen.getByText("The article has been deleted.")
-        //   ).toBeInTheDocument();
-        // });
-
         expect(screen.queryByText("validate")).not.toBeInTheDocument();
       });
 
@@ -156,7 +153,7 @@ describe("Home", () => {
       expect(screen.getAllByText("Hide").length).toBe(2);
     });
 
-    it("should toggle the status to false", async () => {
+    it("should toggle the status to false and display a notification", async () => {
       await openToggleStatusModal();
       userEvent.click(screen.getByText("validate"));
 

@@ -16,6 +16,16 @@ describe("clock", () => {
     expect(expectedTime).toBeLessThanOrEqual(elapsedTime + 1);
   });
 
+  it("should be able to cancel the clock", async () => {
+    const clock = createClock.create();
+    const startTime = clock.now();
+    const wait = clock.waitAsync(10);
+    clock.cancel();
+    await wait;
+    const elapsedTime = clock.now();
+    expect(elapsedTime).toBeLessThanOrEqual(startTime + 2);
+  });
+
   it("fails fast when we use advanceNullAsync in production mode", async () => {
     const clock = createClock.create();
 
@@ -50,6 +60,18 @@ describe("clock", () => {
       expect(wait).toBe("waiting");
       await clock.advanceNullAsync(20);
       expect(wait).toBe(10);
+    });
+
+    it("cancel the clock", async () => {
+      const clock = createClock.createNull();
+      let wait: number | string = "waiting";
+      clock.waitAsync(10).then(() => {
+        wait = clock.now();
+      });
+      clock.cancel();
+      expect(wait).toBe("waiting");
+      await clock.advanceNullAsync(20);
+      expect(wait).toBe(0);
     });
   });
 });

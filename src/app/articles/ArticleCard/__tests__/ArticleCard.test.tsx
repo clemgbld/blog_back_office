@@ -1,14 +1,19 @@
 /* eslint-disable testing-library/no-node-access */
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { createStore } from "../../../../core/store";
 import { Provider } from "react-redux";
 import ArticleCard from "../ArticleCard";
 import { fakeArticle1, fakeArticle2 } from "../../fixtures/articles";
-import { createClock } from "../../../../core/infastructure/create-clock";
+import {
+  createClock,
+  Clock,
+} from "../../../../core/infastructure/create-clock";
+import { inMemoryArticlesService } from "../../../../core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
+import { ClockContext } from "../../../context/ClockContext";
 
-describe("ArticleContent", () => {
+describe("ArticleCard", () => {
   type ArticleCardProps = {
     title: string;
     content: any;
@@ -18,55 +23,44 @@ describe("ArticleContent", () => {
     lightMode: boolean;
   };
 
-  const clock = createClock.createNull();
+  let clock: Clock;
 
-  const renderArticleCard = (props: ArticleCardProps) => {
-    const store = createStore({});
+  beforeEach(() => {
+    clock = createClock.createNull();
+  });
+
+  const renderArticleCard = (
+    props: ArticleCardProps,
+    error: { status: number; message: string } = undefined
+  ) => {
+    const store = createStore({
+      services: {
+        articlesService: inMemoryArticlesService([], error),
+      },
+    });
 
     const { container } = render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <div id="modal"></div>
-                  <ArticleCard
-                    {...props}
-                    id={"1"}
-                    date={"17/09/2022"}
-                    clock={clock}
-                  />
-                </>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+        <ClockContext.Provider value={clock}>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <div id="modal"></div>
+                    <ArticleCard {...props} id={"1"} date={"17/09/2022"} />
+                  </>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </ClockContext.Provider>
       </Provider>
     );
 
     return { container };
   };
-
-  it("should not display any notification initially", () => {
-    const { title, timeToRead, content } = fakeArticle1;
-
-    renderArticleCard({
-      title,
-      timeToRead,
-      content,
-      lightMode: true,
-    });
-
-    expect(
-      screen.queryByText("The article has been deleted.")
-    ).not.toBeInTheDocument();
-
-    expect(
-      screen.queryByText("The hide status of the article has been changed.")
-    ).not.toBeInTheDocument();
-  });
 
   it("should not display any topic or summary when there no topic or summary", () => {
     const { title, timeToRead, content } = fakeArticle1;
@@ -162,6 +156,37 @@ describe("ArticleContent", () => {
       openModal();
       closeModalWithClickOn("modal");
       expect(screen.getByText("fake text")).toBeInTheDocument();
+    });
+  });
+
+  describe("error handling", () => {
+    it("should display an error notification during 5 seconds when the delete operation failed", async () => {
+      const { title, timeToRead, content } = fakeArticle1;
+
+      renderArticleCard(
+        {
+          title,
+          timeToRead,
+          content,
+          lightMode: true,
+        },
+        { status: 404, message: "Something went wrong" }
+      );
+
+      userEvent.click(screen.getByText("Delete"));
+      userEvent.click(screen.getByText("validate"));
+
+      await waitFor(() => {
+        expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      });
+
+      await clock.advanceNullAsync(5000);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Something went wrong")
+        ).not.toBeInTheDocument();
+      });
     });
   });
 });

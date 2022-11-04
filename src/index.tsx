@@ -5,8 +5,9 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { inMemoryArticlesService } from "./core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
+import { createClock } from "./core/infastructure/create-clock";
 import { createStore } from "./core/store";
-
+import { ClockContext } from "./app/context/ClockContext";
 import { fakeArticle1, fakeArticle2 } from "./app/articles/fixtures/articles";
 
 const store = createStore({
@@ -24,9 +25,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <ClockContext.Provider value={createClock.create()}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </ClockContext.Provider>
   </Provider>
 );
 

@@ -30,17 +30,12 @@ import { pipe } from "ramda";
 import { HIDE_STATUS_TAGS, ALL_ARTICLES, ARTICLES_PER_PAGE } from "./constants";
 import classNames from "./Home.module.scss";
 import { Article } from "../../../core/articles/entities/article";
-import { createClock, Clock } from "../../../core/infastructure/create-clock";
 
 type HomeProps = {
   articlesPerPages?: number;
-  clock?: Clock;
 };
 
-const Home: FC<HomeProps> = ({
-  articlesPerPages = ARTICLES_PER_PAGE,
-  clock = createClock.create(),
-}) => {
+const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
   const dispatch: AppDispatch = useDispatch();
 
   const articlesFromStore = useSelector(articlesSelectors.selectAll);
@@ -115,7 +110,6 @@ const Home: FC<HomeProps> = ({
                 content={content}
                 topic={topic}
                 lightMode={lightMode}
-                clock={clock}
               />
             )
           )}
