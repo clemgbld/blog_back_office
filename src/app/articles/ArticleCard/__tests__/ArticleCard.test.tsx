@@ -6,6 +6,7 @@ import { createStore } from "../../../../core/store";
 import { Provider } from "react-redux";
 import ArticleCard from "../ArticleCard";
 import { fakeArticle1, fakeArticle2 } from "../../fixtures/articles";
+import { createClock } from "../../../../core/infastructure/create-clock";
 
 describe("ArticleContent", () => {
   type ArticleCardProps = {
@@ -16,6 +17,8 @@ describe("ArticleContent", () => {
     topic?: string;
     lightMode: boolean;
   };
+
+  const clock = createClock.createNull();
 
   const renderArticleCard = (props: ArticleCardProps) => {
     const store = createStore({});
@@ -29,7 +32,12 @@ describe("ArticleContent", () => {
               element={
                 <>
                   <div id="modal"></div>
-                  <ArticleCard {...props} id={"1"} date={"17/09/2022"} />
+                  <ArticleCard
+                    {...props}
+                    id={"1"}
+                    date={"17/09/2022"}
+                    clock={clock}
+                  />
                 </>
               }
             />
@@ -40,6 +48,25 @@ describe("ArticleContent", () => {
 
     return { container };
   };
+
+  it("should not display any notification initially", () => {
+    const { title, timeToRead, content } = fakeArticle1;
+
+    renderArticleCard({
+      title,
+      timeToRead,
+      content,
+      lightMode: true,
+    });
+
+    expect(
+      screen.queryByText("The article has been deleted.")
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByText("The hide status of the article has been changed.")
+    ).not.toBeInTheDocument();
+  });
 
   it("should not display any topic or summary when there no topic or summary", () => {
     const { title, timeToRead, content } = fakeArticle1;

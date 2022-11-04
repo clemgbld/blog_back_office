@@ -40,3 +40,5 @@ export const createClock = {
   createNull: ({ now }: { now: number } = { now: 0 }) =>
     withClock(time({ now })),
 };
+
+export type Clock = ReturnType<typeof withClock>;

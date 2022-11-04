@@ -45,6 +45,4 @@ describe("storage service", () => {
 
     expect(storage.getItem("myDog")).toBe(undefined);
   });
-
-  it.todo("clear memo when all items are removed");
 });

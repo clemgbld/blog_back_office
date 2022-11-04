@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { AppDispatch } from "../../..";
@@ -11,8 +11,11 @@ import { useModal } from "../../UI/Modal/hooks/useModal";
 import { renderContent } from "../render/renderContent";
 import ArticleButtonContainer from "./ArticleButtonContainer/ArticleButtonContainer";
 import DefaultModal from "../../UI/Modal/DefaultModal/DefaultModal";
+import Modal from "../../UI/Modal/Modal";
+
 import { ROUTES } from "../../routing/constants";
 import classNames from "./ArticleCard.module.scss";
+import { Clock, createClock } from "../../../core/infastructure/create-clock";
 
 type ArticleCardProps = {
   id: string;
@@ -24,6 +27,7 @@ type ArticleCardProps = {
   topic?: string;
   lightMode: boolean;
   hide?: boolean;
+  clock?: Clock;
 };
 
 const ArticleCard: FC<ArticleCardProps> = ({
@@ -36,20 +40,31 @@ const ArticleCard: FC<ArticleCardProps> = ({
   topic,
   lightMode,
   hide = false,
+  clock = createClock.create(),
 }) => {
+  const [show, setShow] = useState(false);
+
   const { src, alt } = selectFirstImg(content);
 
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
   const dispatch: AppDispatch = useDispatch();
 
-  const deleteArticleHandler = async () => await dispatch(deleteArticle(id));
+  const deleteArticleHandler = async () => {
+    setShow(true);
+    await dispatch(deleteArticle(id));
+  };
 
   const toggleHideStatusHandler = async () =>
     await dispatch(toggleHideStatus(id));
 
   return (
     <>
+      {show && (
+        <Modal>
+          <div>The article has been deleted.</div>
+        </Modal>
+      )}
       {isOpen && (
         <DefaultModal onClose={handleCloseModal}>
           <div

@@ -12,6 +12,16 @@ import Home from "../Home";
 import Header from "../../../UI/Header/Header";
 import { Article } from "../../../../core/articles/entities/article";
 import userEvent from "@testing-library/user-event";
+import {
+  createClock,
+  Clock,
+} from "../../../../core/infastructure/create-clock";
+
+let clock: Clock;
+
+beforeEach(() => {
+  clock = createClock.createNull();
+});
 
 describe("Home", () => {
   const renderHome = (
@@ -36,7 +46,7 @@ describe("Home", () => {
                 <>
                   <div id="modal"></div>
                   <Header>
-                    <Home articlesPerPages={pages} />
+                    <Home articlesPerPages={pages} clock={clock} />
                   </Header>
                 </>
               }
@@ -113,9 +123,16 @@ describe("Home", () => {
           screen.getByText("Are you sure you want to delete this article ?")
         ).toBeInTheDocument();
         userEvent.click(screen.getByText("validate"));
+
         await waitFor(() =>
           expect(screen.queryByText("React")).not.toBeInTheDocument()
         );
+
+        // await waitFor(() => {
+        //   expect(
+        //     screen.getByText("The article has been deleted.")
+        //   ).toBeInTheDocument();
+        // });
 
         expect(screen.queryByText("validate")).not.toBeInTheDocument();
       });
@@ -142,9 +159,11 @@ describe("Home", () => {
     it("should toggle the status to false", async () => {
       await openToggleStatusModal();
       userEvent.click(screen.getByText("validate"));
+
       await waitFor(() => {
         expect(screen.getAllByText("Publish").length).toBe(1);
       });
+
       expect(screen.getAllByText("Hide").length).toBe(1);
     });
   });
