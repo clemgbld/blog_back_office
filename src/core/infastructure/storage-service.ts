@@ -5,23 +5,13 @@ export const nullStorage = (store: Record<string, any> = {}) => ({
   clear: () => (store = {}),
 });
 
-const memo = {};
-
 export const createStorageService = (
   storage: Storage | ReturnType<typeof nullStorage>
 ) => ({
   stockItem: (key: string, value: string) => storage.setItem(key, value),
 
-  getItem: (key: string) => {
-    if (memo[key]) return memo[key];
-    memo[key] = storage.getItem(key);
-    return memo[key];
-  },
+  getItem: (key: string) => storage.getItem(key),
 
-  removeItem: (key: string) => {
-    if (memo[key]) memo[key] = undefined;
-    storage.removeItem(key);
-  },
-
+  removeItem: (key: string) => storage.removeItem(key),
   clear: () => storage.clear(),
 });
