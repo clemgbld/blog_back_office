@@ -221,26 +221,6 @@ describe("Home", () => {
 
       expect(screen.queryAllByTestId("article").length).toBe(2);
     });
-
-    it("renders articles directly from store", () => {
-      renderHome([], {
-        articles: {
-          status: "idle",
-          data: {
-            ids: ["1"],
-            entities: {
-              "1": fakeArticle1,
-            },
-          },
-        },
-        ui: {
-          isEditorInLightMode: true,
-          searchTerms: "",
-        },
-      });
-
-      expect(screen.getByText("7 min read")).toBeInTheDocument();
-    });
   });
 
   describe("sort by date", () => {

@@ -46,9 +46,8 @@ const Home: FC<HomeProps> = ({
   const articlesFromStore = useSelector(articlesSelectors.selectAll);
 
   useEffect(() => {
-    if (articlesFromStore.length > 0) return;
     dispatch(retrieveArticles());
-  }, [dispatch, articlesFromStore.length]);
+  }, [dispatch]);
 
   const searchTerms = useSelector(
     ({ ui: { searchTerms } }: RootState) => searchTerms
