@@ -13,17 +13,21 @@ const withClock = ({
   advanceNullAsync?: (milliseconds: number) => Promise<any>;
   cancelClock: any;
 }) => {
-  let cancel: any;
+  const throwCancelError = () => {
+    throw new Error("should not try to cancel a timer when there is no timer");
+  };
+
+  let cancel: () => void = throwCancelError;
   return {
     now: () => date.now(),
     waitAsync: async (miliseconds: number) =>
       await new Promise((resolve) => {
-        const timoutId: number = wait(
-          async () => resolve("end of the timer"),
-          miliseconds
-        );
+        const timoutId: number = wait(async () => {
+          resolve("end of the timer");
+        }, miliseconds);
         cancel = () => {
           cancelClock(timoutId);
+
           resolve("timer cancled");
         };
       }),

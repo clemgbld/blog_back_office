@@ -17,6 +17,8 @@ const WithNotificationError: FC<WithNotificationErrorProps> = ({
 
   const [showNotification, setShowNotification] = useState(true);
 
+  const closeNotification = () => clock.cancel();
+
   useEffect(() => {
     if (!errorMessage) return;
     const showNotificationFor = async () => {
@@ -27,8 +29,6 @@ const WithNotificationError: FC<WithNotificationErrorProps> = ({
     showNotificationFor();
     return () => clock.cancel();
   }, [errorMessage, clock]);
-
-  const closeNotification = () => clock.cancel();
 
   return (
     <>

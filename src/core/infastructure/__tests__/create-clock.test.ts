@@ -62,6 +62,13 @@ describe("clock", () => {
       expect(wait).toBe(10);
     });
 
+    it("should not try to cancel a timer when there is none", () => {
+      const clock = createClock.createNull();
+      expect(() => clock.cancel()).toThrowError(
+        "should not try to cancel a timer when there is no timer"
+      );
+    });
+
     it("cancel the clock", async () => {
       const clock = createClock.createNull();
       let wait: number | string = "waiting";
