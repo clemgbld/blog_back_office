@@ -1,5 +1,5 @@
 /* eslint-disable testing-library/no-node-access */
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { createStore } from "../../../../core/store";
@@ -156,57 +156,6 @@ describe("ArticleCard", () => {
       openModal();
       closeModalWithClickOn("modal");
       expect(screen.getByText("fake text")).toBeInTheDocument();
-    });
-  });
-
-  describe("error handling", () => {
-    const triggerNotificationError = () => {
-      const { title, timeToRead, content } = fakeArticle1;
-
-      renderArticleCard(
-        {
-          title,
-          timeToRead,
-          content,
-          lightMode: true,
-        },
-        { status: 404, message: "Something went wrong" }
-      );
-
-      userEvent.click(screen.getByText("Delete"));
-      userEvent.click(screen.getByText("validate"));
-    };
-    it("should display an error notification during 5 seconds when the delete operation failed", async () => {
-      triggerNotificationError();
-
-      await waitFor(() => {
-        expect(screen.getByText("Something went wrong")).toBeInTheDocument();
-      });
-
-      await clock.advanceNullAsync(5000);
-
-      await waitFor(() => {
-        expect(
-          screen.queryByText("Something went wrong")
-        ).not.toBeInTheDocument();
-      });
-    });
-
-    it("should be able to close the notification when the user click on the close button", async () => {
-      triggerNotificationError();
-
-      let closeNotificationEl: HTMLElement;
-      await waitFor(() => {
-        closeNotificationEl = screen.getByTestId("close notification");
-      });
-
-      userEvent.click(closeNotificationEl);
-
-      await waitFor(() => {
-        expect(
-          screen.queryByText("Something went wrong")
-        ).not.toBeInTheDocument();
-      });
     });
   });
 });

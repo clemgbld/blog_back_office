@@ -7,6 +7,7 @@ import { AppDispatch } from "../../..";
 import { postArticle } from "../../../core/articles/use-cases/post-article";
 import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import Title from "../../UI/Title/Title";
+import WithNotificationError from "../../UI/notification/WithNotificationError";
 import { ROUTES } from "../../routing/constants";
 
 const CreateArticle = () => {
@@ -19,6 +20,10 @@ const CreateArticle = () => {
 
   const isEditorInLightMode = useSelector<RootState, boolean>(
     ({ ui: { isEditorInLightMode } }) => isEditorInLightMode
+  );
+
+  const errorMessage = useSelector(
+    ({ articles: { error } }: RootState) => error
   );
 
   const navigate = useNavigate();
@@ -41,19 +46,21 @@ const CreateArticle = () => {
   };
 
   return (
-    <div className="page_form-layout">
-      <Title title="Create a new article" />
-      <ArticlesForm
-        onSubmit={handleSubmit}
-        content={content}
-        setContent={setContent}
-        inputValues={inputValues}
-        setInputValues={setInputValues}
-        validateButtonLabel="Save"
-        isTopicError={isTopicError}
-        setIsTopicError={setIsTopicError}
-      />
-    </div>
+    <WithNotificationError errorMessage={errorMessage}>
+      <div className="page_form-layout">
+        <Title title="Create a new article" />
+        <ArticlesForm
+          onSubmit={handleSubmit}
+          content={content}
+          setContent={setContent}
+          inputValues={inputValues}
+          setInputValues={setInputValues}
+          validateButtonLabel="Save"
+          isTopicError={isTopicError}
+          setIsTopicError={setIsTopicError}
+        />
+      </div>
+    </WithNotificationError>
   );
 };
 

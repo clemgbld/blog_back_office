@@ -28,12 +28,13 @@ describe("Home", () => {
   const renderHome = (
     articles: Article[],
     preloadedState: any = undefined,
-    pages: number | undefined = undefined
+    pages: number | undefined = undefined,
+    error: { status: number; message: string } | undefined = undefined
   ) => {
     const store = createStore({
       preloadedState,
       services: {
-        articlesService: inMemoryArticlesService(articles),
+        articlesService: inMemoryArticlesService(articles, error),
       },
     });
 
@@ -285,6 +286,45 @@ describe("Home", () => {
       userEvent.click(screen.getByText("React 1"));
 
       expect(screen.getAllByTestId("article").length).toBe(1);
+    });
+  });
+
+  describe("home page error handling", () => {
+    it("should display a notification when articles fething goes wrong", async () => {
+      renderHome([fakeArticle1, fakeArticle2], undefined, 1, {
+        status: 404,
+        message: "Something went wrong",
+      });
+      await waitFor(() => {
+        expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      });
+
+      clock.advanceNullAsync(5000);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Something went wrong")
+        ).not.toBeInTheDocument();
+      });
+    });
+
+    it("should be able to close the notification before that the timer finish", async () => {
+      renderHome([fakeArticle1, fakeArticle2], undefined, 1, {
+        status: 404,
+        message: "Something went wrong",
+      });
+
+      let closeModalEl: HTMLElement;
+
+      await waitFor(() => {
+        closeModalEl = screen.getByTestId("close notification");
+      });
+
+      userEvent.click(closeModalEl);
+
+      await waitFor(() => {
+        expect(closeModalEl).not.toBeInTheDocument();
+      });
     });
   });
 });
