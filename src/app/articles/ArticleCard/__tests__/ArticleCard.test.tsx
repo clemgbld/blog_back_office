@@ -160,7 +160,7 @@ describe("ArticleCard", () => {
   });
 
   describe("error handling", () => {
-    it("should display an error notification during 5 seconds when the delete operation failed", async () => {
+    const triggerNotificationError = () => {
       const { title, timeToRead, content } = fakeArticle1;
 
       renderArticleCard(
@@ -175,12 +175,32 @@ describe("ArticleCard", () => {
 
       userEvent.click(screen.getByText("Delete"));
       userEvent.click(screen.getByText("validate"));
+    };
+    it("should display an error notification during 5 seconds when the delete operation failed", async () => {
+      triggerNotificationError();
 
       await waitFor(() => {
         expect(screen.getByText("Something went wrong")).toBeInTheDocument();
       });
 
       await clock.advanceNullAsync(5000);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Something went wrong")
+        ).not.toBeInTheDocument();
+      });
+    });
+
+    it("should be able to close the notification when the user click on the close button", async () => {
+      triggerNotificationError();
+
+      let closeNotificationEl: HTMLElement;
+      await waitFor(() => {
+        closeNotificationEl = screen.getByTestId("close notification");
+      });
+
+      userEvent.click(closeNotificationEl);
 
       await waitFor(() => {
         expect(
