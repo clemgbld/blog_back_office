@@ -7,7 +7,7 @@
   top: 10%;
   left: 3%;
   z-index: 99;
-  max-width: 35rem;
+  max-width: 40rem;
   width: 100%;
 
   background-color: #ffa8a8;
@@ -16,6 +16,24 @@
   font-weight: 500;
   border-radius: 1rem;
   padding: 1.6rem;
+
+  animation: fade-in 0.4s ease-in-out;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__icon {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  &__close {
+    width: 2rem;
+    height: 2rem;
+  }
 
   &__button {
     color: #e03131;
@@ -26,5 +44,18 @@
     border: none;
     border-left: 1px solid #e03131;
     cursor: pointer;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+
+    transform: translateX(-2rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }

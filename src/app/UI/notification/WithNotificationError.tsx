@@ -1,6 +1,7 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { ClockContext } from "../../context/ClockContext";
 import Modal from "../Modal/Modal";
+import { ErrorOutline, Close } from "@styled-icons/material";
 import classNames from "./WithNotificationError.module.scss";
 
 type WithNotificationErrorProps = {
@@ -35,28 +36,21 @@ const WithNotificationError: FC<WithNotificationErrorProps> = ({
     <>
       {errorMessage && showNotification && (
         <Modal>
-          <div>
+          <div className={classNames.notification}>
+            <div className={classNames.notification__content}>
+              <ErrorOutline className={classNames.notification__icon} />
+              <p>{errorMessage}</p>
+            </div>
             <button
-              onClick={closeNotification}
               data-testid="close notification"
+              className={classNames.notification__button}
+              onClick={closeNotification}
             >
-              X
+              <Close className={classNames.notification__close} />
             </button>
-            <p>{errorMessage}</p>
           </div>
         </Modal>
       )}
-      <Modal>
-        <div className={classNames.notification}>
-          <p>Something went wrong</p>
-          <button
-            className={classNames.notification__button}
-            onClick={closeNotification}
-          >
-            X
-          </button>
-        </div>
-      </Modal>
 
       {children}
     </>
