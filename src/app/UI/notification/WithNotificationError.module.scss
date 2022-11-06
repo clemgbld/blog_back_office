@@ -1,0 +1,30 @@
+.notification {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  top: 10%;
+  left: 3%;
+  z-index: 99;
+  max-width: 35rem;
+  width: 100%;
+
+  background-color: #ffa8a8;
+  border: 2px solid #e03131;
+  color: #e03131;
+  font-weight: 500;
+  border-radius: 1rem;
+  padding: 1.6rem;
+
+  &__button {
+    color: #e03131;
+    background-color: inherit;
+
+    padding: 1rem 1rem 1rem 1.6rem;
+    font-size: 1.6rem;
+    border: none;
+    border-left: 1px solid #e03131;
+    cursor: pointer;
+  }
+}

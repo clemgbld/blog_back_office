@@ -1,6 +1,7 @@
 import { FC, useContext, useEffect, useState } from "react";
 import { ClockContext } from "../../context/ClockContext";
 import Modal from "../Modal/Modal";
+import classNames from "./WithNotificationError.module.scss";
 
 type WithNotificationErrorProps = {
   children: JSX.Element;
@@ -45,6 +46,17 @@ const WithNotificationError: FC<WithNotificationErrorProps> = ({
           </div>
         </Modal>
       )}
+      <Modal>
+        <div className={classNames.notification}>
+          <p>Something went wrong</p>
+          <button
+            className={classNames.notification__button}
+            onClick={closeNotification}
+          >
+            X
+          </button>
+        </div>
+      </Modal>
 
       {children}
     </>
