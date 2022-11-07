@@ -29,7 +29,6 @@ const WithNotificationError: FC<WithNotificationErrorProps> = ({
       setShowNotification(false);
     };
     showNotificationFor();
-    return () => clock.cancel();
   }, [errorMessage, clock]);
 
   return (
