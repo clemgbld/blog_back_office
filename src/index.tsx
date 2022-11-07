@@ -10,9 +10,20 @@ import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
 import { fakeArticle1, fakeArticle2 } from "./app/articles/fixtures/articles";
 
+const error =
+  process.env.REACT_APP_ARG === "error"
+    ? {
+        status: 404,
+        message: "Something went wrong",
+      }
+    : undefined;
+
 const store = createStore({
   services: {
-    articlesService: inMemoryArticlesService([fakeArticle1, fakeArticle2]),
+    articlesService: inMemoryArticlesService(
+      [fakeArticle1, fakeArticle2],
+      error
+    ),
   },
 });
 
