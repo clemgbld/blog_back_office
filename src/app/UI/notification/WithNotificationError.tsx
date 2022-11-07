@@ -28,7 +28,7 @@ const WithNotificationError: FC<WithNotificationErrorProps> = ({
       await clock.waitAsync(TIME_DURIND_SHOW_NOTIFICATION);
       setShowNotification(false);
     };
-    showNotificationFor();
+     showNotificationFor();
   }, [errorMessage, clock]);
 
   return (
