@@ -41,13 +41,26 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
 
   const articlesFromStore = useSelector(articlesSelectors.selectAll);
 
-  useEffect(() => {
-    dispatch(retrieveArticles());
-  }, [dispatch]);
+  const articlesStatus = useSelector(
+    ({ articles: { status } }: RootState) => status
+  );
+
+  const errorMessage = useSelector(
+    ({ articles: { error } }: RootState) => error
+  );
+
+  const isArticlesRetrieved = useSelector(
+    ({ articles: { isArticlesRetrieved } }: RootState) => isArticlesRetrieved
+  );
 
   const searchTerms = useSelector(
     ({ ui: { searchTerms } }: RootState) => searchTerms
   );
+
+  useEffect(() => {
+    if (isArticlesRetrieved) return;
+    dispatch(retrieveArticles());
+  }, [dispatch, isArticlesRetrieved]);
 
   const [currentHideStatus, setCurrentHideStatus] = useState("all articles");
   const [currentTopics, setCurrentTopics] = useState(["all articles"]);
@@ -75,14 +88,6 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
   useEffect(() => {
     setCurrentPage(shycronisePaginationWithOtherFilters(articlesToDisplay));
   }, [articlesToDisplay]);
-
-  const articlesStatus = useSelector(
-    ({ articles: { status } }: RootState) => status
-  );
-
-  const errorMessage = useSelector(
-    ({ articles: { error } }: RootState) => error
-  );
 
   if (articlesStatus === STATUS.PENDING) return <div role="progressbar" />;
 

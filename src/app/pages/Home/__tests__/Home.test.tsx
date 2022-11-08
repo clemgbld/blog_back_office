@@ -327,4 +327,27 @@ describe("Home", () => {
       });
     });
   });
+
+  it("does not refetch the articles when they are already fetched", async () => {
+    const preloadedState = {
+      ui: {
+        isEditorInLightMode: true,
+        searchTerms: "",
+      },
+      articles: {
+        status: "success",
+        isArticlesRetrieved: true,
+        data: {
+          ids: ["1"],
+          entities: {
+            "1": fakeArticle1,
+          },
+        },
+      },
+    };
+
+    renderHome([fakeArticle1, fakeArticle2], preloadedState);
+
+    expect(screen.getAllByTestId("article").length).toBe(1);
+  });
 });

@@ -31,6 +31,7 @@ export const sutBuilder = ({
     });
 
     return {
+      isArticlesRetrieved: store.getState().articles.isArticlesRetrieved,
       status: articlesStatus(store),
       expectedArticles: allArticles(store),
       expectedErrorMsg: articlesError(store),
@@ -43,6 +44,7 @@ export const sutBuilder = ({
       retrieveArticlesAsync: async () => {
         await store.dispatch(retrieveArticles());
         return {
+          isArticlesRetrieved: store.getState().articles.isArticlesRetrieved,
           status: articlesStatus(store),
           expectedArticles: allArticles(store),
           expectedErrorMsg: articlesError(store),

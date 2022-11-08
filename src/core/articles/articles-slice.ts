@@ -13,12 +13,14 @@ import { STATUS } from "../utils/status-constants";
 export const articlesAdapter = createEntityAdapter<Article>();
 
 export type InitialState = {
+  isArticlesRetrieved: boolean;
   status: string;
   data: EntityState<Article>;
   error?: string;
 };
 
 const initialState: InitialState = {
+  isArticlesRetrieved: false,
   status: "idle",
   data: articlesAdapter.getInitialState(),
   error: undefined,
@@ -32,6 +34,7 @@ export const articlesSlice = createSlice({
     builder
       .addCase(retrieveArticles.fulfilled, (state, action) => {
         state.status = STATUS.SUCCESS;
+        state.isArticlesRetrieved = true;
         articlesAdapter.setAll(state.data, action.payload);
       })
       .addCase(retrieveArticles.pending, (state) => {

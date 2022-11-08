@@ -3,9 +3,12 @@ import { sutBuilder } from "../test-helper/sut-builder";
 
 describe("Retrieve articles", () => {
   it("should have no articles initially", () => {
-    const { status, expectedArticles } = sutBuilder({}).build();
+    const { status, expectedArticles, isArticlesRetrieved } = sutBuilder(
+      {}
+    ).build();
 
     expect(status).toBe("idle");
+    expect(isArticlesRetrieved).toBe(false);
     expect(expectedArticles).toEqual([]);
   });
 
@@ -24,7 +27,8 @@ describe("Retrieve articles", () => {
       existingArticles: [articleBuilder()],
     }).build();
 
-    const { status, expectedArticles } = await retrieveArticlesAsync();
+    const { status, expectedArticles, isArticlesRetrieved } =
+      await retrieveArticlesAsync();
 
     expect(expectedArticles).toEqual([
       {
@@ -47,6 +51,7 @@ describe("Retrieve articles", () => {
     ]);
 
     expect(status).toBe("success");
+    expect(isArticlesRetrieved).toBe(true);
   });
 
   it("should infors the user when the articles retrieving failed", async () => {

@@ -4,6 +4,7 @@ import { articleBuilder } from "../builder/article-builder";
 describe("Delete Article", () => {
   const preloadedState = {
     articles: {
+      isArticlesRetrieved: true,
       status: "idle",
       data: {
         ids: ["1"],
