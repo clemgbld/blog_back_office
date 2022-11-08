@@ -1,3 +1,5 @@
+@import "../../../utils.scss";
+
 .home {
   &__articles {
     max-width: 75rem;
@@ -5,12 +7,20 @@
     padding-right: 1rem;
     border-right: solid 1px #08fdd8;
     margin-right: 1.6rem;
+
+    @media (max-width: $tablet) {
+      border: none;
+    }
   }
   &__empty {
     margin-bottom: 1.6rem;
   }
   &__box {
     display: flex;
+    @media (max-width: $tablet) {
+      flex-direction: column;
+      gap: 3rem;
+    }
   }
 
   &__button {
