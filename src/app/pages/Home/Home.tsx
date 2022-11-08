@@ -1,6 +1,7 @@
 import { FC, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../..";
+import { Article } from "../../../core/articles/entities/article";
 import { retrieveArticles } from "../../../core/articles/use-cases/retrieve-articles";
 import { handleSelectedTopics } from "../../../core/articles/use-cases/handle-selected-topics";
 import { handleHideStatus } from "../../../core/articles/use-cases/handle-hide-status";
@@ -27,10 +28,10 @@ import PaginationFooter from "../../articles/PaginationFooter/PaginationFooter";
 import Button from "../../UI/Button/Button";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
 import Title from "../../UI/Title/Title";
+import Spinner from "../../UI/Spinner/Spinner";
 import { pipe } from "ramda";
 import { HIDE_STATUS_TAGS, ALL_ARTICLES, ARTICLES_PER_PAGE } from "./constants";
 import classNames from "./Home.module.scss";
-import { Article } from "../../../core/articles/entities/article";
 
 type HomeProps = {
   articlesPerPages?: number;
@@ -89,7 +90,7 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
     setCurrentPage(shycronisePaginationWithOtherFilters(articlesToDisplay));
   }, [articlesToDisplay]);
 
-  if (articlesStatus === STATUS.PENDING) return <div role="progressbar" />;
+  if (articlesStatus === STATUS.PENDING) return <Spinner />;
 
   return (
     <WithNotificationError errorMessage={errorMessage}>
