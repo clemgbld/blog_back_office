@@ -1,8 +1,8 @@
-import { createStorageService, nullStorage } from "../storage-service";
+import { createStorageService, inMemoryStorage } from "../storage-service";
 
 describe("storage service", () => {
   it("should be able to stock item in the storage", () => {
-    const storage = createStorageService(nullStorage());
+    const storage = createStorageService(inMemoryStorage());
 
     storage.stockItem("myCat", "Tom");
 
@@ -11,7 +11,7 @@ describe("storage service", () => {
 
   it("can preload the storage", () => {
     const storage = createStorageService(
-      nullStorage({
+      inMemoryStorage({
         myCat: "Tom",
       })
     );
@@ -21,7 +21,7 @@ describe("storage service", () => {
 
   it("can remove specific item from the storage", () => {
     const storage = createStorageService(
-      nullStorage({
+      inMemoryStorage({
         myCat: "Tom",
       })
     );
@@ -33,7 +33,7 @@ describe("storage service", () => {
 
   it("should be able to remove all the items of the storage", () => {
     const storage = createStorageService(
-      nullStorage({
+      inMemoryStorage({
         myCat: "Tom",
         myDog: "Dog",
       })

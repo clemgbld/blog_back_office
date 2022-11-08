@@ -1,4 +1,4 @@
-export const nullStorage = (store: Record<string, any> = {}) => ({
+export const inMemoryStorage = (store: Record<string, any> = {}) => ({
   setItem: (key: string, value: any) => (store[key] = value),
   getItem: (key: string) => store[key],
   removeItem: (key: string) => delete store[key],
@@ -6,7 +6,7 @@ export const nullStorage = (store: Record<string, any> = {}) => ({
 });
 
 export const createStorageService = (
-  storage: Storage | ReturnType<typeof nullStorage>
+  storage: Storage | ReturnType<typeof inMemoryStorage>
 ) => ({
   stockItem: (key: string, value: string) => storage.setItem(key, value),
 
