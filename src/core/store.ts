@@ -1,10 +1,12 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { articlesSlice } from "./articles/articles-slice";
+import { authSlice } from "./auth/auth-slice";
 import { uiSlice } from "./UI/ui-slice";
 import { inMemoryArticlesService } from "./articles/infrastructure/in-memory-services/InMemoryArticlesService";
 
 const rootReducer = combineReducers({
   [articlesSlice.name]: articlesSlice.reducer,
+  [authSlice.name]: authSlice.reducer,
   [uiSlice.name]: uiSlice.reducer,
 });
 

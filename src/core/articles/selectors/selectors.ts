@@ -21,7 +21,7 @@ export const articlesError = (store: Store) => store.getState().articles.error;
 export const allArticlesFormatted = createSelector(
   (articles: any) => articles,
   (articles: any) =>
-    articles.map((article) => ({
+    articles.map((article: any) => ({
       ...article,
       date: formatDateDDMMYYYY(new Date(article.date)),
     }))
