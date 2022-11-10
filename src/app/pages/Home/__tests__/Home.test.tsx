@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ClockContext } from "../../../context/ClockContext";
 import { createStore } from "../../../../core/store";
-
+import { inMemoryAuthService } from "../../../../core/auth/infrastructure/in-memory-services/in-memory-auth-service";
 import { inMemoryArticlesService } from "../../../../core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import {
   fakeArticle1,
@@ -35,6 +35,7 @@ describe("Home", () => {
       preloadedState,
       services: {
         articlesService: inMemoryArticlesService(articles, error),
+        authService: inMemoryAuthService(),
       },
     });
 

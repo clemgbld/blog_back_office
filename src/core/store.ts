@@ -3,6 +3,7 @@ import { articlesSlice } from "./articles/articles-slice";
 import { authSlice } from "./auth/auth-slice";
 import { uiSlice } from "./UI/ui-slice";
 import { inMemoryArticlesService } from "./articles/infrastructure/in-memory-services/InMemoryArticlesService";
+import { inMemoryAuthService } from "./auth/infrastructure/in-memory-services/in-memory-auth-service";
 
 const rootReducer = combineReducers({
   [articlesSlice.name]: articlesSlice.reducer,
@@ -15,6 +16,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 export const createStore = ({
   services = {
     articlesService: inMemoryArticlesService([]),
+    authService: inMemoryAuthService(),
   },
 
   preloadedState = {},

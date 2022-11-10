@@ -5,6 +5,7 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { inMemoryArticlesService } from "./core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
+import { inMemoryAuthService } from "./core/auth/infrastructure/in-memory-services/in-memory-auth-service";
 import { createClock } from "./core/infastructure/create-clock";
 import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
@@ -24,6 +25,7 @@ const store = createStore({
       [fakeArticle1, fakeArticle2],
       error
     ),
+    authService: inMemoryAuthService(),
   },
 });
 

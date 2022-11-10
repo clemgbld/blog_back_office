@@ -6,6 +6,7 @@ import {
   articlesError,
 } from "../../selectors/selectors";
 import { inMemoryArticlesService } from "../../infrastructure/in-memory-services/InMemoryArticlesService";
+import { inMemoryAuthService } from "../../../auth/infrastructure/in-memory-services/in-memory-auth-service";
 import { postArticle } from "../post-article";
 import { retrieveArticles } from "../retrieve-articles";
 import { updateArticle } from "../update-article";
@@ -26,6 +27,7 @@ export const sutBuilder = ({
     const store = createStore({
       services: {
         articlesService: inMemoryArticlesService(existingArticles, error),
+        authService: inMemoryAuthService(),
       },
       preloadedState,
     });

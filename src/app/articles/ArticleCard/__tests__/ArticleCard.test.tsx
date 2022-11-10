@@ -11,6 +11,7 @@ import {
   Clock,
 } from "../../../../core/infastructure/create-clock";
 import { inMemoryArticlesService } from "../../../../core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
+import { inMemoryAuthService } from "../../../../core/auth/infrastructure/in-memory-services/in-memory-auth-service";
 import { ClockContext } from "../../../context/ClockContext";
 
 describe("ArticleCard", () => {
@@ -36,6 +37,7 @@ describe("ArticleCard", () => {
     const store = createStore({
       services: {
         articlesService: inMemoryArticlesService([], error),
+        authService: inMemoryAuthService(),
       },
     });
 
