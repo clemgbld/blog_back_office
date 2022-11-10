@@ -12,6 +12,10 @@ import {
 } from "../../../../core/infastructure/create-clock";
 import { inMemoryArticlesService } from "../../../../core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import { inMemoryAuthService } from "../../../../core/auth/infrastructure/in-memory-services/in-memory-auth-service";
+import {
+  inMemoryStorage,
+  createStorageService,
+} from "../../../../core/infastructure/storage-service";
 import { ClockContext } from "../../../context/ClockContext";
 
 describe("ArticleCard", () => {
@@ -38,6 +42,7 @@ describe("ArticleCard", () => {
       services: {
         articlesService: inMemoryArticlesService([], error),
         authService: inMemoryAuthService(),
+        storageService: createStorageService(inMemoryStorage()),
       },
     });
 

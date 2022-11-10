@@ -6,6 +6,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { inMemoryArticlesService } from "./core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import { inMemoryAuthService } from "./core/auth/infrastructure/in-memory-services/in-memory-auth-service";
+import {
+  inMemoryStorage,
+  createStorageService,
+} from "./core/infastructure/storage-service";
 import { createClock } from "./core/infastructure/create-clock";
 import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
@@ -26,6 +30,7 @@ const store = createStore({
       error
     ),
     authService: inMemoryAuthService(),
+    storageService: createStorageService(inMemoryStorage()),
   },
 });
 

@@ -15,3 +15,5 @@ export const createStorageService = (
   removeItem: (key: string) => storage.removeItem(key),
   clear: () => storage.clear(),
 });
+
+export type StorageService = ReturnType<typeof createStorageService>;
