@@ -10,12 +10,7 @@ import {
   createClock,
   Clock,
 } from "../../../../core/infastructure/create-clock";
-import { inMemoryArticlesService } from "../../../../core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
-import { inMemoryAuthService } from "../../../../core/auth/infrastructure/in-memory-services/in-memory-auth-service";
-import {
-  inMemoryStorage,
-  createStorageService,
-} from "../../../../core/infastructure/storage-service";
+import { buildInMemoryServices } from "../../../../core/infastructure/all-services/all-services-in-memory";
 import { ClockContext } from "../../../context/ClockContext";
 
 describe("ArticleCard", () => {
@@ -39,11 +34,9 @@ describe("ArticleCard", () => {
     error: { status: number; message: string } = undefined
   ) => {
     const store = createStore({
-      services: {
-        articlesService: inMemoryArticlesService([], error),
-        authService: inMemoryAuthService(),
-        storageService: createStorageService(inMemoryStorage()),
-      },
+      services: buildInMemoryServices({
+        articlesService: { articles: [], error },
+      }),
     });
 
     const { container } = render(

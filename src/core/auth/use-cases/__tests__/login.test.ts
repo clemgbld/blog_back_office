@@ -1,11 +1,10 @@
 import { createStore } from "../../../store";
 import { selectToken, selectIsLoggedIn } from "../../selectors/selectors";
-import { inMemoryArticlesService } from "../../../articles/infrastructure/in-memory-services/InMemoryArticlesService";
-import { inMemoryAuthService } from "../../infrastructure/in-memory-services/in-memory-auth-service";
 import {
   inMemoryStorage,
   createStorageService,
 } from "../../../infastructure/storage-service";
+import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
 import { login } from "../login";
 
 describe("login", () => {
@@ -20,11 +19,7 @@ describe("login", () => {
     const storageService = createStorageService(inMemoryStorage());
 
     const store = createStore({
-      services: {
-        articlesService: inMemoryArticlesService([]),
-        authService: inMemoryAuthService(),
-        storageService,
-      },
+      services: buildInMemoryServices({ storageService }),
     });
 
     await store.dispatch(login());

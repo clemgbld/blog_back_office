@@ -5,12 +5,7 @@ import {
   articlesStatus,
   articlesError,
 } from "../../selectors/selectors";
-import { inMemoryArticlesService } from "../../infrastructure/in-memory-services/InMemoryArticlesService";
-import { inMemoryAuthService } from "../../../auth/infrastructure/in-memory-services/in-memory-auth-service";
-import {
-  inMemoryStorage,
-  createStorageService,
-} from "../../../infastructure/storage-service";
+import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
 import { postArticle } from "../post-article";
 import { retrieveArticles } from "../retrieve-articles";
 import { updateArticle } from "../update-article";
@@ -29,11 +24,9 @@ export const sutBuilder = ({
 }) => ({
   build: () => {
     const store = createStore({
-      services: {
-        articlesService: inMemoryArticlesService(existingArticles, error),
-        authService: inMemoryAuthService(),
-        storageService: createStorageService(inMemoryStorage()),
-      },
+      services: buildInMemoryServices({
+        articlesService: { articles: existingArticles, error },
+      }),
       preloadedState,
     });
 
