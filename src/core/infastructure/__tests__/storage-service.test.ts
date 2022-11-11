@@ -1,6 +1,6 @@
 import { createStorageService, inMemoryStorage } from "../storage-service";
 
-describe("storage service", () => {
+describe("storage service", () => {²  
   it("should be able to stock item in the storage", () => {
     const storage = createStorageService(inMemoryStorage());
 

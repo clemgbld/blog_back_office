@@ -5,6 +5,7 @@ import {
 } from "../storage-service";
 import { inMemoryArticlesService } from "../../articles/infrastructure/in-memory-services/InMemoryArticlesService";
 import { inMemoryAuthService } from "../../auth/infrastructure/in-memory-services/in-memory-auth-service";
+import { createClock, Clock } from "../create-clock";
 import { Article } from "../../articles/entities/article";
 
 type BuildInMemoryServices = {
@@ -13,11 +14,13 @@ type BuildInMemoryServices = {
     articles: Article[];
     error?: { status: number; message: string };
   };
+  clockService?: Clock;
 };
 
 export const buildInMemoryServices = ({
   storageService = createStorageService(inMemoryStorage()),
   articlesService = { articles: [], error: undefined },
+  clockService = createClock.createNull(),
 }: BuildInMemoryServices) => ({
   articlesService: inMemoryArticlesService(
     articlesService.articles,
@@ -25,4 +28,5 @@ export const buildInMemoryServices = ({
   ),
   authService: inMemoryAuthService(),
   storageService,
+  clockService,
 });
