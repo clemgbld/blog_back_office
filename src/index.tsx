@@ -4,12 +4,7 @@ import { Provider } from "react-redux";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { inMemoryArticlesService } from "./core/articles/infrastructure/in-memory-services/InMemoryArticlesService";
-import { inMemoryAuthService } from "./core/auth/infrastructure/in-memory-services/in-memory-auth-service";
-import {
-  inMemoryStorage,
-  createStorageService,
-} from "./core/infastructure/storage-service";
+import { buildInMemoryServices } from "./core/infastructure/all-services/all-services-in-memory";
 import { createClock } from "./core/infastructure/create-clock";
 import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
@@ -24,14 +19,9 @@ const error =
     : undefined;
 
 const store = createStore({
-  services: {
-    articlesService: inMemoryArticlesService(
-      [fakeArticle1, fakeArticle2],
-      error
-    ),
-    authService: inMemoryAuthService(),
-    storageService: createStorageService(inMemoryStorage()),
-  },
+  services: buildInMemoryServices({
+    articlesService: { articles: [fakeArticle1, fakeArticle2], error },
+  }),
 });
 
 export type AppDispatch = typeof store.dispatch;
