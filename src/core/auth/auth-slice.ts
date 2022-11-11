@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "./use-cases/login";
 import { logout } from "./use-cases/logout";
+import { loginFromStorage } from "./use-cases/login-from-storage";
 import { STATUS } from "../utils/status-constants";
 
 type InitialState = {
@@ -37,6 +38,10 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.token = null;
         state.isLoggedIn = false;
+      })
+      .addCase(loginFromStorage.fulfilled, (state, action) => {
+        state.token = action.payload.token;
+        state.isLoggedIn = !!action.payload.token;
       });
   },
 });
