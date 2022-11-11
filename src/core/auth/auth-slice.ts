@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "./use-cases/login";
+import { logout } from "./use-cases/logout";
 import { STATUS } from "../utils/status-constants";
 
 type InitialState = {
@@ -32,6 +33,10 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.error = action.error.message;
         state.status = STATUS.REJECTED;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.token = null;
+        state.isLoggedIn = false;
       });
   },
 });
