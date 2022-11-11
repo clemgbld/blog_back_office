@@ -12,6 +12,11 @@ const FAKE_TOKEN = "fake-token";
 const FAKE_EXPIRATION_DATE = 7776000000;
 const CURRENT_TIMESTAMP = 1668171813577;
 
+const fakeUserInfos = {
+  email: "user@hotmail.fr",
+  password: "password",
+};
+
 describe("login", () => {
   it("should have a none loged in user and no token", () => {
     const store = createStore({});
@@ -28,7 +33,7 @@ describe("login", () => {
       services: buildInMemoryServices({ storageService, clockService }),
     });
 
-    await store.dispatch(login());
+    await store.dispatch(login(fakeUserInfos));
 
     expect(selectToken(store.getState())).toBe(FAKE_TOKEN);
     expect(selectIsLoggedIn(store.getState())).toBe(true);

@@ -2,13 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { InMemoryAuthService } from "../infrastructure/in-memory-services/in-memory-auth-service";
 import { StorageService } from "../../infastructure/storage-service";
 import { Clock } from "../../infastructure/create-clock";
-type Credentials = {
-  token: string;
-};
+import { Credentials, User } from "../entities/auth";
 
 export const login = createAsyncThunk<
   Credentials,
-  void,
+  User,
   {
     extra: {
       services: {
@@ -21,14 +19,14 @@ export const login = createAsyncThunk<
 >(
   "auth/login",
   async (
-    _,
+    userInfos,
     {
       extra: {
         services: { authService, storageService, clockService },
       },
     }
   ) => {
-    const { token, expirationDate } = await authService.login();
+    const { token, expirationDate } = await authService.login(userInfos);
     storageService.stockItem("blog-admin-token", token);
     storageService.stockItem(
       "blog-admin-token-expiration-time",
