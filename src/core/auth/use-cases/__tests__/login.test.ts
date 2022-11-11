@@ -3,6 +3,7 @@ import {
   selectToken,
   selectIsLoggedIn,
   selectAuthStatus,
+  selectAuthErrorMessage,
 } from "../../selectors/selectors";
 import {
   inMemoryStorage,
@@ -68,6 +69,6 @@ describe("login", () => {
     await store.dispatch(login(fakeUserInfos));
 
     expect(selectAuthStatus(store.getState())).toBe("rejected");
-    expect(store.getState().auth.error).toBe(error.message);
+    expect(selectAuthErrorMessage(store.getState())).toBe(error.message);
   });
 });

@@ -15,3 +15,8 @@ export const selectAuthStatus = createSelector(
   (state: RootState) => state.auth.status,
   (status) => status
 );
+
+export const selectAuthErrorMessage = createSelector(
+  (state: RootState) => state.auth.error,
+  (error) => error
+);
