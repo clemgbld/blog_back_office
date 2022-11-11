@@ -10,6 +10,7 @@ import {
 } from "../../../infastructure/storage-service";
 import { createClock } from "../../../infastructure/create-clock";
 import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
+
 import { login } from "../login";
 
 const FAKE_TOKEN = "fake-token";
@@ -19,6 +20,11 @@ const CURRENT_TIMESTAMP = 1668171813577;
 const fakeUserInfos = {
   email: "user@hotmail.fr",
   password: "password",
+};
+
+const error = {
+  status: 401,
+  message: "Email or password incorrect.",
 };
 
 describe("login", () => {
@@ -49,9 +55,19 @@ describe("login", () => {
     expect(selectAuthStatus(store.getState())).toBe("success");
   });
 
-  it("should  have a pending status while the login operation is proccessing", () => {
+  it("should have a pending status while the login operation is proccessing", () => {
     const store = createStore({});
     store.dispatch(login(fakeUserInfos));
     expect(selectAuthStatus(store.getState())).toBe("pending");
+  });
+
+  it("should alert the user when therer is an login error", async () => {
+    const store = createStore({
+      services: buildInMemoryServices({ authService: { error } }),
+    });
+    await store.dispatch(login(fakeUserInfos));
+
+    expect(selectAuthStatus(store.getState())).toBe("rejected");
+    expect(store.getState().auth.error).toBe(error.message);
   });
 });

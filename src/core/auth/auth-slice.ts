@@ -6,6 +6,7 @@ type InitialState = {
   token: string | null;
   isLoggedIn: boolean;
   status: string;
+  error?: string;
 };
 
 const initialState: InitialState = {
@@ -27,6 +28,10 @@ export const authSlice = createSlice({
       })
       .addCase(login.pending, (state) => {
         state.status = STATUS.PENDING;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.status = STATUS.REJECTED;
       });
   },
 });
