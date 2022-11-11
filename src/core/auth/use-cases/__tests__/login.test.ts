@@ -1,5 +1,9 @@
 import { createStore } from "../../../store";
-import { selectToken, selectIsLoggedIn } from "../../selectors/selectors";
+import {
+  selectToken,
+  selectIsLoggedIn,
+  selectAuthStatus,
+} from "../../selectors/selectors";
 import {
   inMemoryStorage,
   createStorageService,
@@ -23,6 +27,7 @@ describe("login", () => {
 
     expect(selectToken(store.getState())).toBe(null);
     expect(selectIsLoggedIn(store.getState())).toBe(false);
+    expect(selectAuthStatus(store.getState())).toBe("idle");
   });
 
   it("should log the user in and persit his token with token expiration date", async () => {
@@ -41,5 +46,12 @@ describe("login", () => {
     expect(+storageService.getItem("blog-admin-token-expiration-time")).toBe(
       FAKE_EXPIRATION_DATE + CURRENT_TIMESTAMP
     );
+    expect(selectAuthStatus(store.getState())).toBe("success");
+  });
+
+  it("should  have a pending status while the login operation is proccessing", () => {
+    const store = createStore({});
+    store.dispatch(login(fakeUserInfos));
+    expect(selectAuthStatus(store.getState())).toBe("pending");
   });
 });
