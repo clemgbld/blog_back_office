@@ -1,9 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StorageService } from "../../infastructure/storage-service";
-
-type CredentialsFromStorage = {
-  token: string | null;
-};
+import { CredentialsFromStorage } from "../entities/auth";
 
 export const loginFromStorage = createAsyncThunk<
   CredentialsFromStorage,
