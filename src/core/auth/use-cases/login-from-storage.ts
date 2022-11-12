@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StorageService } from "../../infastructure/storage-service";
 import { CredentialsFromStorage } from "../entities/auth";
+import { Clock } from "../../infastructure/create-clock";
 
 export const loginFromStorage = createAsyncThunk<
   CredentialsFromStorage,
@@ -9,6 +10,7 @@ export const loginFromStorage = createAsyncThunk<
     extra: {
       services: {
         storageService: StorageService;
+        clockService: Clock;
       };
     };
   }
@@ -18,12 +20,17 @@ export const loginFromStorage = createAsyncThunk<
     _,
     {
       extra: {
-        services: { storageService },
+        services: { storageService, clockService },
       },
     }
   ) => {
     const token = storageService.getItem("blog-admin-token");
+    const expirationDate = +storageService.getItem(
+      "blog-admin-token-expiration-time"
+    );
 
-    return { token };
+    if (clockService.now() >= expirationDate) return { token: null };
+
+    return { token: token || null };
   }
 );
