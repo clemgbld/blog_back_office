@@ -94,7 +94,7 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
 
   return (
     <WithNotificationError errorMessage={errorMessage}>
-      <div className="page_form-layout">
+      <div data-testid="home" className="page_form-layout">
         <Title title="Dashboard" />
         {articlesToDisplay.length === 0 && (
           <p className={classNames.home__empty}>No article yet...</p>
