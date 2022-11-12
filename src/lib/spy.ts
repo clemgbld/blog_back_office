@@ -1,4 +1,6 @@
-export function spy(func: any) {
+type AnyFunction = (...args: any) => any;
+
+export function spy(func: AnyFunction) {
   function isSpy(...args: any[]) {
     allArgs.push(args);
     return func.apply(this, args);
