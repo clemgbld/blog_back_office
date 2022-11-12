@@ -5,6 +5,10 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { buildInMemoryServices } from "./core/infastructure/all-services/all-services-in-memory";
+import {
+  createStorageService,
+  inMemoryStorage,
+} from "./core/infastructure/storage-service";
 import { createClock } from "./core/infastructure/create-clock";
 import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
@@ -19,9 +23,21 @@ const error =
       }
     : undefined;
 
+const isNotLoggedIn = process.env.REACT_APP_ARG === "inMemory isNotLoggedIn";
+
+const existingStorage: Record<string, string> = isNotLoggedIn
+  ? {}
+  : {
+      "blog-admin-token": "fake-token",
+      "blog-admin-token-expiration-time": "1668171813577",
+    };
+
+const storageService = createStorageService(inMemoryStorage(existingStorage));
+
 const store = createStore({
   services: buildInMemoryServices({
     articlesService: { articles: [fakeArticle1, fakeArticle2], error },
+    storageService,
   }),
 });
 
