@@ -21,7 +21,6 @@ const Auth = () => {
         password: passwordInput.current.value,
       })
     );
-
     navigate(ROUTES.HOME);
   };
 
