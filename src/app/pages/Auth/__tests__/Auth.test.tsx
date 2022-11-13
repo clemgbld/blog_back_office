@@ -8,10 +8,7 @@ import { selectIsLoggedIn } from "../../../../core/auth/selectors/selectors";
 import { spy } from "../../../../lib/spy";
 import { buildInMemoryServices } from "../../../../core/infastructure/all-services/all-services-in-memory";
 import { inMemoryAuthService } from "../../../../core/auth/infrastructure/in-memory-services/in-memory-auth-service";
-import {
-  createClock,
-  Clock,
-} from "../../../../core/infastructure/create-clock";
+import { createClock } from "../../../../core/infastructure/create-clock";
 import ProtectedRoute from "../../../routing/ProtectedRoute/ProtectedRoute";
 import Auth from "../Auth";
 import Home from "../../Home/Home";
@@ -74,7 +71,7 @@ describe("Auth page", () => {
       </Provider>
     );
 
-    return clock;
+    return { clock };
   };
 
   it("should authenticate the user and navigate to the home page", async () => {
@@ -116,7 +113,7 @@ describe("Auth page", () => {
   });
 
   it("should alert the user by displaying a notification when there in an auth error", () => {
-    renderSut({
+    const { clock } = renderSut({
       inMemoryAuthService,
       error: { status: 401, message: "" },
       isHomeNavigationAllowed: false,
