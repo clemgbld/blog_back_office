@@ -1,13 +1,17 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../..";
 import { login } from "../../../core/auth/use-cases/login";
+import { ROUTES } from "../../routing/constants";
 
 const Auth = () => {
   const emailInputEl = useRef(null);
   const passwordInput = useRef(null);
 
   const dispatch: AppDispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
@@ -17,6 +21,8 @@ const Auth = () => {
         password: passwordInput.current.value,
       })
     );
+
+    navigate(ROUTES.HOME);
   };
 
   return (

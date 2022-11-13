@@ -1,13 +1,21 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createStore } from "../../../../core/store";
+import { selectIsLoggedIn } from "../../../../core/auth/selectors/selectors";
 import { spy } from "../../../../lib/spy";
 import { buildInMemoryServices } from "../../../../core/infastructure/all-services/all-services-in-memory";
 import { inMemoryAuthService } from "../../../../core/auth/infrastructure/in-memory-services/in-memory-auth-service";
+import ProtectedRoute from "../../../routing/ProtectedRoute/ProtectedRoute";
 import Auth from "../Auth";
+import Home from "../../Home/Home";
 
 describe("Auth page", () => {
+  beforeEach(() => {
+    window.history.pushState({}, "", "/auth");
+  });
+
   it("should authenticate the user and navigate to the home page", async () => {
     const inMemoryAuth = inMemoryAuthService({});
 
@@ -23,9 +31,30 @@ describe("Auth page", () => {
       }),
     });
 
+    const isLoggedIn = selectIsLoggedIn(store.getState());
+
     render(
       <Provider store={store}>
-        <Auth />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="auth"
+              element={
+                <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/">
+                  <Auth />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute isAllowed={true} redirectPath="/auth">
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
       </Provider>
     );
 
@@ -46,6 +75,10 @@ describe("Auth page", () => {
       expect(spyLogin.args()).toEqual([
         [{ email: "user@example.com", password: "password" }],
       ]);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("home")).toBeInTheDocument();
     });
   });
 });
