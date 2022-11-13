@@ -11,7 +11,7 @@ import {
 } from "../../../infastructure/storage-service";
 import { createClock } from "../../../infastructure/create-clock";
 import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
-
+import { inMemoryAuthService } from "../../infrastructure/in-memory-services/in-memory-auth-service";
 import { login } from "../login";
 
 const FAKE_TOKEN = "fake-token";
@@ -64,7 +64,9 @@ describe("login", () => {
 
   it("should alert the user when therer is an login error", async () => {
     const store = createStore({
-      services: buildInMemoryServices({ authService: { error } }),
+      services: buildInMemoryServices({
+        authService: { error, inMemoryAuthService },
+      }),
     });
     await store.dispatch(login(fakeUserInfos));
 

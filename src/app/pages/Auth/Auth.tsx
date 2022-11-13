@@ -1,7 +1,51 @@
-import React from "react";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../..";
+import { login } from "../../../core/auth/use-cases/login";
 
 const Auth = () => {
-  return <div>Authentification</div>;
+  const emailInputEl = useRef(null);
+  const passwordInput = useRef(null);
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const submitHandler = async (e: any) => {
+    e.preventDefault();
+    await dispatch(
+      login({
+        email: emailInputEl.current.value,
+        password: passwordInput.current.value,
+      })
+    );
+  };
+
+  return (
+    <div>
+      <form onSubmit={submitHandler}>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            ref={emailInputEl}
+            required
+            type="email"
+            id="email"
+            name="emailAuth"
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            ref={passwordInput}
+            required
+            type="password"
+            id="password"
+            name="passwordAuth"
+          />
+        </div>
+        <button>Login</button>
+      </form>
+    </div>
+  );
 };
 
 export default Auth;
