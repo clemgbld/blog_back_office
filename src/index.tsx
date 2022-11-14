@@ -9,6 +9,7 @@ import {
   createStorageService,
   inMemoryStorage,
 } from "./core/infastructure/storage-service";
+import { inMemoryAuthService } from "./core/auth/infrastructure/in-memory-services/in-memory-auth-service";
 import { createClock } from "./core/infastructure/create-clock";
 import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
@@ -26,20 +27,22 @@ const error = chooseAppMode({
   nonMatchingValue: undefined,
 });
 
-const isNotLoggedIn = process.env.REACT_APP_ARG === "inMemory isNotLoggedIn";
-
-const existingStorage: Record<string, string> = isNotLoggedIn
-  ? {}
-  : {
-      "blog-admin-token": "fake-token",
-      "blog-admin-token-expiration-time": "1668171813577",
-    };
+const existingStorage: Record<string, string> = chooseAppMode({
+  expectedMode: "inMemory isNotLoggedIn",
+  currentMode: process.env.REACT_APP_ARG,
+  matchingValue: {},
+  nonMatchingValue: {
+    "blog-admin-token": "fake-token",
+    "blog-admin-token-expiration-time": "1668171813577",
+  },
+});
 
 const storageService = createStorageService(inMemoryStorage(existingStorage));
 
 const store = createStore({
   services: buildInMemoryServices({
     articlesService: { articles: [fakeArticle1, fakeArticle2], error },
+    authService: { error: error, inMemoryAuthService },
     storageService,
   }),
 });

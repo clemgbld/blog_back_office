@@ -2,11 +2,13 @@ import { FC, useContext, useEffect, useState } from "react";
 import { ClockContext } from "../../context/ClockContext";
 import Modal from "../Modal/Modal";
 import { ErrorOutline, Close } from "@styled-icons/material";
+import { STATUS } from "../../../core/utils/status-constants";
 import classNames from "./WithNotificationError.module.scss";
 
 type WithNotificationErrorProps = {
   children: JSX.Element;
   errorMessage: string;
+  status: string;
 };
 
 const TIME_DURIND_SHOW_NOTIFICATION = 5000;
@@ -14,6 +16,7 @@ const TIME_DURIND_SHOW_NOTIFICATION = 5000;
 const WithNotificationError: FC<WithNotificationErrorProps> = ({
   children,
   errorMessage,
+  status,
 }) => {
   const clock = useContext(ClockContext);
 
@@ -22,14 +25,14 @@ const WithNotificationError: FC<WithNotificationErrorProps> = ({
   const closeNotification = () => clock.cancel();
 
   useEffect(() => {
-    if (!errorMessage) return;
+    if (!errorMessage && status !== STATUS.REJECTED) return;
     const showNotificationFor = async () => {
       setShowNotification(true);
       await clock.waitAsync(TIME_DURIND_SHOW_NOTIFICATION);
       setShowNotification(false);
     };
     showNotificationFor();
-  }, [errorMessage, clock]);
+  }, [errorMessage, clock, status]);
 
   return (
     <>

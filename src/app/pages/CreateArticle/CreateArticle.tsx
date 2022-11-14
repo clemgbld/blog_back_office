@@ -26,6 +26,10 @@ const CreateArticle = () => {
     ({ articles: { error } }: RootState) => error
   );
 
+  const articlesStatus = useSelector(
+    ({ articles: { status } }: RootState) => status
+  );
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
@@ -46,7 +50,7 @@ const CreateArticle = () => {
   };
 
   return (
-    <WithNotificationError errorMessage={errorMessage}>
+    <WithNotificationError status={articlesStatus} errorMessage={errorMessage}>
       <div className="page_form-layout">
         <Title title="Create a new article" />
         <ArticlesForm

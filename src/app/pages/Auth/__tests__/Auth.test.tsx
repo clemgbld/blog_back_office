@@ -18,8 +18,6 @@ describe("Auth page", () => {
     window.history.pushState({}, "", "/auth");
   });
 
-  const TIMER = 5000;
-
   type renderSutProps = {
     inMemoryAuthService: typeof inMemoryAuthService;
     error?: { message: string; status: number };
@@ -50,7 +48,10 @@ describe("Auth page", () => {
                 path="auth"
                 element={
                   <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/">
-                    <Auth />
+                    <>
+                      <div id="modal"></div>
+                      <Auth />
+                    </>
                   </ProtectedRoute>
                 }
               />
@@ -70,8 +71,6 @@ describe("Auth page", () => {
         </ClockContext.Provider>
       </Provider>
     );
-
-    return { clock };
   };
 
   it("should authenticate the user and navigate to the home page", async () => {
@@ -112,11 +111,23 @@ describe("Auth page", () => {
     });
   });
 
-  it.skip("should alert the user by displaying a notification when there in an auth error", () => {
-    const { clock } = renderSut({
+  it("should alert the user by displaying a notification when there in an auth error", async () => {
+    renderSut({
       inMemoryAuthService,
-      error: { status: 401, message: "" },
+      error: { status: 401, message: "Something went wrong" },
       isHomeNavigationAllowed: false,
+    });
+
+    const emailInput: HTMLInputElement = screen.getByLabelText("Email");
+    const passwordInput: HTMLInputElement = screen.getByLabelText("Password");
+    const submitButton: HTMLButtonElement = screen.getByRole("button");
+
+    userEvent.type(emailInput, "user@example.com");
+    userEvent.type(passwordInput, "password");
+    userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
     });
   });
 });

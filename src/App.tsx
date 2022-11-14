@@ -12,6 +12,7 @@ import { ROUTES } from "./app/routing/constants";
 
 function App() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
     <BrowserRouter>
       <Routes>

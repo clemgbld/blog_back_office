@@ -31,6 +31,10 @@ const UpdateArticle = () => {
     ({ articles: { error } }: RootState) => error
   );
 
+  const articlesStatus = useSelector(
+    ({ articles: { status } }: RootState) => status
+  );
+
   useEffect(() => {
     if (onMount) return;
     dispatch(setTheme(articleToUpdate.lightMode));
@@ -69,7 +73,7 @@ const UpdateArticle = () => {
   };
 
   return (
-    <WithNotificationError errorMessage={errorMessage}>
+    <WithNotificationError status={articlesStatus} errorMessage={errorMessage}>
       <div className="page_form-layout">
         <Title title="Update an existing article" />
         <ArticlesForm

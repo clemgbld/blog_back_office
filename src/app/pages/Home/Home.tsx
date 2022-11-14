@@ -93,7 +93,7 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
   if (articlesStatus === STATUS.PENDING) return <Spinner />;
 
   return (
-    <WithNotificationError errorMessage={errorMessage}>
+    <WithNotificationError status={articlesStatus} errorMessage={errorMessage}>
       <div data-testid="home" className="page_form-layout">
         <Title title="Dashboard" />
         {articlesToDisplay.length === 0 && (
