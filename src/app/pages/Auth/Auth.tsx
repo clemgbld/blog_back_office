@@ -5,6 +5,8 @@ import { AppDispatch, RootState } from "../../..";
 import { login } from "../../../core/auth/use-cases/login";
 import { ROUTES } from "../../routing/constants";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
+import Title from '../../UI/Title/Title'
+
 
 const Auth = () => {
   const emailInputEl = useRef(null);
@@ -31,7 +33,9 @@ const Auth = () => {
 
   return (
     <WithNotificationError status={status} errorMessage={errorMessage}>
-      <div>
+     
+      <div className="page_form-layout">
+      <Title title="Authentification"/>
         <form onSubmit={submitHandler}>
           <div>
             <label htmlFor="email">Email</label>
