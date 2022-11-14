@@ -14,14 +14,17 @@ import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
 import { fakeArticle1, fakeArticle2 } from "./app/articles/fixtures/articles";
 import { loginFromStorage } from "./core/auth/use-cases/login-from-storage";
+import { chooseAppMode } from "./helper/choose-app-mode";
 
-const error =
-  process.env.REACT_APP_ARG === "inMemory error"
-    ? {
-        status: 404,
-        message: "Something went wrong",
-      }
-    : undefined;
+const error = chooseAppMode({
+  expectedMode: "inMemory error",
+  currentMode: process.env.REACT_APP_ARG,
+  matchingValue: {
+    status: 404,
+    message: "Something went wrong",
+  },
+  nonMatchingValue: undefined,
+});
 
 const isNotLoggedIn = process.env.REACT_APP_ARG === "inMemory isNotLoggedIn";
 
