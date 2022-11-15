@@ -8,6 +8,7 @@ import { logout } from "../../../core/auth/use-cases/logout";
 import SwitchEditorTheme from "./SwitchEditorTheme/SwitchEditorTheme";
 import { EDITOR_THEME_MODE } from "./SwitchEditorTheme/constants";
 import { ROUTES } from "../../routing/constants";
+import { Logout } from "@styled-icons/material/Logout";
 import classNames from "./Header.module.scss";
 
 type HeaderProps = {
@@ -61,13 +62,16 @@ const Header: FC<HeaderProps> = ({ children }) => {
             onClick={() => dispatch(toggleEditorTheme())}
           />
         )}
-
-        {pathname === ROUTES.HOME && (
-          <Link className={classNames.nav__link} to="/create">
-            Create an article
-          </Link>
-        )}
-        <button onClick={logoutHandler}>Logout</button>
+        <div className={classNames.nav__right}>
+          {pathname === ROUTES.HOME && (
+            <Link className={classNames.nav__link} to="/create">
+              Create an article
+            </Link>
+          )}
+          <button className={classNames.nav__button} onClick={logoutHandler}>
+            <Logout />
+          </button>
+        </div>
       </nav>
       {children}
     </>

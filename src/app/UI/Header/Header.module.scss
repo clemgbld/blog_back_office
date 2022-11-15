@@ -83,4 +83,25 @@
 
     transition: all 3ms ease-out;
   }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  &__button {
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    width: 4rem;
+    height: 4rem;
+
+    color: #c5f6fa;
+    transition: all 0.3s ease-out;
+    &:hover {
+      color: #08fdd8;
+    }
+  }
 }
