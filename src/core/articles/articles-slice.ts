@@ -19,7 +19,7 @@ export type InitialState = {
   error?: string;
 };
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   isArticlesRetrieved: false,
   status: "idle",
   data: articlesAdapter.getInitialState(),

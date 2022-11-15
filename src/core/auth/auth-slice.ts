@@ -11,7 +11,7 @@ type InitialState = {
   error?: string;
 };
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   token: null,
   isLoggedIn: false,
   status: "idle",
