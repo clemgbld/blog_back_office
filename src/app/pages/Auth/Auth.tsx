@@ -5,11 +5,10 @@ import { AppDispatch, RootState } from "../../..";
 import { login } from "../../../core/auth/use-cases/login";
 import { ROUTES } from "../../routing/constants";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
-import Title from '../../UI/Title/Title'
+import Title from "../../UI/Title/Title";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
-import classNames from './Auth.module.scss'
-
+import classNames from "./Auth.module.scss";
 
 const Auth = () => {
   const emailInputEl = useRef(null);
@@ -37,10 +36,10 @@ const Auth = () => {
 
   return (
     <WithNotificationError status={status} errorMessage={errorMessage}>
-      <div className="page_form-layout">
-      <Title title="Authentification"/>
-      <div className={classNames.box} >
-      <form onSubmit={submitHandler}>
+      <div data-testid="auth" className="page_form-layout">
+        <Title title="Authentification" />
+        <div className={classNames.box}>
+          <form onSubmit={submitHandler}>
             <Input
               refEl={emailInputEl}
               isRequired
@@ -48,19 +47,22 @@ const Auth = () => {
               id="email"
               label="Email"
             />
-         <Input
+            <Input
               refEl={passwordInputEl}
               isRequired
               type="password"
               id="password"
               label="Password"
             />
-            <div className={classNames['button-container']}>
-            <Button className={classNames.button} label="Login" type='submit'/>
+            <div className={classNames["button-container"]}>
+              <Button
+                className={classNames.button}
+                label="Login"
+                type="submit"
+              />
             </div>
-        </form>
-      </div>
-     
+          </form>
+        </div>
       </div>
     </WithNotificationError>
   );

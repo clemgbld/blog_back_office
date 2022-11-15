@@ -4,6 +4,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../../..";
 import { updateSearchTerms } from "../../../core/UI/use-cases/update-search-terms";
 import { toggleEditorTheme } from "../../../core/UI/use-cases/toggle-theme";
+import { logout } from "../../../core/auth/use-cases/logout";
 import SwitchEditorTheme from "./SwitchEditorTheme/SwitchEditorTheme";
 import { EDITOR_THEME_MODE } from "./SwitchEditorTheme/constants";
 import { ROUTES } from "../../routing/constants";
@@ -22,6 +23,11 @@ const Header: FC<HeaderProps> = ({ children }) => {
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    await dispatch(logout());
+    navigate(ROUTES.AUTH);
+  };
 
   return (
     <>
@@ -61,6 +67,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
             Create an article
           </Link>
         )}
+        <button onClick={logoutHandler}>Logout</button>
       </nav>
       {children}
     </>

@@ -1,18 +1,36 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import {
+  createStorageService,
+  inMemoryStorage,
+} from "../../../../core/infastructure/storage-service";
+import { buildInMemoryServices } from "../../../../core/infastructure/all-services/all-services-in-memory";
 import { createStore } from "../../../../core/store";
 import Header from "../Header";
+import Auth from "../../../pages/Auth/Auth";
 
 beforeEach(() => {
   window.history.pushState({}, "", "/");
 });
 
-const setup = () =>
+const setup = () => {
+  const existingStorage: Record<string, string> = {
+    "blog-admin-token": "fake-token",
+    "blog-admin-token-expiration-time": "1668171813577",
+  };
+
+  const storageService = createStorageService(inMemoryStorage(existingStorage));
+
   render(
-    <Provider store={createStore({})}>
+    <Provider
+      store={createStore({
+        services: buildInMemoryServices({
+          storageService,
+        }),
+      })}
+    >
       <BrowserRouter>
         <Routes>
           <Route
@@ -32,10 +50,14 @@ const setup = () =>
               </Header>
             }
           />
+          <Route path="auth" element={<Auth />} />
         </Routes>
       </BrowserRouter>
     </Provider>
   );
+
+  return { storageService };
+};
 
 describe("Header", () => {
   it("should be in light mode initially", () => {
@@ -104,5 +126,18 @@ describe("Header", () => {
     window.history.pushState({}, "", "/create");
     setup();
     expect(screen.queryByText("Create an article")).not.toBeInTheDocument();
+  });
+
+  it("should be a able to logout the user", async () => {
+    const { storageService } = setup();
+    userEvent.click(screen.getByRole("button"));
+    await waitFor(() => {
+      expect(screen.getByTestId("auth")).toBeInTheDocument();
+    });
+
+    expect(storageService.getItem("blog-admin-token")).toBe(undefined);
+    expect(storageService.getItem("blog-admin-token-expiration-time")).toBe(
+      undefined
+    );
   });
 });
