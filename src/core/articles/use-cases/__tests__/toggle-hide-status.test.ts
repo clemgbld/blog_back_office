@@ -5,6 +5,7 @@ describe("Toggle hide status", () => {
   it("should toggle hide status to false", async () => {
     const preloadedState = {
       articles: {
+        isArticlesRetrieved: true,
         status: "idle",
         data: {
           ids: ["1"],
@@ -27,6 +28,7 @@ describe("Toggle hide status", () => {
   it("should toggle hide status to true", async () => {
     const preloadedState = {
       articles: {
+        isArticlesRetrieved: true,
         status: "idle",
         data: {
           ids: ["1"],

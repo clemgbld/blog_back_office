@@ -4,6 +4,7 @@ import { articleBuilder, contentBuilder } from "../builder/article-builder";
 describe("Update Article", () => {
   const preloadedState = {
     articles: {
+      isArticlesRetrieved: true,
       status: "idle",
       data: {
         ids: ["1"],
