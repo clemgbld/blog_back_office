@@ -5,7 +5,7 @@ import { MyValue } from "../RichTextEditor/config/typescript";
 import { validateTopic } from "../../../core/articles/validation/validateTopic";
 import RichTextEditor from "../RichTextEditor/RichTextEditor";
 import { InputValues } from "../hooks/use-articles-form";
-import ArticleInput from "./ArticleInput/ArticleInput";
+import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
 import { pipe } from "ramda";
 import classNames from "./ArticleForm.module.scss";
@@ -67,7 +67,7 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
   return (
     <form onSubmit={onSubmit}>
       <div className={classNames.form_flex}>
-        <ArticleInput
+        <Input
           value={inputValues.title}
           label={"Title: "}
           isRequired
@@ -75,7 +75,7 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
           onChange={handleInputChange}
         />
         <div className={classNames.form__container}>
-          <ArticleInput
+          <Input
             value={inputValues.topic}
             label={"Topic: "}
             id="topic"
@@ -88,7 +88,7 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
           )}
         </div>
       </div>
-      <ArticleInput
+      <Input
         value={inputValues.description}
         label={"Description: "}
         id="description"

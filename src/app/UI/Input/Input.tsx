@@ -1,10 +1,10 @@
-import { FC } from "react";
-import classNames from "./ArticleInput.module.scss";
+import React,{ FC } from "react";
+import classNames from "./Input.module.scss";
 
-type ArticleInputProps = {
+type InputProps = {
   isRequired?: boolean;
   id: string;
-  onChange: ({
+  onChange?: ({
     target: { name, value },
   }: {
     target: {
@@ -13,35 +13,49 @@ type ArticleInputProps = {
     };
   }) => void;
   label: string;
-  value: string;
+  value?: string;
+  type?:string;
+  refEl?: React.MutableRefObject<any> 
 };
 
-const ArticleInput: FC<ArticleInputProps> = ({
+const Input: FC<InputProps> = ({
   isRequired = false,
   id,
   onChange,
   label,
-  value,
+  value=undefined,
+  type='text',
+  refEl
 }) => {
   return (
     <div className={classNames["input-container"]}>
       <label
         className={classNames["input-container_label"]}
-        htmlFor="description"
+        htmlFor={id}
       >
         {label}
       </label>
+     { refEl  ? 
+     <input
+        className={classNames["input-container_input"]}
+        required={isRequired}
+        id={id}
+        name={id}
+        type={type}
+        ref={refEl}
+      /> :
       <input
         value={value}
         className={classNames["input-container_input"]}
         required={isRequired}
         id={id}
         name={id}
-        type="text"
+        type={type}
         onChange={onChange}
-      />
+        
+      />}
     </div>
   );
 };
 
-export default ArticleInput;
+export default Input;

@@ -6,11 +6,15 @@ import { login } from "../../../core/auth/use-cases/login";
 import { ROUTES } from "../../routing/constants";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
 import Title from '../../UI/Title/Title'
+import Input from "../../UI/Input/Input";
+import Button from "../../UI/Button/Button";
+import classNames from './Auth.module.scss'
 
 
 const Auth = () => {
   const emailInputEl = useRef(null);
-  const passwordInput = useRef(null);
+
+  const passwordInputEl = useRef(null);
 
   const errorMessage = useSelector(({ auth: { error } }: RootState) => error);
   const status = useSelector(({ auth: { status } }: RootState) => status);
@@ -24,7 +28,7 @@ const Auth = () => {
     await dispatch(
       login({
         email: emailInputEl.current.value,
-        password: passwordInput.current.value,
+        password: passwordInputEl.current.value,
       })
     );
 
@@ -33,32 +37,30 @@ const Auth = () => {
 
   return (
     <WithNotificationError status={status} errorMessage={errorMessage}>
-     
       <div className="page_form-layout">
       <Title title="Authentification"/>
-        <form onSubmit={submitHandler}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              ref={emailInputEl}
-              required
+      <div className={classNames.box} >
+      <form onSubmit={submitHandler}>
+            <Input
+              refEl={emailInputEl}
+              isRequired
               type="email"
               id="email"
-              name="emailAuth"
+              label="Email"
             />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              ref={passwordInput}
-              required
+         <Input
+              refEl={passwordInputEl}
+              isRequired
               type="password"
               id="password"
-              name="passwordAuth"
+              label="Password"
             />
-          </div>
-          <button>Login</button>
+            <div className={classNames['button-container']}>
+            <Button className={classNames.button} label="Login" type='submit'/>
+            </div>
         </form>
+      </div>
+     
       </div>
     </WithNotificationError>
   );
