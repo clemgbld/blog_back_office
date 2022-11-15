@@ -13,6 +13,14 @@ describe("helper that dertermine the initial mode of the application", () => {
 
     expect(
       chooseAppMode({
+        expectedMode: "production",
+        matchingValue: true,
+        nonMatchingValue: false,
+      })
+    ).toBe(false);
+
+    expect(
+      chooseAppMode({
         currentMode: "inMemory error",
         expectedMode: "inMemory isNotLoggedIn",
         matchingValue: true,

@@ -20,13 +20,13 @@ const isMatchingValue = (
 };
 
 export const chooseAppMode = ({
-  currentMode,
+  currentMode="",
   expectedMode,
   matchingValue,
   nonMatchingValue,
 }: {
   expectedMode: string;
-  currentMode: string;
+  currentMode?: string;
   matchingValue: any;
   nonMatchingValue: any;
 }) =>
