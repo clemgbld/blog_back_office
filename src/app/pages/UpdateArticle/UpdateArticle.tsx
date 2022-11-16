@@ -6,6 +6,7 @@ import { RootState } from "../../../core/store";
 import { articlesSelectors } from "../../../core/articles/selectors/selectors";
 import { AppDispatch } from "../../..";
 import { updateArticle } from "../../../core/articles/use-cases/update-article";
+import { resetError } from "../../../core/articles/articles-slice";
 import { setTheme } from "../../../core/UI/use-cases/set-theme";
 import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
@@ -29,10 +30,6 @@ const UpdateArticle = () => {
 
   const errorMessage = useSelector(
     ({ articles: { error } }: RootState) => error
-  );
-
-  const articlesStatus = useSelector(
-    ({ articles: { status } }: RootState) => status
   );
 
   useEffect(() => {
@@ -72,8 +69,15 @@ const UpdateArticle = () => {
     navigate(ROUTES.HOME);
   };
 
+  const resetErrorMessage = () => {
+    dispatch(resetError());
+  };
+
   return (
-    <WithNotificationError status={articlesStatus} errorMessage={errorMessage}>
+    <WithNotificationError
+      resetErrorMessage={resetErrorMessage}
+      errorMessage={errorMessage}
+    >
       <div className="page_form-layout">
         <Title title="Update an existing article" />
         <ArticlesForm

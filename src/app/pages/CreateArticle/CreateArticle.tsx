@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../core/store";
 import { useArticlesForm } from "../../articles/hooks/use-articles-form";
 import { AppDispatch } from "../../..";
+import { resetError } from "../../../core/articles/articles-slice";
 import { postArticle } from "../../../core/articles/use-cases/post-article";
 import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import Title from "../../UI/Title/Title";
@@ -26,10 +27,6 @@ const CreateArticle = () => {
     ({ articles: { error } }: RootState) => error
   );
 
-  const articlesStatus = useSelector(
-    ({ articles: { status } }: RootState) => status
-  );
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
@@ -49,8 +46,15 @@ const CreateArticle = () => {
     navigate(ROUTES.HOME);
   };
 
+  const resetErrorMessage = () => {
+    dispatch(resetError());
+  };
+
   return (
-    <WithNotificationError status={articlesStatus} errorMessage={errorMessage}>
+    <WithNotificationError
+      resetErrorMessage={resetErrorMessage}
+      errorMessage={errorMessage}
+    >
       <div className="page_form-layout">
         <Title title="Create a new article" />
         <ArticlesForm

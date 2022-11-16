@@ -56,6 +56,8 @@ describe("Home", () => {
         </ClockContext.Provider>
       </Provider>
     );
+
+    return { store };
   };
 
   const fetchArticles = async () =>
@@ -288,7 +290,7 @@ describe("Home", () => {
 
   describe("home page error handling", () => {
     it("should display a notification when articles fething goes wrong", async () => {
-      renderHome([fakeArticle1, fakeArticle2], undefined, 1, {
+      const { store } = renderHome([fakeArticle1, fakeArticle2], undefined, 1, {
         status: 404,
         message: "Something went wrong",
       });
@@ -303,6 +305,8 @@ describe("Home", () => {
           screen.queryByText("Something went wrong")
         ).not.toBeInTheDocument();
       });
+
+      expect(store.getState().articles.error).toBeUndefined();
     });
 
     it("should be able to close the notification before that the timer finish", async () => {

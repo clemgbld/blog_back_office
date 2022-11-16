@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../..";
 import { login } from "../../../core/auth/use-cases/login";
+import { resetError } from "../../../core/auth/auth-slice";
 import { ROUTES } from "../../routing/constants";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
 import Title from "../../UI/Title/Title";
@@ -16,7 +17,6 @@ const Auth = () => {
   const passwordInputEl = useRef(null);
 
   const errorMessage = useSelector(({ auth: { error } }: RootState) => error);
-  const status = useSelector(({ auth: { status } }: RootState) => status);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -34,8 +34,15 @@ const Auth = () => {
     navigate(ROUTES.HOME);
   };
 
+  const resetErrorMessage = () => {
+    dispatch(resetError());
+  };
+
   return (
-    <WithNotificationError status={status} errorMessage={errorMessage}>
+    <WithNotificationError
+      resetErrorMessage={resetErrorMessage}
+      errorMessage={errorMessage}
+    >
       <div data-testid="auth" className="page_form-layout">
         <Title title="Authentification" />
         <div className={classNames.box}>

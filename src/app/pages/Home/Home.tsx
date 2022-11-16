@@ -12,6 +12,7 @@ import {
   allTopics,
   selectArticlesBasedOnTopic,
 } from "../../../core/articles/selectors/selectors";
+import { resetError } from "../../../core/articles/articles-slice";
 import {
   selectArticlesOnPage,
   shycronisePaginationWithOtherFilters,
@@ -58,6 +59,10 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
     ({ ui: { searchTerms } }: RootState) => searchTerms
   );
 
+  const resetErrorMessage = () => {
+    dispatch(resetError());
+  };
+
   useEffect(() => {
     if (isArticlesRetrieved) return;
     dispatch(retrieveArticles());
@@ -93,7 +98,10 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
   if (articlesStatus === STATUS.PENDING) return <Spinner />;
 
   return (
-    <WithNotificationError status={articlesStatus} errorMessage={errorMessage}>
+    <WithNotificationError
+      resetErrorMessage={resetErrorMessage}
+      errorMessage={errorMessage}
+    >
       <div data-testid="home" className="page_form-layout">
         <Title title="Dashboard" />
         {articlesToDisplay.length === 0 && (
