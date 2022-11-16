@@ -9,6 +9,7 @@ import { postArticle } from "../../../core/articles/use-cases/post-article";
 import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import Title from "../../UI/Title/Title";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
+import { STATUS } from "../../../core/utils/status-constants";
 import { ROUTES } from "../../routing/constants";
 
 const CreateArticle = () => {
@@ -27,6 +28,10 @@ const CreateArticle = () => {
     ({ articles: { error } }: RootState) => error
   );
 
+  const articlesStatus = useSelector(
+    ({ articles: { status } }: RootState) => status
+  );
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
@@ -43,6 +48,8 @@ const CreateArticle = () => {
         content,
       })
     );
+    if (articlesStatus === STATUS.REJECTED) return;
+
     navigate(ROUTES.HOME);
   };
 

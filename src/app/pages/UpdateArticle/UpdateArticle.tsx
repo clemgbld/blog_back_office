@@ -11,6 +11,7 @@ import { setTheme } from "../../../core/UI/use-cases/set-theme";
 import ArticlesForm from "../../articles/ArticlesForm/ArticlesForm";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
 import Title from "../../UI/Title/Title";
+import { STATUS } from "../../../core/utils/status-constants";
 import { ROUTES } from "../../routing/constants";
 
 const UpdateArticle = () => {
@@ -30,6 +31,10 @@ const UpdateArticle = () => {
 
   const errorMessage = useSelector(
     ({ articles: { error } }: RootState) => error
+  );
+
+  const articlesStatus = useSelector(
+    ({ articles: { status } }: RootState) => status
   );
 
   useEffect(() => {
@@ -65,6 +70,8 @@ const UpdateArticle = () => {
         content,
       })
     );
+
+    if (articlesStatus === STATUS.REJECTED) return;
 
     navigate(ROUTES.HOME);
   };
