@@ -33,7 +33,6 @@ export const articlesSlice = createSlice({
     resetError: (state) => {
       state.error = undefined;
     },
-    resetState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -85,4 +84,4 @@ export const articlesSlice = createSlice({
   },
 });
 
-export const { resetError, resetState } = articlesSlice.actions;
+export const { resetError } = articlesSlice.actions;
