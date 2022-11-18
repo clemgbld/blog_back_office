@@ -8,13 +8,6 @@ const FAKE_ID = "546";
 
 const FAKE_TIME_TO_READ = "7 min read";
 
-export interface InMemoryArticlesService {
-  getArticles: () => Promise<Article[]>;
-  postArticle: (article: ArticleWithoutId) => Promise<Article>;
-  updateArticle: (article: ArticleWithoutTimeToRead) => Promise<Article>;
-  deleteArticle: (id: string) => Promise<string>;
-}
-
 const throwError = (error: { status: number; message: string }) => {
   throw new Error(error.message);
 };
@@ -26,7 +19,10 @@ export const inMemoryArticlesService = (
   getArticles: async () =>
     error ? throwError(error) : Promise.resolve(articles),
 
-  postArticle: async (article: ArticleWithoutId): Promise<Article> =>
+  postArticle: async (
+    article: ArticleWithoutId,
+    token: string
+  ): Promise<Article> =>
     error
       ? throwError(error)
       : Promise.resolve({
@@ -34,10 +30,20 @@ export const inMemoryArticlesService = (
           id: FAKE_ID,
           ...article,
         }),
-  updateArticle: async (article: Article) =>
+  updateArticle: async (article: Article, token: string) =>
     error
       ? throwError(error)
       : Promise.resolve({ ...article, timeToRead: FAKE_TIME_TO_READ }),
-  deleteArticle: async (id: string) =>
+  deleteArticle: async (id: string, token: string) =>
     error ? throwError(error) : Promise.resolve(id),
 });
+
+export interface InMemoryArticlesService {
+  getArticles: () => Promise<Article[]>;
+  postArticle: (article: ArticleWithoutId, token: string) => Promise<Article>;
+  updateArticle: (
+    article: ArticleWithoutTimeToRead,
+    token: string
+  ) => Promise<Article>;
+  deleteArticle: (id: string, token: string) => Promise<string>;
+}

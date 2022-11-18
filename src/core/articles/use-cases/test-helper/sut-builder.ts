@@ -16,18 +16,27 @@ import { Article, ArticleWithoutId } from "../../entities/article";
 export const sutBuilder = ({
   existingArticles = [],
   error,
-  preloadedState,
+  preloadedState = {},
 }: {
   existingArticles?: Article[];
   error?: { status: number; message: string };
   preloadedState?: PreloadedState<RootState>;
 }) => ({
   build: () => {
+    const preloadedStateWithToken = {
+      ...preloadedState,
+      auth: {
+        token: "fake-token",
+        isLoggedIn: true,
+        status: "success",
+      },
+    };
+
     const store = createStore({
       services: buildInMemoryServices({
         articlesService: { articles: existingArticles, error },
       }),
-      preloadedState,
+      preloadedState: preloadedStateWithToken,
     });
 
     return {
