@@ -2,7 +2,7 @@
 
 ## Architecture
 
-![alt text]https://github.com/clemgbld/blog_back_office/blob/master/public/hexagonal-architecture.png
+![Screenshot](hexagonal-architecture.png)
 
 ## Available Scripts
 
