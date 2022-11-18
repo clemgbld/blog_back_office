@@ -44,17 +44,4 @@ describe("Delete Article", () => {
 
     expect(expectedErrorMsg).toBe("Something went wrong");
   });
-
-  it("should put status the status in the erroMessage when the status is 401", async () => {
-    const { deleteArticleAsync } = sutBuilder({
-      preloadedState,
-      error: { status: 401, message: "Something went wrong" },
-    }).build();
-
-    const { expectedErrorMsg, status } = await deleteArticleAsync("1");
-
-    expect(status).toBe("rejected");
-
-    expect(expectedErrorMsg).toBe("401:Something went wrong");
-  });
 });

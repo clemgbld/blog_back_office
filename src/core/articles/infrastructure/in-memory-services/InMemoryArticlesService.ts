@@ -16,9 +16,6 @@ export interface InMemoryArticlesService {
 }
 
 const throwError = (error: { status: number; message: string }) => {
-  if (error.status === 401) {
-    throw new Error(`${error.status}:${error.message}`);
-  }
   throw new Error(error.message);
 };
 
