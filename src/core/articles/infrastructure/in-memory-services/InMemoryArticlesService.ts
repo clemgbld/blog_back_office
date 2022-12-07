@@ -8,15 +8,15 @@ const FAKE_ID = "546";
 
 const FAKE_TIME_TO_READ = "7 min read";
 
-const throwError = (error: { status: number; message: string }) => {
+const throwError = (error: { statusCode: number; message: string }) => {
   throw new Error(error.message);
 };
 
 export const inMemoryArticlesService = (
   articles: Article[],
-  error?: { status: number; message: string }
+  error?: { statusCode: number; message: string }
 ): InMemoryArticlesService => ({
-  getArticles: async () =>
+  getArticles: async (token: string) =>
     error ? throwError(error) : Promise.resolve(articles),
 
   postArticle: async (
@@ -39,7 +39,7 @@ export const inMemoryArticlesService = (
 });
 
 export interface InMemoryArticlesService {
-  getArticles: () => Promise<Article[]>;
+  getArticles: (token: string) => Promise<Article[]>;
   postArticle: (article: ArticleWithoutId, token: string) => Promise<Article>;
   updateArticle: (
     article: ArticleWithoutTimeToRead,

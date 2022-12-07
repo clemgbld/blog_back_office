@@ -4,7 +4,7 @@ const FAKE_TOKEN = "fake-token";
 const FAKE_EXPIRATION_DATE = 7776000000;
 
 type Error = {
-  status: number;
+  statusCode: number;
   message: string;
 };
 
