@@ -245,7 +245,7 @@ export interface Article {
 
 export interface ArticleWithoutId {
   summary?: string;
-  topic?: string;
+  topic?: string | null;
   title: string;
   date: number;
   hide?: boolean;
