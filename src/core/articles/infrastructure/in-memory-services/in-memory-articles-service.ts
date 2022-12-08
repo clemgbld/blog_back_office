@@ -8,6 +8,8 @@ const FAKE_ID = "546";
 
 const FAKE_TIME_TO_READ = "7 min read";
 
+const FAKE_DATE = 123456;
+
 const throwError = (error: { statusCode: number; message: string }) => {
   throw new Error(error.message);
 };
@@ -27,6 +29,7 @@ export const inMemoryArticlesService = (
       ? throwError(error)
       : Promise.resolve({
           timeToRead: FAKE_TIME_TO_READ,
+          date: FAKE_DATE,
           id: FAKE_ID,
           ...article,
         }),

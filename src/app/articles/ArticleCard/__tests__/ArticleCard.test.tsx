@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { createStore } from "../../../../core/store";
 import { Provider } from "react-redux";
 import ArticleCard from "../ArticleCard";
-import { fakeArticle1, fakeArticle2 } from "../../fixtures/articles";
+import { fakeArticle1, fakeArticle2 } from "../../../../fixtures/articles";
 import {
   createClock,
   Clock,

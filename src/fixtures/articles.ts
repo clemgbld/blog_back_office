@@ -1,4 +1,4 @@
-import { Article } from "../../../core/articles/entities/article";
+import { Article } from "../core/articles/entities/article";
 
 export const fakeArticle1: any = {
   id: "1",

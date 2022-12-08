@@ -4,7 +4,6 @@ import { sutBuilder } from "../test-helper/sut-builder";
 describe("Post Article", () => {
   const articleToPost = {
     title: "new article",
-    date: 166480348787490,
     lightMode: true,
     content: [contentBuilder({ children: [{ text: "new article posted." }] })],
   };
@@ -19,7 +18,7 @@ describe("Post Article", () => {
       {
         id: "546",
         title: "new article",
-        date: 166480348787490,
+        date: 123456,
         lightMode: true,
         timeToRead: "7 min read",
         content: [

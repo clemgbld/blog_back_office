@@ -3,7 +3,7 @@ import {
   inMemoryStorage,
   StorageService,
 } from "../storage-service";
-import { inMemoryArticlesService } from "../../articles/infrastructure/in-memory-services/InMemoryArticlesService";
+import { inMemoryArticlesService } from "../../articles/infrastructure/in-memory-services/In-memory-articles-service";
 import { inMemoryAuthService } from "../../auth/infrastructure/in-memory-services/in-memory-auth-service";
 import { createClock, Clock } from "../create-clock";
 import { Article } from "../../articles/entities/article";
@@ -12,10 +12,10 @@ type BuildInMemoryServices = {
   storageService?: StorageService;
   articlesService?: {
     articles: Article[];
-    error?: { status: number; message: string };
+    error?: { statusCode: number; message: string };
   };
   authService?: {
-    error?: { status: number; message: string };
+    error?: { statusCode: number; message: string };
     inMemoryAuthService: typeof inMemoryAuthService;
   };
   clockService?: Clock;

@@ -247,7 +247,6 @@ export interface ArticleWithoutId {
   summary?: string;
   topic?: string | null;
   title: string;
-  date: number;
   hide?: boolean;
   lightMode: boolean;
   content: MyValue;

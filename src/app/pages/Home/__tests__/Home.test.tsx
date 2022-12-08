@@ -4,10 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ClockContext } from "../../../context/ClockContext";
 import { createStore } from "../../../../core/store";
 import { buildInMemoryServices } from "../../../../core/infastructure/all-services/all-services-in-memory";
-import {
-  fakeArticle1,
-  fakeArticle2,
-} from "../../../articles/fixtures/articles";
+import { fakeArticle1, fakeArticle2 } from "../../../../fixtures/articles";
 import Home from "../Home";
 import Header from "../../../UI/Header/Header";
 import { Article } from "../../../../core/articles/entities/article";

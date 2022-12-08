@@ -13,7 +13,7 @@ import { inMemoryAuthService } from "./core/auth/infrastructure/in-memory-servic
 import { createClock } from "./core/infastructure/create-clock";
 import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
-import { fakeArticle1, fakeArticle2 } from "./app/articles/fixtures/articles";
+import { fakeArticle1, fakeArticle2 } from "./fixtures/articles";
 import { loginFromStorage } from "./core/auth/use-cases/login-from-storage";
 import { chooseAppMode } from "./helper/choose-app-mode";
 

@@ -43,7 +43,6 @@ const CreateArticle = () => {
         summary: inputValues.description,
         topic: inputValues.topic,
         hide: inputValues.hide,
-        date: Date.now(),
         lightMode: isEditorInLightMode,
         content,
       })

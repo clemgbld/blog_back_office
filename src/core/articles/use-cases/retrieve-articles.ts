@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../..";
 import { Article } from "../entities/article";
-import { InMemoryArticlesService } from "../infrastructure/in-memory-services/InMemoryArticlesService";
+import { InMemoryArticlesService } from "../infrastructure/in-memory-services/In-memory-articles-service";
 import { selectToken } from "../../auth/selectors/selectors";
 
 export const retrieveArticles = createAsyncThunk<
