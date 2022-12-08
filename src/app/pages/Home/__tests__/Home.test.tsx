@@ -311,8 +311,9 @@ describe("Home", () => {
 
     it("should be able to close the notification before that the timer finish", async () => {
       renderHome([fakeArticle1, fakeArticle2], undefined, 1, {
-        status: 404,
+        statusCode: 404,
         message: "Something went wrong",
+        status: "fail",
       });
 
       let closeModalEl: HTMLElement;
