@@ -58,8 +58,9 @@ describe("Retrieve articles", () => {
     const { retrieveArticlesAsync } = sutBuilder({
       existingArticles: [],
       error: {
-        status: 400,
+        statusCode: 400,
         message: "something went wrong",
+        status: "fail",
       },
     }).build();
 

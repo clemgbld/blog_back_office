@@ -31,7 +31,7 @@ describe("ArticleCard", () => {
 
   const renderArticleCard = (
     props: ArticleCardProps,
-    error: { status: number; message: string } = undefined
+    error: { statusCode: number; message: string; status: string } = undefined
   ) => {
     const store = createStore({
       services: buildInMemoryServices({

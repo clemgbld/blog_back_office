@@ -49,7 +49,11 @@ describe("Update Article", () => {
   it("should be able to inform the user when an error occur in the updating operation", async () => {
     const { updateArticleAsync } = sutBuilder({
       preloadedState,
-      error: { status: 400, message: "Something went wrong" },
+      error: {
+        statusCode: 400,
+        message: "Something went wrong",
+        status: "fail",
+      },
     }).build();
 
     const { expectedErrorMsg } = await updateArticleAsync(updatedArticle);

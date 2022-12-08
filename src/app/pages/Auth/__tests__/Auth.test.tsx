@@ -20,7 +20,7 @@ describe("Auth page", () => {
 
   type renderSutProps = {
     inMemoryAuthService: typeof inMemoryAuthService;
-    error?: { message: string; status: number };
+    error?: { message: string; statusCode: number; status: string };
     isHomeNavigationAllowed: boolean;
   };
 
@@ -114,7 +114,11 @@ describe("Auth page", () => {
   it("should alert the user by displaying a notification when there in an auth error", async () => {
     renderSut({
       inMemoryAuthService,
-      error: { status: 401, message: "Something went wrong" },
+      error: {
+        statusCode: 401,
+        message: "Something went wrong",
+        status: "fail",
+      },
       isHomeNavigationAllowed: false,
     });
 

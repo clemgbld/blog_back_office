@@ -12,10 +12,10 @@ type BuildInMemoryServices = {
   storageService?: StorageService;
   articlesService?: {
     articles: Article[];
-    error?: { statusCode: number; message: string };
+    error?: { statusCode: number; message: string; status: string };
   };
   authService?: {
-    error?: { statusCode: number; message: string };
+    error?: { statusCode: number; message: string; status: string };
     inMemoryAuthService: typeof inMemoryAuthService;
   };
   clockService?: Clock;

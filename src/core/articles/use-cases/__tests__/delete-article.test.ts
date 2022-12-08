@@ -35,7 +35,11 @@ describe("Delete Article", () => {
   it("should informs the user when the delete operation failed", async () => {
     const { deleteArticleAsync } = sutBuilder({
       preloadedState,
-      error: { status: 400, message: "Something went wrong" },
+      error: {
+        statusCode: 400,
+        message: "Something went wrong",
+        status: "fail",
+      },
     }).build();
 
     const { expectedErrorMsg, status } = await deleteArticleAsync("1");

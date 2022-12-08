@@ -42,8 +42,9 @@ describe("Post Article", () => {
   it("should informs the user when the posting operation failed", async () => {
     const { postArticleAsync } = sutBuilder({
       error: {
-        status: 400,
+        statusCode: 400,
         message: "something went wrong",
+        status: "fail",
       },
     }).build();
 

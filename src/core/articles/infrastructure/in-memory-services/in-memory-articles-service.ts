@@ -10,13 +10,17 @@ const FAKE_TIME_TO_READ = "7 min read";
 
 const FAKE_DATE = 123456;
 
-const throwError = (error: { statusCode: number; message: string }) => {
+const throwError = (error: {
+  statusCode: number;
+  message: string;
+  status: string;
+}) => {
   throw new Error(error.message);
 };
 
 export const inMemoryArticlesService = (
   articles: Article[],
-  error?: { statusCode: number; message: string }
+  error?: { statusCode: number; message: string; status: string }
 ): InMemoryArticlesService => ({
   getArticles: async (token: string) =>
     error ? throwError(error) : Promise.resolve(articles),

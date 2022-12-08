@@ -6,6 +6,7 @@ const FAKE_EXPIRATION_DATE = 7776000000;
 type Error = {
   statusCode: number;
   message: string;
+  status: string;
 };
 
 export const inMemoryAuthService = ({ error }: { error?: Error }) => ({

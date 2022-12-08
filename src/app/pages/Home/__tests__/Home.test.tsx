@@ -25,7 +25,9 @@ describe("Home", () => {
     articles: Article[],
     preloadedState: any = undefined,
     pages: number | undefined = undefined,
-    error: { status: number; message: string } | undefined = undefined
+    error:
+      | { statusCode: number; message: string; status: string }
+      | undefined = undefined
   ) => {
     const store = createStore({
       preloadedState,
@@ -288,8 +290,9 @@ describe("Home", () => {
   describe("home page error handling", () => {
     it("should display a notification when articles fething goes wrong", async () => {
       const { store } = renderHome([fakeArticle1, fakeArticle2], undefined, 1, {
-        status: 404,
+        statusCode: 404,
         message: "Something went wrong",
+        status: "fail",
       });
       await waitFor(() => {
         expect(screen.getByText("Something went wrong")).toBeInTheDocument();

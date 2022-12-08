@@ -24,8 +24,9 @@ const fakeUserInfos = {
 };
 
 const error = {
-  status: 401,
+  statusCode: 401,
   message: "Email or password incorrect.",
+  status: "fail",
 };
 
 describe("login", () => {

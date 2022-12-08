@@ -19,7 +19,7 @@ export const sutBuilder = ({
   preloadedState = {},
 }: {
   existingArticles?: Article[];
-  error?: { status: number; message: string };
+  error?: { statusCode: number; message: string; status: string };
   preloadedState?: PreloadedState<RootState>;
 }) => ({
   build: () => {
