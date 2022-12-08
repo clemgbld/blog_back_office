@@ -44,5 +44,23 @@ describe("articles service", () => {
       expect(articles).toEqual([fakeArticle1, fakeArticle2]);
       expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
     });
+
+    it("should throw the correct error when the get operation fails", async () => {
+      server.use(
+        rest.get(
+          "https://backend-blog-peni.onrender.com/api/v1/articles",
+          (req, res, ctx) => {
+            ctx.status(401);
+            return res(
+              ctx.json({
+                status: "fail",
+                message: "You are not logged in!",
+                statusCode: 401,
+              })
+            );
+          }
+        )
+      );
+    });
   });
 });
