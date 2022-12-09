@@ -50,17 +50,22 @@ describe("articles service", () => {
         rest.get(
           "https://backend-blog-peni.onrender.com/api/v1/articles",
           (req, res, ctx) => {
-            ctx.status(401);
             return res(
+              ctx.status(400),
               ctx.json({
                 status: "fail",
-                message: "You are not logged in!",
-                statusCode: 401,
+                message: "Something went wrong!",
+                statusCode: 400,
               })
             );
           }
         )
       );
+
+      const articlesService = buildArticlesService();
+      await expect(
+        async () => await articlesService.getArticles(token)
+      ).rejects.toThrowError("Something went wrong!");
     });
   });
 });
