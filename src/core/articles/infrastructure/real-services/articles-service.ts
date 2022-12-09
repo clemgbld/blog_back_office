@@ -23,4 +23,28 @@ export const buildArticlesService = () => ({
       throw new Error(message);
     }
   },
+
+  deleteArticle: async (id: string, token: string) => {
+    try {
+      const reponse = await fetch(
+        `https://backend-blog-peni.onrender.com/api/v1/articles/${id}`,
+        {
+          method: "DELETE",
+          headers: new Headers({
+            Authorization: `Bearer ${token}`,
+          }),
+        }
+      );
+
+      const data = await reponse.json();
+
+      if (data.status === "fail") {
+        throw new Error(data.message);
+      }
+
+      return id;
+    } catch ({ message }) {
+      throw new Error(message);
+    }
+  },
 });

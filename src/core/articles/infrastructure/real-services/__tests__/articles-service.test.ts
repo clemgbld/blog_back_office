@@ -7,6 +7,8 @@ let request: RestRequest;
 
 const token = "FAKE_TOKEN";
 
+const FAKE_ID = "FAKE_ID";
+
 const server = setupServer(
   rest.get(
     "https://backend-blog-peni.onrender.com/api/v1/articles",
@@ -18,6 +20,20 @@ const server = setupServer(
           status: "success",
           results: 2,
           data: [fakeArticle1, fakeArticle2],
+        })
+      );
+    }
+  ),
+  rest.delete(
+    "https://backend-blog-peni.onrender.com/api/v1/articles/FAKE_ID",
+    (req, res, ctx) => {
+      request = req;
+      return res(
+        ctx.status(204),
+        ctx.json({
+          status: "success",
+
+          data: null,
         })
       );
     }
@@ -66,6 +82,41 @@ describe("articles service", () => {
       await expect(
         async () => await articlesService.getArticles(token)
       ).rejects.toThrowError("Something went wrong!");
+    });
+  });
+
+  describe("delete articles", () => {
+    it("should delete an article and pass the token in the call", async () => {
+      const articlesService = buildArticlesService();
+      const id = await articlesService.deleteArticle(FAKE_ID, token);
+      expect(request.method).toBe("DELETE");
+      expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
+      expect(id).toBe(FAKE_ID);
+    });
+
+    it("should throw an error when the delete operation fails", async () => {
+      server.use(
+        rest.delete(
+          "https://backend-blog-peni.onrender.com/api/v1/articles/FAKE_ID",
+          (req, res, ctx) => {
+            request = req;
+            return res(
+              ctx.status(401),
+              ctx.json({
+                status: "fail",
+                statusCode: 401,
+
+                message: "You are not logged in!",
+              })
+            );
+          }
+        )
+      );
+
+      const articlesService = buildArticlesService();
+      await expect(async () =>
+        articlesService.deleteArticle(FAKE_ID, token)
+      ).rejects.toThrowError("You are not logged in!");
     });
   });
 });
