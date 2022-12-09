@@ -1,4 +1,10 @@
-import { rest, RestRequest } from "msw";
+import {
+  rest,
+  RestRequest,
+  ResponseComposition,
+  DefaultBodyType,
+  RestContext,
+} from "msw";
 import { setupServer } from "msw/node";
 import { fakeArticle1, fakeArticle2 } from "../../../../../fixtures/articles";
 import { buildArticlesService } from "../articles-service";
@@ -40,6 +46,35 @@ const server = setupServer(
   )
 );
 
+type SimulateError = {
+  url: string;
+  message: string;
+  status: number;
+  method: string;
+};
+
+const simulateError = ({ url, message, status, method }: SimulateError) => {
+  server.use(
+    rest[method](
+      url,
+      (
+        req: RestRequest,
+        res: ResponseComposition<DefaultBodyType>,
+        ctx: RestContext
+      ) => {
+        return res(
+          ctx.status(status),
+          ctx.json({
+            status: "fail",
+            message,
+            statusCode: status,
+          })
+        );
+      }
+    )
+  );
+};
+
 beforeAll(() => {
   server.listen();
 });
@@ -62,21 +97,12 @@ describe("articles service", () => {
     });
 
     it("should throw the correct error when the get operation fails", async () => {
-      server.use(
-        rest.get(
-          "https://backend-blog-peni.onrender.com/api/v1/articles",
-          (req, res, ctx) => {
-            return res(
-              ctx.status(400),
-              ctx.json({
-                status: "fail",
-                message: "Something went wrong!",
-                statusCode: 400,
-              })
-            );
-          }
-        )
-      );
+      simulateError({
+        url: "https://backend-blog-peni.onrender.com/api/v1/articles",
+        status: 400,
+        message: "Something went wrong!",
+        method: "get",
+      });
 
       const articlesService = buildArticlesService();
       await expect(
@@ -95,23 +121,12 @@ describe("articles service", () => {
     });
 
     it("should throw an error when the delete operation fails", async () => {
-      server.use(
-        rest.delete(
-          "https://backend-blog-peni.onrender.com/api/v1/articles/FAKE_ID",
-          (req, res, ctx) => {
-            request = req;
-            return res(
-              ctx.status(401),
-              ctx.json({
-                status: "fail",
-                statusCode: 401,
-
-                message: "You are not logged in!",
-              })
-            );
-          }
-        )
-      );
+      simulateError({
+        url: "https://backend-blog-peni.onrender.com/api/v1/articles/FAKE_ID",
+        status: 401,
+        message: "You are not logged in!",
+        method: "delete",
+      });
 
       const articlesService = buildArticlesService();
       await expect(async () =>
