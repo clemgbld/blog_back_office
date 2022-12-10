@@ -8,6 +8,8 @@ import {
 import { setupServer } from "msw/node";
 import { fakeArticle1, fakeArticle2 } from "../../../../../fixtures/articles";
 import { buildArticlesService } from "../articles-service";
+import { BLOG_BASE_URL } from "../../../../infastructure/rest-service/constants";
+import { ARTICLES_ENDPOINT } from "../constants";
 
 let request: RestRequest;
 
@@ -16,22 +18,19 @@ const token = "FAKE_TOKEN";
 const FAKE_ID = "FAKE_ID";
 
 const server = setupServer(
-  rest.get(
-    "https://backend-blog-peni.onrender.com/api/v1/articles",
-    (req, res, ctx) => {
-      request = req;
+  rest.get(`${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`, (req, res, ctx) => {
+    request = req;
 
-      return res(
-        ctx.json({
-          status: "success",
-          results: 2,
-          data: [fakeArticle1, fakeArticle2],
-        })
-      );
-    }
-  ),
+    return res(
+      ctx.json({
+        status: "success",
+        results: 2,
+        data: [fakeArticle1, fakeArticle2],
+      })
+    );
+  }),
   rest.delete(
-    "https://backend-blog-peni.onrender.com/api/v1/articles/FAKE_ID",
+    `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}/${FAKE_ID}`,
     (req, res, ctx) => {
       request = req;
       return res(
@@ -98,7 +97,7 @@ describe("articles service", () => {
 
     it("should throw the correct error when the get operation fails", async () => {
       simulateError({
-        url: "https://backend-blog-peni.onrender.com/api/v1/articles",
+        url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,
         status: 400,
         message: "Something went wrong!",
         method: "get",
@@ -122,7 +121,7 @@ describe("articles service", () => {
 
     it("should throw an error when the delete operation fails", async () => {
       simulateError({
-        url: "https://backend-blog-peni.onrender.com/api/v1/articles/FAKE_ID",
+        url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}/${FAKE_ID}`,
         status: 401,
         message: "You are not logged in!",
         method: "delete",
