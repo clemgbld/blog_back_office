@@ -5,14 +5,14 @@ import { loginFromStorage } from "./use-cases/login-from-storage";
 import { STATUS } from "../utils/status-constants";
 
 type InitialState = {
-  token: string | null;
+  token: string;
   isLoggedIn: boolean;
   status: string;
   error?: string;
 };
 
 export const initialState: InitialState = {
-  token: null,
+  token: "",
   isLoggedIn: false,
   status: "idle",
 };
@@ -40,7 +40,7 @@ export const authSlice = createSlice({
         state.status = STATUS.REJECTED;
       })
       .addCase(logout.fulfilled, (state) => {
-        state.token = null;
+        state.token = "";
         state.isLoggedIn = false;
       })
       .addCase(loginFromStorage.fulfilled, (state, action) => {

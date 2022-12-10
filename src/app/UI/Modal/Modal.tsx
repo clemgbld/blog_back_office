@@ -5,7 +5,9 @@ type ModalProps = {
   children: JSX.Element;
 };
 
-const Modal: FC<ModalProps> = ({ children }) =>
-  ReactDOM.createPortal(children, document.getElementById("modal"));
+const Modal: FC<ModalProps> = ({ children }) => {
+  const modal: any = document.getElementById("modal");
+  return ReactDOM.createPortal(children, modal);
+};
 
 export default Modal;

@@ -12,9 +12,9 @@ import Button from "../../UI/Button/Button";
 import classNames from "./Auth.module.scss";
 
 const Auth = () => {
-  const emailInputEl = useRef(null);
+  const emailInputEl = useRef<HTMLInputElement>(null);
 
-  const passwordInputEl = useRef(null);
+  const passwordInputEl = useRef<HTMLInputElement>(null);
 
   const errorMessage = useSelector(({ auth: { error } }: RootState) => error);
 
@@ -26,8 +26,8 @@ const Auth = () => {
     e.preventDefault();
     await dispatch(
       login({
-        email: emailInputEl.current.value,
-        password: passwordInputEl.current.value,
+        email: emailInputEl.current?.value || "",
+        password: passwordInputEl.current?.value || "",
       })
     );
 

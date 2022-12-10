@@ -22,7 +22,7 @@ const UpdateArticle = () => {
   const { id } = useParams();
 
   const articleToUpdate = useSelector((state: RootState) =>
-    articlesSelectors.selectById(state, id)
+    articlesSelectors.selectById(state, id || "")
   );
 
   const isEditorInLightMode = useSelector<RootState, boolean>(
@@ -39,18 +39,18 @@ const UpdateArticle = () => {
 
   useEffect(() => {
     if (onMount) return;
-    dispatch(setTheme(articleToUpdate.lightMode));
+    dispatch(setTheme(!!articleToUpdate?.lightMode));
     setOnMount(true);
   }, [dispatch, articleToUpdate, onMount]);
 
   const { inputValues, setInputValues, content, setContent } = useArticlesForm(
     {
-      title: articleToUpdate.title,
-      topic: articleToUpdate.topic || "",
-      description: articleToUpdate.summary || "",
-      hide: articleToUpdate.hide || false,
+      title: articleToUpdate?.title || "",
+      topic: articleToUpdate?.topic || "",
+      description: articleToUpdate?.summary || "",
+      hide: articleToUpdate?.hide || false,
     },
-    articleToUpdate.content
+    articleToUpdate?.content
   );
 
   const navigate = useNavigate();
@@ -60,12 +60,12 @@ const UpdateArticle = () => {
     if (isTopicError === true) return;
     await dispatch(
       updateArticle({
-        id: articleToUpdate.id,
+        id: articleToUpdate?.id || "",
         title: inputValues.title,
         summary: inputValues.description,
         topic: inputValues.topic,
         hide: inputValues.hide,
-        date: articleToUpdate.date,
+        date: articleToUpdate?.date || 0,
         lightMode: isEditorInLightMode,
         content,
       })

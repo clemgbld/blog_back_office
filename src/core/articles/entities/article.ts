@@ -234,7 +234,7 @@ export type MyValue = MyRootBlock[];
 export interface Article {
   id: string;
   summary?: string;
-  topic?: string;
+  topic?: string | null;
   title: string;
   date: number;
   hide?: boolean;
@@ -255,7 +255,7 @@ export interface ArticleWithoutId {
 export interface ArticleWithoutTimeToRead {
   id: string;
   summary?: string;
-  topic?: string;
+  topic?: string | null;
   title: string;
   date: number;
   hide?: boolean;

@@ -37,6 +37,8 @@ const existingStorage: Record<string, string> = chooseAppMode({
   },
 });
 
+console.log(process.env.REACT_APP_ARG);
+
 const storageService = createStorageService(inMemoryStorage(existingStorage));
 
 const store = createStore({

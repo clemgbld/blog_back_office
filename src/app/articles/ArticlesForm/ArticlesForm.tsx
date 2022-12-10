@@ -40,7 +40,7 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
   isTopicError,
   setIsTopicError,
 }) => {
-  const handleInputChange = ({ target: { name, value } }) => {
+  const handleInputChange = ({ target: { name, value } }: any) => {
     setInputValues({ ...inputValues, [name]: value });
     return value;
   };

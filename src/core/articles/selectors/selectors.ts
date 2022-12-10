@@ -6,6 +6,18 @@ import { removeUndefinedAndDuplicate } from "../../utils/helper";
 import { curry } from "ramda";
 import { Article } from "../entities/article";
 
+export type FormattedArticle = {
+  id: string;
+  summary?: string;
+  topic?: string | null;
+  title: string;
+  date: string;
+  hide?: boolean;
+  content: any;
+  lightMode: boolean;
+  timeToRead: string;
+};
+
 export const articlesSelectors = articlesAdapter.getSelectors<RootState>(
   (state) => state.articles.data
 );
@@ -20,7 +32,7 @@ export const articlesError = (store: Store) => store.getState().articles.error;
 
 export const allArticlesFormatted = createSelector(
   (articles: any) => articles,
-  (articles: any) =>
+  (articles: any): FormattedArticle[] =>
     articles.map((article: any) => ({
       ...article,
       date: formatDateDDMMYYYY(new Date(article.date)),
@@ -37,7 +49,7 @@ export const selectArticlesBasedOnTopic = curry(
   (currentTopics: string[], articles: Article[]): Article[] =>
     currentTopics.includes("all articles")
       ? articles
-      : articles.filter(({ topic }) => currentTopics.includes(topic))
+      : articles.filter(({ topic }) => topic && currentTopics.includes(topic))
 );
 
 export const selectArticlesWithHideStatus = curry(

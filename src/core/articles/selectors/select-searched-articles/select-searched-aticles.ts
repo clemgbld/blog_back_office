@@ -11,7 +11,7 @@ const replaceAllTextKeyByNothing = (str: string) =>
 const isSearchvalueInText = (text: string, searchValue: string) =>
   new RegExp(searchValue.toLowerCase().trim()).test(text?.toLowerCase());
 
-const extractTextFromContent = compose(
+const extractTextFromContent: (...args: any[]) => string = compose(
   replaceAllTextKeyByNothing,
   (str?: string[]) => str?.join(";"),
   extractTextField,

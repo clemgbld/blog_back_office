@@ -21,7 +21,7 @@ type ArticleCardProps = {
   timeToRead: string;
   date: string;
   content: any;
-  topic?: string;
+  topic?: string | null;
   lightMode: boolean;
   hide?: boolean;
 };

@@ -1,12 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState, AppDispatch } from "../../..";
-
+import { AppDispatch } from "../../..";
 import { updateArticle } from "./update-article";
 
 export const toggleHideStatus = createAsyncThunk<
   any,
   string,
-  { state: RootState; dispatch: AppDispatch }
+  { state: any; dispatch: AppDispatch }
 >(
   "articles/toggleHideStatus",
   async (id, thunkApi) =>

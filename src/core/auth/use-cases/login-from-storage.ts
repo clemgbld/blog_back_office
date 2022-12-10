@@ -29,8 +29,8 @@ export const loginFromStorage = createAsyncThunk<
       "blog-admin-token-expiration-time"
     );
 
-    if (clockService.now() >= expirationDate) return { token: null };
+    if (clockService.now() >= expirationDate) return { token: "" };
 
-    return { token: token || null };
+    return { token: token || "" };
   }
 );

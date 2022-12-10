@@ -77,7 +77,7 @@ let components = createPlateUI({
 components = withStyledPlaceHolders(components);
 components = withStyledDraggables(components);
 
-const plugins = createMyPlugins(
+const plugins: any = createMyPlugins(
   [
     createParagraphPlugin(),
     createBlockquotePlugin(),

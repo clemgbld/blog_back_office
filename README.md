@@ -16,12 +16,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `REAT_APP_ARG='inMemory error' yarn start`
+### `REACT_APP_ARG='inMemory error' yarn start`
 
 run the app in the development mode in in memory mode.
 Simulate network errors.
 
-### `REAT_APP_ARG='inMemory isNotLoggedIn' yarn start`
+### `REACT_APP_ARG='inMemory isNotLoggedIn' yarn start`
 
 run the app in the development mode in in memory mode.
 Simulate a senario in wich the user is not logged in.

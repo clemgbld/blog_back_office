@@ -33,7 +33,7 @@ describe("login", () => {
   it("should have a none loged in user and no token", () => {
     const store = createStore({});
 
-    expect(selectToken(store.getState())).toBe(null);
+    expect(selectToken(store.getState())).toBe("");
     expect(selectIsLoggedIn(store.getState())).toBe(false);
     expect(selectAuthStatus(store.getState())).toBe("idle");
   });

@@ -43,7 +43,7 @@ describe("logout", () => {
     });
 
     await store.dispatch(logout());
-    expect(selectToken(store.getState())).toBe(null);
+    expect(selectToken(store.getState())).toBe("");
     expect(selectIsLoggedIn(store.getState())).toBe(false);
     expect(storageService.getItem("blog-admin-token")).toBe(undefined);
     expect(storageService.getItem("blog-admin-token-expiration-time")).toBe(

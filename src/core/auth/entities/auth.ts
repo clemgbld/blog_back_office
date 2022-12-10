@@ -8,5 +8,5 @@ export type User = {
 };
 
 export type CredentialsFromStorage = {
-  token: string | null;
+  token: string;
 };

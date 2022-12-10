@@ -43,7 +43,7 @@ describe("login from storage", () => {
 
     await store.dispatch(loginFromStorage());
 
-    expect(selectToken(store.getState())).toBe(null);
+    expect(selectToken(store.getState())).toBe("");
     expect(selectIsLoggedIn(store.getState())).toBe(false);
   });
 
@@ -54,7 +54,7 @@ describe("login from storage", () => {
 
     await store.dispatch(loginFromStorage());
 
-    expect(selectToken(store.getState())).toBe(null);
+    expect(selectToken(store.getState())).toBe("");
     expect(selectIsLoggedIn(store.getState())).toBe(false);
   });
 
@@ -65,7 +65,7 @@ describe("login from storage", () => {
 
     await store.dispatch(loginFromStorage());
 
-    expect(selectToken(store.getState())).toBe(null);
+    expect(selectToken(store.getState())).toBe("");
     expect(selectIsLoggedIn(store.getState())).toBe(false);
   });
 });

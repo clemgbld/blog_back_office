@@ -1,8 +1,11 @@
 import { curry } from "ramda";
-import { Article } from "../../entities/article";
 import { allArticlesFormatted } from "../selectors";
+import { FormattedArticle } from "../selectors";
 
-export const calcNumPages = (articlesPerPages: number, articles: Article[]) =>
+export const calcNumPages = (
+  articlesPerPages: number,
+  articles: FormattedArticle[]
+) =>
   Array.from(
     { length: Math.ceil(articles.length / articlesPerPages) },
 

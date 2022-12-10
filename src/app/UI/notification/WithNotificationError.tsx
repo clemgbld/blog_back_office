@@ -7,7 +7,7 @@ import classNames from "./WithNotificationError.module.scss";
 
 type WithNotificationErrorProps = {
   children: JSX.Element;
-  errorMessage: string;
+  errorMessage: string | undefined;
   resetErrorMessage: () => any;
 };
 

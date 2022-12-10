@@ -37,7 +37,7 @@ export const inMemoryArticlesService = (
           id: FAKE_ID,
           ...article,
         }),
-  updateArticle: async (article: Article, token: string) =>
+  updateArticle: async (article: ArticleWithoutTimeToRead, token: string) =>
     error
       ? throwError(error)
       : Promise.resolve({ ...article, timeToRead: FAKE_TIME_TO_READ }),

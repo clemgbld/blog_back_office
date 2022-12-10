@@ -42,14 +42,24 @@ const server = setupServer(
         })
       );
     }
-  )
+  ),
+  rest.patch(`${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`, (req, res, ctx) => {
+    request = req;
+
+    return res(
+      ctx.json({
+        status: "success",
+        data: fakeArticle1,
+      })
+    );
+  })
 );
 
 type SimulateError = {
   url: string;
   message: string;
   status: number;
-  method: string;
+  method: "get" | "post" | "patch" | "delete" | "put";
 };
 
 const simulateError = ({ url, message, status, method }: SimulateError) => {
@@ -131,6 +141,23 @@ describe("articles service", () => {
       await expect(async () =>
         articlesService.deleteArticle(FAKE_ID, token)
       ).rejects.toThrowError("You are not logged in!");
+    });
+  });
+
+  describe("update article", () => {
+    it("should update the article and pass the token in the call", async () => {
+      const articleWithoutTimeToRead = { ...fakeArticle1 };
+      delete articleWithoutTimeToRead.timeToRead;
+
+      const articlesService = buildArticlesService();
+      const updatedArticle = await articlesService.updateArticle(
+        articleWithoutTimeToRead,
+        token
+      );
+      expect(updatedArticle).toEqual(fakeArticle1);
+
+      expect(await request.json()).toEqual(articleWithoutTimeToRead);
+      expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
     });
   });
 });

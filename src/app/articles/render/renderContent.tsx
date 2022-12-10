@@ -155,7 +155,7 @@ const buildProps = (content: any) => ({
   ...buildSpecificProps(content),
 });
 
-export const renderContent = (content: any[]) =>
+export const renderContent = (content: any[]): any =>
   content.length === 0 ? null : content.map(renderElement);
 
 const shouldRenderBr = (content: any) =>
