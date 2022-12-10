@@ -1,4 +1,4 @@
-import { Article } from "../../entities/article";
+import { Article, ArticleWithoutId } from "../../entities/article";
 import { ArticleWithoutTimeToRead } from "../../entities/article";
 import { restService } from "../../../infastructure/rest-service/rest-service";
 import {
@@ -25,7 +25,23 @@ export const buildArticlesService = () => ({
 
     return id;
   },
-  updateArticle: async (article: ArticleWithoutTimeToRead, token: string) => {
+  updateArticle: async (
+    article: ArticleWithoutTimeToRead,
+    token: string
+  ): Promise<Article> => {
+    const res = await restService({
+      method: METHOD.PATCH,
+      url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,
+      headers: { Authorization: `Bearer ${token}` },
+      body: article,
+    });
+
+    return res.data;
+  },
+  postArticle: async (
+    article: ArticleWithoutId,
+    token: string
+  ): Promise<Article> => {
     const res = await restService({
       method: METHOD.PATCH,
       url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,

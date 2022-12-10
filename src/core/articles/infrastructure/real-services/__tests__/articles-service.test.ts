@@ -52,6 +52,16 @@ const server = setupServer(
         data: fakeArticle1,
       })
     );
+  }),
+  rest.post(`${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`, (req, res, ctx) => {
+    request = req;
+
+    return res(
+      ctx.json({
+        status: "success",
+        data: fakeArticle1,
+      })
+    );
   })
 );
 
@@ -157,6 +167,24 @@ describe("articles service", () => {
       expect(updatedArticle).toEqual(fakeArticle1);
 
       expect(await request.json()).toEqual(articleWithoutTimeToRead);
+      expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
+    });
+  });
+
+  describe("post article", () => {
+    it("should post the articles and pass the token in the call", async () => {
+      const articleToPost = { ...fakeArticle1 };
+      delete articleToPost.timeToRead;
+      delete articleToPost.id;
+      delete articleToPost.date;
+      const articlesService = buildArticlesService();
+      const articlePosted = await articlesService.postArticle(
+        articleToPost,
+        token
+      );
+
+      expect(articlePosted).toEqual(fakeArticle1);
+      expect(await request.json()).toEqual(articleToPost);
       expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
     });
   });
