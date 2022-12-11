@@ -47,7 +47,7 @@ import {
   PlateEventProvider,
   AutoformatPlugin,
   ELEMENT_CODE_BLOCK,
-  StyledElement,
+  CodeBlockElement,
 } from "@udecode/plate";
 import { createJuicePlugin } from "@udecode/plate-juice";
 import {
@@ -72,7 +72,7 @@ import {
 const id = "Blog/BackOffice";
 
 let components = createPlateUI({
-  [ELEMENT_CODE_BLOCK]: StyledElement,
+  [ELEMENT_CODE_BLOCK]: CodeBlockElement,
 });
 components = withStyledPlaceHolders(components);
 components = withStyledDraggables(components);
