@@ -5,6 +5,7 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { buildInMemoryServices } from "./core/infastructure/all-services/all-services-in-memory";
+import { buildServices } from "./core/infastructure/all-services/all-services";
 import {
   createStorageService,
   inMemoryStorage,
@@ -37,15 +38,20 @@ const existingStorage: Record<string, string> = chooseAppMode({
   },
 });
 
-console.log(process.env.REACT_APP_ARG);
-
 const storageService = createStorageService(inMemoryStorage(existingStorage));
 
-const store = createStore({
-  services: buildInMemoryServices({
-    articlesService: { articles: [fakeArticle1, fakeArticle2], error },
-    authService: { error: error, inMemoryAuthService },
-    storageService,
+const store = chooseAppMode({
+  expectedMode: "inMemory",
+  currentMode: process.env.REACT_APP_ARG,
+  matchingValue: createStore({
+    services: buildInMemoryServices({
+      articlesService: { articles: [fakeArticle1, fakeArticle2], error },
+      authService: { error: error, inMemoryAuthService },
+      storageService,
+    }),
+  }),
+  nonMatchingValue: createStore({
+    services: buildServices(),
   }),
 });
 

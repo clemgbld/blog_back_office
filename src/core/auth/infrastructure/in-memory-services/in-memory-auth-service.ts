@@ -10,7 +10,7 @@ type Error = {
 };
 
 export const inMemoryAuthService = ({ error }: { error?: Error }) => ({
-  login: async (_: User) =>
+  login: async (user: User) =>
     error
       ? Promise.reject(error)
       : Promise.resolve({

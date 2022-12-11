@@ -9,7 +9,7 @@ import { setupServer } from "msw/node";
 import { fakeArticle1, fakeArticle2 } from "../../../../../fixtures/articles";
 import { buildArticlesService } from "../articles-service";
 import { BLOG_BASE_URL } from "../../../../infastructure/rest-service/constants";
-import { ARTICLES_ENDPOINT } from "../constants";
+import { ARTICLES_ENDPOINT, DELETE_ENDPOINT } from "../constants";
 
 let request: RestRequest;
 
@@ -30,17 +30,10 @@ const server = setupServer(
     );
   }),
   rest.delete(
-    `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}/${FAKE_ID}`,
+    `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}${DELETE_ENDPOINT}/${FAKE_ID}`,
     (req, res, ctx) => {
       request = req;
-      return res(
-        ctx.status(204),
-        ctx.json({
-          status: "success",
-
-          data: null,
-        })
-      );
+      return res(ctx.status(204));
     }
   ),
   rest.patch(`${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`, (req, res, ctx) => {
@@ -141,7 +134,7 @@ describe("articles service", () => {
 
     it("should throw an error when the delete operation fails", async () => {
       simulateError({
-        url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}/${FAKE_ID}`,
+        url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}${DELETE_ENDPOINT}/${FAKE_ID}`,
         status: 401,
         message: "You are not logged in!",
         method: "delete",
@@ -168,6 +161,8 @@ describe("articles service", () => {
 
       expect(await request.json()).toEqual(articleWithoutTimeToRead);
       expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
+      expect(request.headers.get("content-type")).toEqual("application/json");
+      expect(request.headers.get("accept")).toEqual("application/json");
     });
   });
 
@@ -185,6 +180,7 @@ describe("articles service", () => {
 
       expect(articlePosted).toEqual(fakeArticle1);
       expect(await request.json()).toEqual(articleToPost);
+      expect(request.method).toBe("POST");
       expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
     });
   });

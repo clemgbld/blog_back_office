@@ -95,7 +95,12 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
     setCurrentPage(shycronisePaginationWithOtherFilters(articlesToDisplay));
   }, [articlesToDisplay]);
 
-  if (articlesStatus === STATUS.PENDING) return <Spinner />;
+  if (articlesStatus === STATUS.PENDING)
+    return (
+      <div className="page_form-layout">
+        <Spinner />
+      </div>
+    );
 
   return (
     <WithNotificationError
