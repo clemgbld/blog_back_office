@@ -64,7 +64,7 @@ const UpdateArticle = () => {
         title: inputValues.title,
         summary: inputValues.description,
         topic: inputValues.topic,
-        hide: inputValues.hide,
+        hide: !inputValues.hide,
         date: articleToUpdate?.date || 0,
         lightMode: isEditorInLightMode,
         content,
