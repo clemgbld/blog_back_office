@@ -48,4 +48,15 @@ describe("helper that dertermine the initial mode of the application", () => {
       })
     ).toBe(true);
   });
+
+  it("should be false when there is not the two matching string", () => {
+    expect(
+      chooseAppMode({
+        currentMode: "inMemory",
+        expectedMode: "inMemory error",
+        matchingValue: true,
+        nonMatchingValue: false,
+      })
+    ).toBe(false);
+  });
 });

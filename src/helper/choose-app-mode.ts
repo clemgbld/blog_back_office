@@ -9,6 +9,10 @@ const isMatchingValue = (
   currentMode: string
 ): boolean => {
   const currentModeArr = currentMode.split(" ");
+
+  if (currentModeArr.length === 1 && expectedMode.split(" ").length > 1)
+    return false;
+
   const filteredByMatchingValues = filterByMatchingValues(
     expectedMode.split(" "),
     currentModeArr
@@ -20,7 +24,7 @@ const isMatchingValue = (
 };
 
 export const chooseAppMode = ({
-  currentMode="",
+  currentMode = "",
   expectedMode,
   matchingValue,
   nonMatchingValue,
