@@ -1,4 +1,7 @@
+import { ResetTv } from "@styled-icons/material";
 import { createElement, CSSProperties } from "react";
+import { CopyBlock, dracula } from "react-code-blocks";
+import { extractCodeLines } from "./extractCodeLines/extract-code-lines";
 
 const buildSpecificProps = (content: any) => {
   let props = {};
@@ -79,10 +82,6 @@ const buildStyle = (content: any) => {
     };
   }
 
-  if (content.type === "code") {
-    style = { ...style, fontFamily: "monospace" };
-  }
-
   if (content.type === "img") {
     style = { ...style, objectFit: "cover" };
   }
@@ -145,8 +144,6 @@ const buildStyle = (content: any) => {
 const buildType = (content: any) => {
   if (content.type === "media_embed") return "iframe";
 
-  if (["lic", "code_line"].includes(content.type)) return "p";
-
   return content.type;
 };
 
@@ -176,6 +173,19 @@ function renderElement(content: any, i: number) {
       </span>
     ) : (
       content.text
+    );
+  }
+
+  if (content.type === "code_block") {
+    return (
+      <CopyBlock
+        key={content.id}
+        text={extractCodeLines(content.children)}
+        language={content.lang}
+        showLineNumbers={true}
+        theme={dracula}
+        codeBlock
+      />
     );
   }
 

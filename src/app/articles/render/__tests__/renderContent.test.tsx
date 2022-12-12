@@ -81,18 +81,6 @@ describe("renderContent", () => {
     expect(pElement.children[0].tagName).toBe("BR");
   });
 
-  it("should be able to render a code_line", () => {
-    const content = [
-      { type: "code_line", id: 1, children: [{ text: "a line of code" }] },
-    ];
-
-    render(renderContent(content));
-
-    const codeLineElement = screen.getByText("a line of code");
-
-    expect(codeLineElement.tagName).toBe("P");
-  });
-
   describe("style", () => {
     it("create an element without any styling when not specify", () => {
       const content = [{ type: "h1", id: 1, children: [{ text: "Title" }] }];
@@ -350,22 +338,6 @@ describe("renderContent", () => {
       expect(tableElement.style.width).toBe("100%");
     });
 
-    it("should should have a fontFamiliy of monospace when there is code block element", () => {
-      const content = [
-        {
-          type: "code",
-          id: 1,
-          children: [{ text: "code" }],
-        },
-      ];
-
-      render(<div>{renderContent(content)}</div>);
-
-      const codeElement = screen.getByText("code");
-
-      expect(codeElement.style.fontFamily).toBe("monospace");
-    });
-
     it("should able to add a color to a text element", () => {
       const content = [
         {
@@ -484,6 +456,41 @@ describe("renderContent", () => {
 
       expect(spanElement.tagName).toBe("SPAN");
       expect(spanElement.style.fontWeight).toBe("700");
+    });
+  });
+  describe("code snipet", () => {
+    it("should not crash when rendering a code snipet", () => {
+      const content = [
+        {
+          type: "code_block",
+          id: 1234,
+          lang: "jsx",
+          children: [
+            {
+              id: 1,
+              type: "code_line",
+              children: [
+                { text: "class HelloMessage extends React.Component {" },
+              ],
+            },
+            {
+              id: 2,
+              type: "code_line",
+              children: [{ text: "  handlePress = () => {" }],
+            },
+            {
+              id: 3,
+              type: "code_line",
+              children: [{ text: "    alert('Hello')" }],
+            },
+          ],
+        },
+      ];
+
+      render(<div>{renderContent(content)}</div>);
+
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(document.querySelectorAll("code").length).toBe(2);
     });
   });
 });
