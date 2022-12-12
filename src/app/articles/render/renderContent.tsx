@@ -1,4 +1,3 @@
-import { ResetTv } from "@styled-icons/material";
 import { createElement, CSSProperties } from "react";
 import { CopyBlock, dracula } from "react-code-blocks";
 import { extractCodeLines } from "./extractCodeLines/extract-code-lines";
