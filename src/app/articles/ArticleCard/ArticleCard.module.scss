@@ -31,7 +31,8 @@
     @include modal-layout;
     background-color: #fff;
     color: #000;
-
+    overflow-y: scroll;
+    max-height: 90vh;
     &--dark-theme {
       color: #fff;
       background-color: #212529;
