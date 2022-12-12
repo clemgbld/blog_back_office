@@ -54,7 +54,10 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
     setInputValues({ ...inputValues, hide: !inputValues.hide });
 
   const handleValueChange = useCallback(
-    (content: MyValue) => setContent(content),
+    (content: MyValue) => {
+      console.log(content);
+      setContent(content);
+    },
     [setContent]
   );
 
