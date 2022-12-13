@@ -6,49 +6,53 @@ import {
   METHOD,
 } from "../../../infastructure/rest-service/constants";
 import { ARTICLES_ENDPOINT, DELETE_ENDPOINT } from "./constants";
+import { catchAsync } from "../../../error/catch-async";
 
 export const buildArticlesService = () => ({
-  getArticles: async (token: string): Promise<Article[]> => {
+  getArticles: catchAsync(async (token: string): Promise<Article[]> => {
     const { data } = await restService({
       url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
-  },
+  }),
 
-  deleteArticle: async (id: string, token: string): Promise<string> => {
-    await restService({
-      method: METHOD.DELETE,
-      url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}${DELETE_ENDPOINT}/${id}`,
-      headers: { Authorization: `Bearer ${token}` },
-    });
+  deleteArticle: catchAsync(
+    async (id: string, token: string): Promise<string> => {
+      await restService({
+        method: METHOD.DELETE,
+        url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}${DELETE_ENDPOINT}/${id}`,
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    return id;
-  },
-  updateArticle: async (
-    article: ArticleWithoutTimeToRead,
-    token: string
-  ): Promise<Article> => {
-    const res = await restService({
-      method: METHOD.PATCH,
-      url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,
-      headers: { Authorization: `Bearer ${token}` },
-      body: article,
-    });
+      return id;
+    }
+  ),
+  updateArticle: catchAsync(
+    async (
+      article: ArticleWithoutTimeToRead,
+      token: string
+    ): Promise<Article> => {
+      const res = await restService({
+        method: METHOD.PATCH,
+        url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,
+        headers: { Authorization: `Bearer ${token}` },
+        body: article,
+      });
 
-    return res.data;
-  },
-  postArticle: async (
-    article: ArticleWithoutId,
-    token: string
-  ): Promise<Article> => {
-    const res = await restService({
-      method: METHOD.POST,
-      url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,
-      headers: { Authorization: `Bearer ${token}` },
-      body: article,
-    });
+      return res.data;
+    }
+  ),
+  postArticle: catchAsync(
+    async (article: ArticleWithoutId, token: string): Promise<Article> => {
+      const res = await restService({
+        method: METHOD.POST,
+        url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,
+        headers: { Authorization: `Bearer ${token}` },
+        body: article,
+      });
 
-    return res.data;
-  },
+      return res.data;
+    }
+  ),
 });

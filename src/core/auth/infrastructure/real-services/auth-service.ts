@@ -5,9 +5,10 @@ import {
   METHOD,
 } from "../../../infastructure/rest-service/constants";
 import { USERS_ENDPOINT, LOGIN_ENDPOINT } from "./constants";
+import { catchAsync } from "../../../error/catch-async";
 
 export const buildAuthService = () => ({
-  login: async (user: User): Promise<AuthCredentials> => {
+  login: catchAsync(async (user: User): Promise<AuthCredentials> => {
     const res = await restService({
       url: `${BLOG_BASE_URL}${USERS_ENDPOINT}${LOGIN_ENDPOINT}`,
       method: METHOD.POST,
@@ -15,5 +16,5 @@ export const buildAuthService = () => ({
     });
 
     return res.data;
-  },
+  }),
 });

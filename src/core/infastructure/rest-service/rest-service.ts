@@ -23,12 +23,11 @@ export const restService = async ({
     body: JSON.stringify(body),
   });
 
-  if (response.ok && response.status === 204) return;
+  if (!response.ok) return Promise.reject(await response.json());
+
+  if (response.status === 204) return;
 
   const data = await response.json();
 
-  if (data.status === "fail") {
-    throw new Error(data.message);
-  }
   return data;
 };
