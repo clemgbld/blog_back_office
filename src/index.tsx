@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+import { Store } from "./core/store";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -40,7 +41,7 @@ const existingStorage: Record<string, string> = chooseAppMode({
 
 const storageService = createStorageService(inMemoryStorage(existingStorage));
 
-const store = chooseAppMode({
+const store: Store = chooseAppMode({
   expectedMode: "inMemory",
   currentMode: process.env.REACT_APP_ARG,
   matchingValue: createStore({

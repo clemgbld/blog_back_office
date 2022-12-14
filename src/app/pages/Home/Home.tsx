@@ -65,7 +65,11 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
 
   useEffect(() => {
     if (isArticlesRetrieved) return;
-    dispatch(retrieveArticles());
+    const dispatchPromise = dispatch(retrieveArticles());
+
+    return () => {
+      dispatchPromise.abort();
+    };
   }, [dispatch, isArticlesRetrieved]);
 
   const [currentHideStatus, setCurrentHideStatus] = useState("all articles");
