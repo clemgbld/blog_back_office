@@ -51,10 +51,6 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
     ({ articles: { error } }: RootState) => error
   );
 
-  const isArticlesRetrieved = useSelector(
-    ({ articles: { isArticlesRetrieved } }: RootState) => isArticlesRetrieved
-  );
-
   const searchTerms = useSelector(
     ({ ui: { searchTerms } }: RootState) => searchTerms
   );
@@ -64,13 +60,11 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
   };
 
   useEffect(() => {
-    if (isArticlesRetrieved) return;
     const dispatchPromise = dispatch(retrieveArticles());
-
     return () => {
       dispatchPromise.abort();
     };
-  }, [dispatch, isArticlesRetrieved]);
+  }, [dispatch]);
 
   const [currentHideStatus, setCurrentHideStatus] = useState("all articles");
   const [currentTopics, setCurrentTopics] = useState(["all articles"]);

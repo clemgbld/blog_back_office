@@ -316,11 +316,7 @@ describe("Home", () => {
         status: "fail",
       });
 
-      let closeModalEl: HTMLElement;
-
-      await waitFor(() => {
-        closeModalEl = screen.getByTestId("close notification");
-      });
+      const closeModalEl = await screen.findByTestId("close notification");
 
       userEvent.click(closeModalEl);
 
@@ -328,28 +324,5 @@ describe("Home", () => {
         expect(closeModalEl).not.toBeInTheDocument();
       });
     });
-  });
-
-  it("does not refetch the articles when they are already fetched", async () => {
-    const preloadedState = {
-      ui: {
-        isEditorInLightMode: true,
-        searchTerms: "",
-      },
-      articles: {
-        status: "success",
-        isArticlesRetrieved: true,
-        data: {
-          ids: ["1"],
-          entities: {
-            "1": fakeArticle1,
-          },
-        },
-      },
-    };
-
-    renderHome([fakeArticle1, fakeArticle2], preloadedState);
-
-    expect(screen.getAllByTestId("article").length).toBe(1);
   });
 });

@@ -13,6 +13,8 @@ import { createClock } from "../../../infastructure/create-clock";
 import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
 import { inMemoryAuthService } from "../../infrastructure/in-memory-services/in-memory-auth-service";
 import { login } from "../login";
+import { STATUS } from "../../../utils/status-constants";
+import { spy } from "../../../../lib/spy";
 
 const FAKE_TOKEN = "fake-token";
 const FAKE_EXPIRATION_DATE = 7776000000;
@@ -73,5 +75,37 @@ describe("login", () => {
 
     expect(selectAuthStatus(store.getState())).toBe("rejected");
     expect(selectAuthErrorMessage(store.getState())).toBe(error.message);
+  });
+
+  it("should not excute login process when one is alrady loading", async () => {
+    const preloadedState = {
+      auth: {
+        token: "",
+        isLoggedIn: false,
+        status: STATUS.PENDING,
+      },
+    };
+
+    const inMemoryAuth = inMemoryAuthService({});
+
+    const spyLogin = spy(inMemoryAuth.login);
+
+    const inMemoryAuthWithAuthWithSpyLogin = () => ({
+      login: spyLogin,
+    });
+
+    const store = createStore({
+      preloadedState,
+      services: buildInMemoryServices({
+        authService: {
+          error,
+          inMemoryAuthService: inMemoryAuthWithAuthWithSpyLogin,
+        },
+      }),
+    });
+
+    await store.dispatch(login(fakeUserInfos));
+
+    expect(spyLogin.hasBeenCalled()).toBe(false);
   });
 });
