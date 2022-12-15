@@ -1,5 +1,6 @@
 import { articleBuilder } from "../builder/article-builder";
 import { sutBuilder } from "../test-helper/sut-builder";
+import { STATUS } from "../../../utils/status-constants";
 
 describe("Retrieve articles", () => {
   it("should have no articles initially", () => {
@@ -69,5 +70,49 @@ describe("Retrieve articles", () => {
     expect(status).toBe("rejected");
 
     expect(expectedErrorMsg).toBe("something went wrong");
+  });
+
+  it("should not start another retreive articles operation when one is alrady loading", async () => {
+    const preloadedState = {
+      articles: {
+        isArticlesRetrieved: false,
+        status: STATUS.PENDING,
+        data: {
+          ids: [],
+          entities: {},
+        },
+      },
+    };
+
+    const { retrieveArticlesAsync, getArticlesSpy } = sutBuilder({
+      existingArticles: [articleBuilder()],
+      preloadedState,
+    }).build();
+
+    await retrieveArticlesAsync();
+
+    expect(getArticlesSpy.hasBeenCalled()).toBe(false);
+  });
+
+  it("should not start another retrieve articles operation when articles have already been loaded", async () => {
+    const preloadedState = {
+      articles: {
+        isArticlesRetrieved: true,
+        status: STATUS.SUCCESS,
+        data: {
+          ids: [],
+          entities: {},
+        },
+      },
+    };
+
+    const { retrieveArticlesAsync, getArticlesSpy } = sutBuilder({
+      existingArticles: [articleBuilder()],
+      preloadedState,
+    }).build();
+
+    await retrieveArticlesAsync();
+
+    expect(getArticlesSpy.hasBeenCalled()).toBe(false);
   });
 });

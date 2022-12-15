@@ -25,8 +25,9 @@ export const postArticle = createAsyncThunk<
   ) =>
     await articlesService.postArticle(articleToPost, selectToken(getState())),
   {
-    condition: (articleToPost, { getState }) => {
+    condition: (_, { getState }) => {
       const { articles } = getState();
+
       if (articles.status === STATUS.PENDING) {
         return false;
       }
