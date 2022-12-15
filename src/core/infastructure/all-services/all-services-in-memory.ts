@@ -13,6 +13,7 @@ type BuildInMemoryServices = {
   articlesService?: {
     articles: Article[];
     error?: { statusCode: number; message: string; status: string };
+    buildInMemoryArticlesService?: typeof inMemoryArticlesService;
   };
   authService?: {
     error?: { statusCode: number; message: string; status: string };
@@ -23,14 +24,20 @@ type BuildInMemoryServices = {
 
 export const buildInMemoryServices = ({
   storageService = createStorageService(inMemoryStorage()),
-  articlesService = { articles: [], error: undefined },
+  articlesService = {
+    articles: [],
+    error: undefined,
+    buildInMemoryArticlesService: inMemoryArticlesService,
+  },
   clockService = createClock.createNull(),
   authService = { error: undefined, inMemoryAuthService },
 }: BuildInMemoryServices) => ({
-  articlesService: inMemoryArticlesService(
-    articlesService.articles,
-    articlesService.error
-  ),
+  articlesService: articlesService.buildInMemoryArticlesService
+    ? articlesService.buildInMemoryArticlesService(
+        articlesService.articles,
+        articlesService.error
+      )
+    : inMemoryArticlesService(articlesService.articles, articlesService.error),
   authService: authService.inMemoryAuthService({ error: authService.error }),
   storageService,
   clockService,

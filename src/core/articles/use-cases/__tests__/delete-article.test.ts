@@ -1,5 +1,6 @@
 import { sutBuilder } from "../test-helper/sut-builder";
 import { articleBuilder } from "../builder/article-builder";
+import { STATUS } from "../../../utils/status-constants";
 
 describe("Delete Article", () => {
   const preloadedState = {
@@ -47,5 +48,25 @@ describe("Delete Article", () => {
     expect(status).toBe("rejected");
 
     expect(expectedErrorMsg).toBe("Something went wrong");
+  });
+
+  it("should not start a delete operation when one is already loading", async () => {
+    const preloadedState = {
+      articles: {
+        isArticlesRetrieved: true,
+        status: STATUS.PENDING,
+        data: {
+          ids: [],
+          entities: {},
+        },
+      },
+    };
+    const { deleteArticleAsync, deleteArticleSpy } = sutBuilder({
+      preloadedState,
+    }).build();
+
+    await deleteArticleAsync("1");
+
+    expect(deleteArticleSpy.hasBeenCalled()).toBe(false);
   });
 });

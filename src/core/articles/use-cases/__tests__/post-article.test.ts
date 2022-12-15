@@ -1,5 +1,6 @@
 import { contentBuilder } from "../builder/article-builder";
 import { sutBuilder } from "../test-helper/sut-builder";
+import { STATUS } from "../../../utils/status-constants";
 
 describe("Post Article", () => {
   const articleToPost = {
@@ -53,5 +54,26 @@ describe("Post Article", () => {
     expect(status).toBe("rejected");
 
     expect(expectedErrorMsg).toBe("something went wrong");
+  });
+
+  it("should not excute a post article operation when one operation is already loading", async () => {
+    const preloadedState = {
+      articles: {
+        isArticlesRetrieved: true,
+        status: STATUS.PENDING,
+        data: {
+          ids: [],
+          entities: {},
+        },
+      },
+    };
+
+    const { postArticleAsync, postArticleSpy } = sutBuilder({
+      preloadedState,
+    }).build();
+
+    await postArticleAsync(articleToPost);
+
+    expect(postArticleSpy.hasBeenCalled()).toBe(false);
   });
 });

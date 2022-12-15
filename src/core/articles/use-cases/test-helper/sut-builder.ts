@@ -12,6 +12,8 @@ import { updateArticle } from "../update-article";
 import { deleteArticle } from "../deleteArticle";
 import { toggleHideStatus } from "../toogle-hide-status";
 import { Article, ArticleWithoutId } from "../../entities/article";
+import { inMemoryArticlesService } from "../../infrastructure/in-memory-services/in-memory-articles-service";
+import { spy } from "../../../../lib/spy";
 
 export const sutBuilder = ({
   existingArticles = [],
@@ -32,9 +34,30 @@ export const sutBuilder = ({
       },
     };
 
+    const articlesServices = inMemoryArticlesService(existingArticles, error);
+
+    const getArticlesSpy = spy(articlesServices.getArticles);
+    const postArticleSpy = spy(articlesServices.postArticle);
+    const updateArticleSpy = spy(articlesServices.updateArticle);
+    const deleteArticleSpy = spy(articlesServices.deleteArticle);
+
+    const buildInMemoryArticlesService = (
+      articles: Article[],
+      error?: { statusCode: number; message: string; status: string }
+    ) => ({
+      getArticles: getArticlesSpy,
+      postArticle: postArticleSpy,
+      updateArticle: updateArticleSpy,
+      deleteArticle: deleteArticleSpy,
+    });
+
     const store = createStore({
       services: buildInMemoryServices({
-        articlesService: { articles: existingArticles, error },
+        articlesService: {
+          articles: existingArticles,
+          error,
+          buildInMemoryArticlesService,
+        },
       }),
       preloadedState: preloadedStateWithToken,
     });
@@ -44,6 +67,10 @@ export const sutBuilder = ({
       status: articlesStatus(store),
       expectedArticles: allArticles(store),
       expectedErrorMsg: articlesError(store),
+      getArticlesSpy,
+      postArticleSpy,
+      updateArticleSpy,
+      deleteArticleSpy,
       retrieveArticles: () => {
         store.dispatch(retrieveArticles());
         return {
