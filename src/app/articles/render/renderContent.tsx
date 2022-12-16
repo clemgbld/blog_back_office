@@ -175,6 +175,8 @@ function renderElement(content: any, i: number) {
     );
   }
 
+  if (content.type === "code_line") return;
+
   if (content.type === "code_block") {
     return (
       <CopyBlock
@@ -184,6 +186,7 @@ function renderElement(content: any, i: number) {
         showLineNumbers={true}
         theme={dracula}
         codeBlock
+        wrapLines={true}
       />
     );
   }
