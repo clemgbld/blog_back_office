@@ -31,9 +31,9 @@ export const articlesStatus = (store: Store) =>
 export const articlesError = (store: Store) => store.getState().articles.error;
 
 export const allArticlesFormatted = createSelector(
-  (articles: any) => articles,
-  (articles: any): FormattedArticle[] =>
-    articles.map((article: any) => ({
+  (articles: Article[]) => articles,
+  (articles: Article[]): FormattedArticle[] =>
+    articles.map((article: Article) => ({
       ...article,
       date: formatDateDDMMYYYY(new Date(article.date)),
     }))
