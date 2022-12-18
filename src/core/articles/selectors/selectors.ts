@@ -39,10 +39,11 @@ export const allArticlesFormatted = createSelector(
     }))
 );
 
-export const allTopics = createSelector<any[], string[]>(
+export const allTopics = createSelector(
   (articles: ReturnType<typeof allArticles>) =>
     articles.map(({ topic }) => topic),
-  (allTopics: string[]) => removeUndefinedAndDuplicate(allTopics)
+  (allTopics: (string | null | undefined)[]) =>
+    removeUndefinedAndDuplicate(allTopics)
 );
 
 export const selectArticlesBasedOnTopic = curry(
