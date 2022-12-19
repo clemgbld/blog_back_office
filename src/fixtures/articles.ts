@@ -1,6 +1,6 @@
 import { Article } from "../core/articles/entities/article";
 
-export const fakeArticle1: any = {
+export const fakeArticle1: Article = {
   id: "1",
   summary:
     "Redundant re-renders are a common issue in React. If not taken seriously, this issue can quickly worsen the performance of your application.",
