@@ -44,6 +44,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "start:in-memory": "REACT_APP_ARG='inMemory' GENERATE_SOURCEMAP=false react-scripts start",
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",

@@ -82,7 +82,13 @@ const buildStyle = (content: any) => {
   }
 
   if (content.type === "img") {
-    style = { ...style, objectFit: "cover" };
+    style = {
+      ...style,
+      objectFit: "cover",
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
+    };
   }
 
   if (content.strikethrough) {
