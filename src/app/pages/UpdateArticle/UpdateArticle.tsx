@@ -48,7 +48,7 @@ const UpdateArticle = () => {
       title: articleToUpdate?.title || "",
       topic: articleToUpdate?.topic || "",
       description: articleToUpdate?.summary || "",
-      hide: articleToUpdate?.hide || false,
+      hide: !articleToUpdate?.hide || true,
     },
     articleToUpdate?.content
   );
