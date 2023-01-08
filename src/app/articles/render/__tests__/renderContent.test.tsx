@@ -493,4 +493,25 @@ describe("renderContent", () => {
       expect(document.querySelectorAll("code").length).toBe(2);
     });
   });
+
+  it("should render a link", () => {
+    const content = [
+      {
+        type: "h1",
+        id: 1,
+        children: [{ text: "title" }],
+      },
+      {
+        type: "p",
+        id: 1673173643297,
+      },
+      { text: "" },
+      { type: "a", url: "/", id: 13, children: [{ text: "link" }] },
+      { text: "" },
+    ];
+
+    render(<div>{renderContent(content)}</div>);
+
+    expect(screen.getByText("link")).toBeInTheDocument();
+  });
 });

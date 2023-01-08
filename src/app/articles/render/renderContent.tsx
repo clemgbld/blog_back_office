@@ -162,7 +162,7 @@ export const renderContent = (content: any[]): any =>
 
 const shouldRenderBr = (content: any) =>
   content.type === "p" &&
-  content.children.length === 1 &&
+  content.children?.length === 1 &&
   content.children[0].text === "";
 
 function renderElement(content: any, i: number) {
@@ -204,7 +204,7 @@ function renderElement(content: any, i: number) {
   return createElement(
     buildType(content),
     buildProps(content),
-    content.children && content.children[0].text !== ""
+    content.children && content.type !== "img"
       ? renderContent(content.children)
       : null
   );
