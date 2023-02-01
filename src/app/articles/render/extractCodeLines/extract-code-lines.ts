@@ -5,4 +5,6 @@ type CodeLine = {
 };
 
 export const extractCodeLines = (codeLines: CodeLine[]) =>
-  codeLines.reduce((acc, curr) => `${acc}${`${curr.children[0].text}\n`}`, "");
+  codeLines
+    .reduce((acc, curr) => `${acc}${`${curr.children[0].text}\n`}`, "")
+    .replaceAll("&lt;", "<");

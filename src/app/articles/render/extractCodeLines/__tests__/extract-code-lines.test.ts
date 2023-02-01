@@ -42,4 +42,30 @@ describe("extract code lines", () => {
       "class HelloMessage extends React.Component {\n  handlePress = () => {\n    alert('Hello')\n"
     );
   });
+
+  it("should replace all &lt; by <", () => {
+    const codeLines = [
+      {
+        id: 1,
+        type: "code_line",
+        children: [
+          { text: "class &lt;HelloMessage extends React.Component {" },
+        ],
+      },
+      {
+        id: 2,
+        type: "code_line",
+        children: [{ text: "  &lt;handlePress = () => {" }],
+      },
+      {
+        id: 3,
+        type: "code_line",
+        children: [{ text: "    alert('Hello')" }],
+      },
+    ];
+
+    expect(extractCodeLines(codeLines)).toBe(
+      "class <HelloMessage extends React.Component {\n  <handlePress = () => {\n    alert('Hello')\n"
+    );
+  });
 });
