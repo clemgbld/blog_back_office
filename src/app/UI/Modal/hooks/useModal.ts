@@ -8,7 +8,7 @@ export const useModal = () => {
   const handleCloseModal = useCallback(() => setIsOpen(false), []);
 
   const closeModalWithEsc = useCallback(
-    (e: any) => {
+    (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       handleCloseModal();
     },
