@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, SyntheticEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { useArticlesForm } from "../../articles/hooks/use-articles-form";
@@ -55,7 +55,7 @@ const UpdateArticle = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (isTopicError === true) return;
     await dispatch(
