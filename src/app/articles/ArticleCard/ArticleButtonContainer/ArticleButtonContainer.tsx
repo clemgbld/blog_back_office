@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { stopPropagation } from "../../../UI/utils/stopPropagation";
 import { useModal } from "../../../UI/Modal/hooks/useModal";
-import { compose } from "@reduxjs/toolkit";
+import { pipe } from "ramda";
 import DefaultModal from "../../../UI/Modal/DefaultModal/DefaultModal";
 import Button from "../../../UI/Button/Button";
 import classNames from "./ArticleButtonContainer.module.scss";
@@ -17,7 +17,7 @@ const ArticleButtonContainer: FC<ArticleButtonContainerProps> = ({
 }) => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
-  const modalHandler = (fn: () => void) => compose(fn, stopPropagation);
+  const modalHandler = (fn: () => void) => pipe(stopPropagation, fn);
 
   const openModalHandler = modalHandler(handleOpenModal);
 

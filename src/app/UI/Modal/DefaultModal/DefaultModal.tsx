@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, SyntheticEvent } from "react";
 import Modal from "../Modal";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { Close } from "@styled-icons/material";
@@ -8,7 +8,7 @@ import classNames from "./DefaultModal.module.scss";
 type DefaultModalProps = {
   children: JSX.Element;
 
-  onClose?: any;
+  onClose: (e?: SyntheticEvent) => void;
 };
 
 const DefaultModal: FC<DefaultModalProps> = ({ children, onClose }) => (

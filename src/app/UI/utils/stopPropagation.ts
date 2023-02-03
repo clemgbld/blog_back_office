@@ -1,1 +1,3 @@
-export const stopPropagation = (e: any) => e.stopPropagation();
+import { SyntheticEvent } from "react";
+
+export const stopPropagation = (e?: SyntheticEvent) => e?.stopPropagation();
