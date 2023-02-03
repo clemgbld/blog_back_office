@@ -1,17 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, SyntheticEvent } from "react";
 import classNames from "./Input.module.scss";
 
 type InputProps = {
   isRequired?: boolean;
   id: string;
-  onChange?: ({
-    target: { name, value },
-  }: {
-    target: {
-      name: any;
-      value: any;
-    };
-  }) => void;
+  onChange?: (e: SyntheticEvent) => void;
   label: string;
   value?: string;
   type?: string;

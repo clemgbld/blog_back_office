@@ -6,7 +6,7 @@ type ModalProps = {
 };
 
 const Modal: FC<ModalProps> = ({ children }) => {
-  const modal: any = document.getElementById("modal");
+  const modal = document.getElementById("modal")!;
   return ReactDOM.createPortal(children, modal);
 };
 
