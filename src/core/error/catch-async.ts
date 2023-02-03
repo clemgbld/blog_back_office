@@ -5,7 +5,7 @@ type ServerBlogError = {
 };
 
 export const catchAsync =
-  (fn: any) =>
+  (fn: (...args: any[]) => Promise<any>) =>
   (...args: any[]) =>
     fn(...args).catch(({ message }: ServerBlogError) => {
       throw new Error(message);
