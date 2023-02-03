@@ -4,7 +4,7 @@ type RestService = {
   method?: string;
   url: string;
   headers?: HeadersInit;
-  body?: any;
+  body?: Object;
 };
 
 export const restService = async ({
