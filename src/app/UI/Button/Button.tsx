@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FC, SyntheticEvent } from "react";
 
 type ButtonProps = {
   label: string;
   disabled?: boolean;
-  onClick?: (e: any) => void;
+  onClick?: (e: SyntheticEvent) => void;
   type?: "button" | "submit" | "reset";
   className?: string;
 };
@@ -11,7 +11,7 @@ type ButtonProps = {
 const Button: FC<ButtonProps> = ({
   label,
   disabled = false,
-  onClick = (e: any) => {},
+  onClick = (e: SyntheticEvent) => {},
   type = "button",
   className = "",
 }) => {
