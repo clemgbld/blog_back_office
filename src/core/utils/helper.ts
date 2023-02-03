@@ -1,10 +1,10 @@
 import { compose } from "@reduxjs/toolkit";
 
-export const removeDuplicate = (array: any[]) => [...new Set(array)];
+export const removeDuplicate = <T>(array: T[]) => [...new Set(array)];
 
-export const removeUndefined = (arr: any[]) => arr.filter((el) => el);
+export const removeUndefined = <T>(arr: T[]) => arr.filter((el) => el);
 
-export const removeUndefinedAndDuplicate = compose(
+export const removeUndefinedAndDuplicate: <T, R>(arr: T[]) => R[] = compose(
   removeDuplicate,
   removeUndefined
 );

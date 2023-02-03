@@ -42,8 +42,8 @@ export const allArticlesFormatted = createSelector(
 export const allTopics = createSelector(
   (articles: ReturnType<typeof allArticles>) =>
     articles.map(({ topic }) => topic),
-  (allTopics: (string | null | undefined)[]) =>
-    removeUndefinedAndDuplicate(allTopics)
+  (allTopics: (string | null | undefined)[]): string[] =>
+    removeUndefinedAndDuplicate<string | null | undefined, string>(allTopics)
 );
 
 export const selectArticlesBasedOnTopic = curry(
