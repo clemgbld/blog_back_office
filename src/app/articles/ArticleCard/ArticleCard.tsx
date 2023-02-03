@@ -47,8 +47,9 @@ const ArticleCard: FC<ArticleCardProps> = ({
     await dispatch(deleteArticle(id));
   };
 
-  const toggleHideStatusHandler = async () =>
+  const toggleHideStatusHandler = async () => {
     await dispatch(toggleHideStatus(id));
+  };
 
   return (
     <>

@@ -7,7 +7,7 @@ import Button from "../../../UI/Button/Button";
 import classNames from "./ArticleButtonContainer.module.scss";
 
 type ArticleButtonContainerProps = {
-  onValidate: () => Promise<any>;
+  onValidate: () => Promise<void>;
   action: string;
 };
 
