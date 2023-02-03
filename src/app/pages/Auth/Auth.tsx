@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, SyntheticEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "../../..";
@@ -22,7 +22,7 @@ const Auth = () => {
 
   const navigate = useNavigate();
 
-  const submitHandler = async (e: any) => {
+  const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault();
     await dispatch(
       login({
