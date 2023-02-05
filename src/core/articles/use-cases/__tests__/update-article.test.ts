@@ -10,7 +10,7 @@ describe("Update Article", () => {
       data: {
         ids: ["1"],
         entities: {
-          1: articleBuilder(),
+          1: articleBuilder({}),
         },
       },
     },
@@ -70,7 +70,7 @@ describe("Update Article", () => {
         data: {
           ids: ["1"],
           entities: {
-            1: articleBuilder(),
+            1: articleBuilder({}),
           },
         },
       },

@@ -15,7 +15,7 @@ describe("Retrieve articles", () => {
 
   it("informs the user when the the articles are loading", async () => {
     const { retrieveArticles } = sutBuilder({
-      existingArticles: [articleBuilder()],
+      existingArticles: [articleBuilder({})],
     }).build();
 
     const { status } = retrieveArticles();
@@ -25,7 +25,7 @@ describe("Retrieve articles", () => {
 
   it("retrieves articles", async () => {
     const { retrieveArticlesAsync } = sutBuilder({
-      existingArticles: [articleBuilder()],
+      existingArticles: [articleBuilder({})],
     }).build();
 
     const { status, expectedArticles, isArticlesRetrieved } =
@@ -85,7 +85,7 @@ describe("Retrieve articles", () => {
     };
 
     const { retrieveArticlesAsync, getArticlesSpy } = sutBuilder({
-      existingArticles: [articleBuilder()],
+      existingArticles: [articleBuilder({})],
       preloadedState,
     }).build();
 
@@ -107,7 +107,7 @@ describe("Retrieve articles", () => {
     };
 
     const { retrieveArticlesAsync, getArticlesSpy } = sutBuilder({
-      existingArticles: [articleBuilder()],
+      existingArticles: [articleBuilder({})],
       preloadedState,
     }).build();
 

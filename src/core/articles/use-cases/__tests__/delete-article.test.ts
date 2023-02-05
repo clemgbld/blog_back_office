@@ -10,7 +10,7 @@ describe("Delete Article", () => {
       data: {
         ids: ["1"],
         entities: {
-          1: articleBuilder(),
+          1: articleBuilder({}),
         },
       },
     },

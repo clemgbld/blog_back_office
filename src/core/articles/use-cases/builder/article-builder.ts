@@ -1,6 +1,6 @@
 import { builder } from "../../../utils/builder";
 
-const defaultContent: Record<string, string | Record<string, string>[]> = {
+const defaultContent: any = {
   type: "paragraph",
   children: [{ text: "A first line of text." }],
 };
@@ -14,7 +14,7 @@ const defaultArticle = {
   title: "article 1",
   date: 166480348787489,
   content: [
-    contentBuilder(),
+    contentBuilder({}),
     contentBuilder({ children: [{ text: "A second line of text." }] }),
   ],
 };

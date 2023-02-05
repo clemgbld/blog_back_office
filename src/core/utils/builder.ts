@@ -1,6 +1,6 @@
 export const builder =
-  (defaultObj: any) =>
-  (overide: any = {}) => ({
+  <T extends {}>(defaultObj: T) =>
+  <U extends {}>(overide: U) => ({
     ...defaultObj,
     ...overide,
   });
