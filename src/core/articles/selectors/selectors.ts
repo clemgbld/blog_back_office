@@ -6,17 +6,7 @@ import { removeUndefinedAndDuplicate } from "../../utils/helper";
 import { curry } from "ramda";
 import { Article } from "../entities/article";
 
-export type FormattedArticle = {
-  id: string;
-  summary?: string;
-  topic?: string | null;
-  title: string;
-  date: string;
-  hide?: boolean;
-  content: any;
-  lightMode: boolean;
-  timeToRead: string;
-};
+export type FormattedArticle = Omit<Article, "date"> & { date: string };
 
 export const articlesSelectors = articlesAdapter.getSelectors<RootState>(
   (state) => state.articles.data
