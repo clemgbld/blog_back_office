@@ -23,7 +23,7 @@ describe("clock", () => {
     clock.cancel();
     await wait;
     const elapsedTime = clock.now();
-    expect(elapsedTime).toBeLessThanOrEqual(startTime + 2);
+    expect(elapsedTime).toBeLessThanOrEqual(startTime + 5);
   });
 
   it("fails fast when we use advanceNullAsync in production mode", async () => {

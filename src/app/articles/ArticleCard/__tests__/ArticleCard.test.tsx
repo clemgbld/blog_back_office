@@ -19,7 +19,7 @@ describe("ArticleCard", () => {
     content: any;
     timeToRead: string;
     summary?: string;
-    topic?: string;
+    topic?: string | null;
     lightMode: boolean;
   };
 
@@ -31,7 +31,9 @@ describe("ArticleCard", () => {
 
   const renderArticleCard = (
     props: ArticleCardProps,
-    error: { statusCode: number; message: string; status: string } = undefined
+    error:
+      | { statusCode: number; message: string; status: string }
+      | undefined = undefined
   ) => {
     const store = createStore({
       services: buildInMemoryServices({
