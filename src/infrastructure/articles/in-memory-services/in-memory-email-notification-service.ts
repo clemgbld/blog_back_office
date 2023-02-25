@@ -1,6 +1,6 @@
 import { NotificationInfos } from "../../../core/articles/entities/notification";
 
 export const buildInMemoryEmailNotificationService = () => ({
-  notifySubscribers: (notificationInfos: NotificationInfos) =>
+  notifySubscribers: async (notificationInfos: NotificationInfos) =>
     Promise.resolve(),
 });

@@ -5,12 +5,13 @@ import { STATUS } from "../../../utils/status-constants";
 describe("Post Article", () => {
   const articleToPost = {
     title: "new article",
+    notify: false,
     lightMode: true,
     content: [contentBuilder({ children: [{ text: "new article posted." }] })],
   };
 
   it("should post an article an add it to the list of articles", async () => {
-    const { postArticleAsync } = sutBuilder({}).build();
+    const { postArticleAsync, notifiySubscribersSpy } = sutBuilder({}).build();
 
     const { status, expectedArticles } = await postArticleAsync(articleToPost);
 
@@ -21,6 +22,7 @@ describe("Post Article", () => {
         title: "new article",
         date: 123456,
         lightMode: true,
+
         timeToRead: "7 min read",
         content: [
           {
@@ -29,6 +31,40 @@ describe("Post Article", () => {
           },
         ],
       },
+    ]);
+    expect(notifiySubscribersSpy.hasBeenCalled()).toBeFalsy();
+  });
+
+  it("should send an notification email with the correct new article infos", async () => {
+    const { postArticleAsync, notifiySubscribersSpy } = sutBuilder({}).build();
+    const articleToPostWithImage = {
+      title: "new article",
+      summary: "summary",
+      topic: "topic",
+      notify: true,
+      lightMode: true,
+      content: [
+        contentBuilder({
+          children: [{ text: "new article posted." }],
+        }),
+        { type: "img", url: "url" },
+      ],
+    };
+    await postArticleAsync(articleToPostWithImage);
+    expect(notifiySubscribersSpy.hasBeenCalled()).toBeTruthy();
+
+    expect(notifiySubscribersSpy.args()).toEqual([
+      [
+        {
+          id: "546",
+          summary: "summary",
+          topic: "topic",
+          title: "new article",
+          timeToRead: "7 min read",
+          date: "01/01/1970",
+          img: "url",
+        },
+      ],
     ]);
   });
 
