@@ -39,15 +39,18 @@ export const updateArticle = createAsyncThunk<
     );
 
     if (updatedArticle.notify) {
-      emailNotificationService.notifySubscribers({
-        id: newArticle.id,
-        summary: newArticle.summary,
-        topic: newArticle.topic,
-        title: newArticle.title,
-        img: selectFirstImg(newArticle.content).src,
-        date: formatDateDDMMYYYY(new Date(newArticle.date)),
-        timeToRead: newArticle.timeToRead,
-      });
+      emailNotificationService.notifySubscribers(
+        {
+          id: newArticle.id,
+          summary: newArticle.summary,
+          topic: newArticle.topic,
+          title: newArticle.title,
+          img: selectFirstImg(newArticle.content).src,
+          date: formatDateDDMMYYYY(new Date(newArticle.date)),
+          timeToRead: newArticle.timeToRead,
+        },
+        selectToken(getState())
+      );
     }
 
     return newArticle;

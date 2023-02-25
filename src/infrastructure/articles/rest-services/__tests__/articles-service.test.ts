@@ -149,8 +149,10 @@ describe("articles service", () => {
 
   describe("update article", () => {
     it("should update the article and pass the token in the call", async () => {
-      const articleWithoutTimeToRead = { ...fakeArticle1 };
-      delete articleWithoutTimeToRead.timeToRead;
+      const articleWithoutTimeToRead = {
+        ...fakeArticle1,
+        timeToRead: undefined,
+      };
 
       const articlesService = buildRestArticlesService();
       const updatedArticle = await articlesService.updateArticle(
@@ -168,10 +170,13 @@ describe("articles service", () => {
 
   describe("post article", () => {
     it("should post the articles and pass the token in the call", async () => {
-      const articleToPost = { ...fakeArticle1 };
-      delete articleToPost.timeToRead;
-      delete articleToPost.id;
-      delete articleToPost.date;
+      const articleToPost = {
+        ...fakeArticle1,
+        timeToRead: undefined,
+        id: undefined,
+        date: undefined,
+      };
+
       const articlesService = buildRestArticlesService();
       const articlePosted = await articlesService.postArticle(
         articleToPost,

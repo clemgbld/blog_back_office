@@ -64,6 +64,7 @@ describe("Post Article", () => {
           date: "01/01/1970",
           img: "url",
         },
+        "fake-token",
       ],
     ]);
   });

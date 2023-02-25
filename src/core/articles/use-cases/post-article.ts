@@ -37,15 +37,18 @@ export const postArticle = createAsyncThunk<
       selectToken(getState())
     );
     if (articleToPost.notify) {
-      await emailNotificationService.notifySubscribers({
-        id: postedArticle.id,
-        summary: postedArticle.summary,
-        topic: postedArticle.topic,
-        title: postedArticle.title,
-        timeToRead: postedArticle.timeToRead,
-        date: formatDateDDMMYYYY(new Date(postedArticle.date)),
-        img: selectFirstImg(postedArticle.content).src,
-      });
+      await emailNotificationService.notifySubscribers(
+        {
+          id: postedArticle.id,
+          summary: postedArticle.summary,
+          topic: postedArticle.topic,
+          title: postedArticle.title,
+          timeToRead: postedArticle.timeToRead,
+          date: formatDateDDMMYYYY(new Date(postedArticle.date)),
+          img: selectFirstImg(postedArticle.content).src,
+        },
+        selectToken(getState())
+      );
     }
     return postedArticle;
   },

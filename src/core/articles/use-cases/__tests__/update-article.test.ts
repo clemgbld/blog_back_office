@@ -67,6 +67,7 @@ describe("Update Article", () => {
           date: "20/07/7245",
           timeToRead: "7 min read",
         },
+        "fake-token",
       ],
     ]);
   });
