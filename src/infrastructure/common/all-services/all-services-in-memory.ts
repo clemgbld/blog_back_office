@@ -7,8 +7,12 @@ import { inMemoryArticlesService } from "../../articles/in-memory-services/in-me
 import { inMemoryAuthService } from "../../auth/in-memory-services/in-memory-auth-service";
 import { createClock, Clock } from "../create-clock";
 import { Article } from "../../../core/articles/entities/article";
+import { buildInMemoryEmailNotificationService } from "../../articles/in-memory-services/in-memory-email-notification-service";
 
 type BuildInMemoryServices = {
+  emailNotificationService?: ReturnType<
+    typeof buildInMemoryEmailNotificationService
+  >;
   storageService?: StorageService;
   articlesService?: {
     articles: Article[];
@@ -23,6 +27,7 @@ type BuildInMemoryServices = {
 };
 
 export const buildInMemoryServices = ({
+  emailNotificationService = buildInMemoryEmailNotificationService(),
   storageService = createStorageService(inMemoryStorage()),
   articlesService = {
     articles: [],
@@ -32,6 +37,9 @@ export const buildInMemoryServices = ({
   clockService = createClock.createNull(),
   authService = { error: undefined, inMemoryAuthService },
 }: BuildInMemoryServices) => ({
+  emailNotificationService: emailNotificationService
+    ? emailNotificationService
+    : buildInMemoryEmailNotificationService(),
   articlesService: articlesService.buildInMemoryArticlesService
     ? articlesService.buildInMemoryArticlesService(
         articlesService.articles,

@@ -13,6 +13,7 @@ import { deleteArticle } from "../deleteArticle";
 import { toggleHideStatus } from "../toogle-hide-status";
 import { Article, ArticleWithoutId } from "../../entities/article";
 import { inMemoryArticlesService } from "../../../../infrastructure/articles/in-memory-services/in-memory-articles-service";
+import { buildInMemoryEmailNotificationService } from "../../../../infrastructure/articles/in-memory-services/in-memory-email-notification-service";
 import { spy } from "../../../../lib/spy";
 
 export const sutBuilder = ({
@@ -35,11 +36,15 @@ export const sutBuilder = ({
     };
 
     const articlesServices = inMemoryArticlesService(existingArticles, error);
+    const emailNotificationService = buildInMemoryEmailNotificationService();
 
     const getArticlesSpy = spy(articlesServices.getArticles);
     const postArticleSpy = spy(articlesServices.postArticle);
     const updateArticleSpy = spy(articlesServices.updateArticle);
     const deleteArticleSpy = spy(articlesServices.deleteArticle);
+    const notifiySubscribersSpy = spy(
+      emailNotificationService.notifySubscribers
+    );
 
     const buildInMemoryArticlesService = (
       articles: Article[],
@@ -53,6 +58,9 @@ export const sutBuilder = ({
 
     const store = createStore({
       services: buildInMemoryServices({
+        emailNotificationService: {
+          notifySubscribers: notifiySubscribersSpy,
+        },
         articlesService: {
           articles: existingArticles,
           error,
@@ -71,6 +79,7 @@ export const sutBuilder = ({
       postArticleSpy,
       updateArticleSpy,
       deleteArticleSpy,
+      notifiySubscribersSpy,
       retrieveArticles: () => {
         store.dispatch(retrieveArticles());
         return {
