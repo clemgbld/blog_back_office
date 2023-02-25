@@ -3,7 +3,7 @@ import {
   inMemoryStorage,
   StorageService,
 } from "../storage-service";
-import { inMemoryArticlesService } from "../../articles/infrastructure/in-memory-services/in-memory-articles-service";
+import { inMemoryArticlesService } from "../../../infrastructure/articles/in-memory-services/in-memory-articles-service";
 import { inMemoryAuthService } from "../../auth/infrastructure/in-memory-services/in-memory-auth-service";
 import { createClock, Clock } from "../create-clock";
 import { Article } from "../../articles/entities/article";

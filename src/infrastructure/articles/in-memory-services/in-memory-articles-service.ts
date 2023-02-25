@@ -2,7 +2,8 @@ import {
   Article,
   ArticleWithoutId,
   ArticleWithoutTimeToRead,
-} from "../../entities/article";
+} from "../../../core/articles/entities/article";
+import { ArticlesService } from "../../../core/articles/port/aticles-service";
 
 const FAKE_ID = "546";
 
@@ -21,7 +22,7 @@ const throwError = (error: {
 export const inMemoryArticlesService = (
   articles: Article[],
   error?: { statusCode: number; message: string; status: string }
-): InMemoryArticlesService => ({
+): ArticlesService => ({
   getArticles: async (token: string) =>
     error ? throwError(error) : Promise.resolve(articles),
 
@@ -44,13 +45,3 @@ export const inMemoryArticlesService = (
   deleteArticle: async (id: string, token: string) =>
     error ? throwError(error) : Promise.resolve(id),
 });
-
-export interface InMemoryArticlesService {
-  getArticles: (token: string) => Promise<Article[]>;
-  postArticle: (article: ArticleWithoutId, token: string) => Promise<Article>;
-  updateArticle: (
-    article: ArticleWithoutTimeToRead,
-    token: string
-  ) => Promise<Article>;
-  deleteArticle: (id: string, token: string) => Promise<string>;
-}

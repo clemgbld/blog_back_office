@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../..";
 import { Article, ArticleWithoutId } from "../entities/article";
-import { InMemoryArticlesService } from "../infrastructure/in-memory-services/in-memory-articles-service";
+import { ArticlesService } from "../port/aticles-service";
 import { selectToken } from "../../auth/selectors/selectors";
 import { STATUS } from "../../utils/status-constants";
 
@@ -10,7 +10,7 @@ export const postArticle = createAsyncThunk<
   ArticleWithoutId,
   {
     state: RootState;
-    extra: { services: { articlesService: InMemoryArticlesService } };
+    extra: { services: { articlesService: ArticlesService } };
   }
 >(
   "articles/postArticle",

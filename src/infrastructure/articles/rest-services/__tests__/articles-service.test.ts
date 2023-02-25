@@ -6,9 +6,9 @@ import {
   RestContext,
 } from "msw";
 import { setupServer } from "msw/node";
-import { fakeArticle1, fakeArticle2 } from "../../../../../fixtures/articles";
-import { buildArticlesService } from "../articles-service";
-import { BLOG_BASE_URL } from "../../../../infastructure/rest-service/constants";
+import { fakeArticle1, fakeArticle2 } from "../../../../fixtures/articles";
+import { buildRestArticlesService } from "../articles-service";
+import { BLOG_BASE_URL } from "../../../../core/infastructure/rest-service/constants";
 import { ARTICLES_ENDPOINT, DELETE_ENDPOINT } from "../constants";
 
 let request: RestRequest;
@@ -102,7 +102,7 @@ afterAll(() => {
 describe("articles service", () => {
   describe("get articles", () => {
     it("should get all articles and pass the token in the call", async () => {
-      const articlesService = buildArticlesService();
+      const articlesService = buildRestArticlesService();
       const articles = await articlesService.getArticles(token);
       expect(articles).toEqual([fakeArticle1, fakeArticle2]);
       expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
@@ -116,7 +116,7 @@ describe("articles service", () => {
         method: "get",
       });
 
-      const articlesService = buildArticlesService();
+      const articlesService = buildRestArticlesService();
       await expect(
         async () => await articlesService.getArticles(token)
       ).rejects.toThrowError("Something went wrong!");
@@ -125,7 +125,7 @@ describe("articles service", () => {
 
   describe("delete articles", () => {
     it("should delete an article and pass the token in the call", async () => {
-      const articlesService = buildArticlesService();
+      const articlesService = buildRestArticlesService();
       const id = await articlesService.deleteArticle(FAKE_ID, token);
       expect(request.method).toBe("DELETE");
       expect(request.headers.get("authorization")).toEqual("Bearer FAKE_TOKEN");
@@ -140,7 +140,7 @@ describe("articles service", () => {
         method: "delete",
       });
 
-      const articlesService = buildArticlesService();
+      const articlesService = buildRestArticlesService();
       await expect(async () =>
         articlesService.deleteArticle(FAKE_ID, token)
       ).rejects.toThrowError("You are not logged in!");
@@ -152,7 +152,7 @@ describe("articles service", () => {
       const articleWithoutTimeToRead = { ...fakeArticle1 };
       delete articleWithoutTimeToRead.timeToRead;
 
-      const articlesService = buildArticlesService();
+      const articlesService = buildRestArticlesService();
       const updatedArticle = await articlesService.updateArticle(
         articleWithoutTimeToRead,
         token
@@ -172,7 +172,7 @@ describe("articles service", () => {
       delete articleToPost.timeToRead;
       delete articleToPost.id;
       delete articleToPost.date;
-      const articlesService = buildArticlesService();
+      const articlesService = buildRestArticlesService();
       const articlePosted = await articlesService.postArticle(
         articleToPost,
         token

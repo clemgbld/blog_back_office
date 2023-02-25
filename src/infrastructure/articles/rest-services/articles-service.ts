@@ -1,14 +1,18 @@
-import { Article, ArticleWithoutId } from "../../entities/article";
-import { ArticleWithoutTimeToRead } from "../../entities/article";
-import { restService } from "../../../infastructure/rest-service/rest-service";
+import {
+  Article,
+  ArticleWithoutId,
+} from "../../../core/articles/entities/article";
+import { ArticleWithoutTimeToRead } from "../../../core/articles/entities/article";
+import { restService } from "../../../core/infastructure/rest-service/rest-service";
 import {
   BLOG_BASE_URL,
   METHOD,
-} from "../../../infastructure/rest-service/constants";
+} from "../../../core/infastructure/rest-service/constants";
 import { ARTICLES_ENDPOINT, DELETE_ENDPOINT } from "./constants";
-import { catchAsync } from "../../../error/catch-async";
+import { catchAsync } from "../../../core/error/catch-async";
+import { ArticlesService } from "../../../core/articles/port/aticles-service";
 
-export const buildArticlesService = () => ({
+export const buildRestArticlesService = (): ArticlesService => ({
   getArticles: catchAsync(async (token: string): Promise<Article[]> => {
     const { data } = await restService({
       url: `${BLOG_BASE_URL}${ARTICLES_ENDPOINT}`,

@@ -12,7 +12,7 @@ import { updateArticle } from "../update-article";
 import { deleteArticle } from "../deleteArticle";
 import { toggleHideStatus } from "../toogle-hide-status";
 import { Article, ArticleWithoutId } from "../../entities/article";
-import { inMemoryArticlesService } from "../../infrastructure/in-memory-services/in-memory-articles-service";
+import { inMemoryArticlesService } from "../../../../infrastructure/articles/in-memory-services/in-memory-articles-service";
 import { spy } from "../../../../lib/spy";
 
 export const sutBuilder = ({
