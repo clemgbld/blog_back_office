@@ -18,16 +18,22 @@ describe("Update Article", () => {
 
   const updatedArticle = articleBuilder({
     title: "article updated",
+    topic: "topic",
+    summary: "summary",
+    notify: false,
     content: [
       contentBuilder({ children: [{ text: "A first line of text updated." }] }),
       contentBuilder({
         children: [{ text: "A second line of text updated." }],
       }),
+      { type: "img", url: "url" },
     ],
   });
 
   it("should should update an already existing article", async () => {
-    const { updateArticleAsync } = sutBuilder({ preloadedState }).build();
+    const { updateArticleAsync, notifiySubscribersSpy } = sutBuilder({
+      preloadedState,
+    }).build();
 
     const { expectedArticles, status } = await updateArticleAsync(
       updatedArticle
@@ -35,7 +41,33 @@ describe("Update Article", () => {
 
     expect(status).toBe("success");
     expect(expectedArticles).toEqual([
-      { ...updatedArticle, timeToRead: "7 min read" },
+      { ...updatedArticle, notify: undefined, timeToRead: "7 min read" },
+    ]);
+    expect(notifiySubscribersSpy.hasBeenCalled()).toBeFalsy();
+  });
+  console.log(new Date(166480348787489));
+  it("should send an notification email with the correct new article infos", async () => {
+    const { updateArticleAsync, notifiySubscribersSpy } = sutBuilder({
+      preloadedState,
+    }).build();
+
+    const updatedArticleWithNotify = { ...updatedArticle, notify: true };
+
+    await updateArticleAsync(updatedArticleWithNotify);
+
+    expect(notifiySubscribersSpy.hasBeenCalled()).toBeTruthy();
+    expect(notifiySubscribersSpy.args()).toEqual([
+      [
+        {
+          id: "1",
+          topic: "topic",
+          summary: "summary",
+          title: "article updated",
+          img: "url",
+          date: "20/07/7245",
+          timeToRead: "7 min read",
+        },
+      ],
     ]);
   });
 

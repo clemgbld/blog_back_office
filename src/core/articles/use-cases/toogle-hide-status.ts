@@ -12,6 +12,7 @@ export const toggleHideStatus = createAsyncThunk<
     await thunkApi.dispatch(
       updateArticle({
         ...thunkApi.getState().articles.data.entities[id],
+        notify: false,
         hide:
           thunkApi.getState().articles.data.entities[id].hide !== undefined
             ? !thunkApi.getState().articles.data.entities[id].hide

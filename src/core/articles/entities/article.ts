@@ -247,4 +247,6 @@ export type ArticleWithoutId = Omit<Article, "id" | "date" | "timeToRead"> & {
   notify?: boolean;
 };
 
-export type ArticleWithoutTimeToRead = Omit<Article, "timeToRead">;
+export type ArticleWithoutTimeToRead = Omit<Article, "timeToRead"> & {
+  notify?: boolean;
+};
