@@ -8,7 +8,7 @@ import {
 import { setupServer } from "msw/node";
 import { fakeArticle1, fakeArticle2 } from "../../../../fixtures/articles";
 import { buildRestArticlesService } from "../articles-service";
-import { BLOG_BASE_URL } from "../../../../core/infastructure/rest-service/constants";
+import { BLOG_BASE_URL } from "../../../common/rest-service/constants";
 import { ARTICLES_ENDPOINT, DELETE_ENDPOINT } from "../constants";
 
 let request: RestRequest;

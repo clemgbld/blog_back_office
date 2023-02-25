@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { StorageService } from "../../infastructure/storage-service";
+import { StorageService } from "../../../infrastructure/common/storage-service";
 import { CredentialsFromStorage } from "../entities/auth";
-import { Clock } from "../../infastructure/create-clock";
+import { Clock } from "../../../infrastructure/common/create-clock";
 
 export const loginFromStorage = createAsyncThunk<
   CredentialsFromStorage,

@@ -9,8 +9,8 @@ import { fakeArticle1, fakeArticle2 } from "../../../../fixtures/articles";
 import {
   createClock,
   Clock,
-} from "../../../../core/infastructure/create-clock";
-import { buildInMemoryServices } from "../../../../core/infastructure/all-services/all-services-in-memory";
+} from "../../../../infrastructure/common/create-clock";
+import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
 import { ClockContext } from "../../../context/ClockContext";
 
 describe("ArticleCard", () => {

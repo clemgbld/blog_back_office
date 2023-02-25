@@ -3,7 +3,7 @@ import { articlesSlice } from "./articles/articles-slice";
 import { authSlice } from "./auth/auth-slice";
 import { uiSlice } from "./UI/ui-slice";
 
-import { buildInMemoryServices } from "./infastructure/all-services/all-services-in-memory";
+import { buildInMemoryServices } from "../infrastructure/common/all-services/all-services-in-memory";
 
 const rootReducer = combineReducers({
   [articlesSlice.name]: articlesSlice.reducer,

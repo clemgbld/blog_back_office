@@ -2,7 +2,7 @@ import React, { useCallback, FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../..";
 import { MyValue } from "../RichTextEditor/config/typescript";
-import { validateTopic } from "../../../core/articles/validation/validateTopic";
+import { validateTopic } from "../../../core/articles/use-cases/validation/validateTopic";
 import RichTextEditor from "../RichTextEditor/RichTextEditor";
 import { InputValues } from "../hooks/use-articles-form";
 import Input from "../../UI/Input/Input";

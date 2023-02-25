@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../..";
-import { InMemoryAuthService } from "../infrastructure/in-memory-services/in-memory-auth-service";
-import { StorageService } from "../../infastructure/storage-service";
-import { Clock } from "../../infastructure/create-clock";
+import { AuthService } from "../port/auth-service";
+import { StorageService } from "../../../infrastructure/common/storage-service";
+import { Clock } from "../../../infrastructure/common/create-clock";
 import { Credentials, User } from "../entities/auth";
 import { STATUS } from "../../utils/status-constants";
 
@@ -13,7 +13,7 @@ export const login = createAsyncThunk<
     state: RootState;
     extra: {
       services: {
-        authService: InMemoryAuthService;
+        authService: AuthService;
         storageService: StorageService;
         clockService: Clock;
       };

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { StorageService } from "../../infastructure/storage-service";
+import { StorageService } from "../../../infrastructure/common/storage-service";
 
 export const logout = createAsyncThunk<
   void,

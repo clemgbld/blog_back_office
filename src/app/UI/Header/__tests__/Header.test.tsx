@@ -5,8 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   createStorageService,
   inMemoryStorage,
-} from "../../../../core/infastructure/storage-service";
-import { buildInMemoryServices } from "../../../../core/infastructure/all-services/all-services-in-memory";
+} from "../../../../infrastructure/common/storage-service";
+import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
 import { createStore } from "../../../../core/store";
 import Header from "../Header";
 import Auth from "../../../pages/Auth/Auth";

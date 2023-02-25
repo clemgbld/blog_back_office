@@ -3,10 +3,10 @@ import {
   inMemoryStorage,
   StorageService,
 } from "../storage-service";
-import { inMemoryArticlesService } from "../../../infrastructure/articles/in-memory-services/in-memory-articles-service";
-import { inMemoryAuthService } from "../../auth/infrastructure/in-memory-services/in-memory-auth-service";
+import { inMemoryArticlesService } from "../../articles/in-memory-services/in-memory-articles-service";
+import { inMemoryAuthService } from "../../auth/in-memory-services/in-memory-auth-service";
 import { createClock, Clock } from "../create-clock";
-import { Article } from "../../articles/entities/article";
+import { Article } from "../../../core/articles/entities/article";
 
 type BuildInMemoryServices = {
   storageService?: StorageService;

@@ -2,10 +2,10 @@ import { createStore } from "../../../store";
 import {
   inMemoryStorage,
   createStorageService,
-} from "../../../infastructure/storage-service";
-import { createClock } from "../../../infastructure/create-clock";
+} from "../../../../infrastructure/common/storage-service";
+import { createClock } from "../../../../infrastructure/common/create-clock";
 import { selectToken, selectIsLoggedIn } from "../../selectors/selectors";
-import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
+import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
 import { loginFromStorage } from "../login-from-storage";
 
 describe("login from storage", () => {

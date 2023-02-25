@@ -1,7 +1,7 @@
 import { rest, RestRequest } from "msw";
 import { setupServer } from "msw/node";
-import { BLOG_BASE_URL } from "../../../../infastructure/rest-service/constants";
-import { buildAuthService } from "../auth-service";
+import { BLOG_BASE_URL } from "../../../common/rest-service/constants";
+import { buildRestAuthService } from "../rest-auth-service";
 
 let request: RestRequest;
 
@@ -43,7 +43,7 @@ afterAll(() => {
 describe("auth service", () => {
   describe("login", () => {
     it("should post the email and password of the user and retrieve a token and an expiration date", async () => {
-      const authService = buildAuthService();
+      const authService = buildRestAuthService();
       const credentials = await authService.login(user);
       expect(await request.json()).toEqual(user);
       expect(credentials).toEqual({ token, expirationDate });

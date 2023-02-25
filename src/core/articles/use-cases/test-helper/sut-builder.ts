@@ -5,7 +5,7 @@ import {
   articlesStatus,
   articlesError,
 } from "../../selectors/selectors";
-import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
+import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
 import { postArticle } from "../post-article";
 import { retrieveArticles } from "../retrieve-articles";
 import { updateArticle } from "../update-article";

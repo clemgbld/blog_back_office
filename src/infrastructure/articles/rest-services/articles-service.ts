@@ -3,13 +3,10 @@ import {
   ArticleWithoutId,
 } from "../../../core/articles/entities/article";
 import { ArticleWithoutTimeToRead } from "../../../core/articles/entities/article";
-import { restService } from "../../../core/infastructure/rest-service/rest-service";
-import {
-  BLOG_BASE_URL,
-  METHOD,
-} from "../../../core/infastructure/rest-service/constants";
+import { restService } from "../../common/rest-service/rest-service";
+import { BLOG_BASE_URL, METHOD } from "../../common/rest-service/constants";
 import { ARTICLES_ENDPOINT, DELETE_ENDPOINT } from "./constants";
-import { catchAsync } from "../../../core/error/catch-async";
+import { catchAsync } from "../../common/error/catch-async";
 import { ArticlesService } from "../../../core/articles/port/aticles-service";
 
 export const buildRestArticlesService = (): ArticlesService => ({

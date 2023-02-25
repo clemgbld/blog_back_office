@@ -5,14 +5,14 @@ import { Store } from "./core/store";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { buildInMemoryServices } from "./core/infastructure/all-services/all-services-in-memory";
-import { buildServices } from "./core/infastructure/all-services/all-services";
+import { buildInMemoryServices } from "./infrastructure/common/all-services/all-services-in-memory";
+import { buildServices } from "./infrastructure/common/all-services/all-services";
 import {
   createStorageService,
   inMemoryStorage,
-} from "./core/infastructure/storage-service";
-import { inMemoryAuthService } from "./core/auth/infrastructure/in-memory-services/in-memory-auth-service";
-import { createClock } from "./core/infastructure/create-clock";
+} from "./infrastructure/common/storage-service";
+import { inMemoryAuthService } from "./infrastructure/auth/in-memory-services/in-memory-auth-service";
+import { createClock } from "./infrastructure/common/create-clock";
 import { createStore } from "./core/store";
 import { ClockContext } from "./app/context/ClockContext";
 import { fakeArticle1, fakeArticle2 } from "./fixtures/articles";

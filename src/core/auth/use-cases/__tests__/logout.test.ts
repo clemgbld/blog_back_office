@@ -1,11 +1,11 @@
 import { createStore } from "../../../store";
 import { logout } from "../logout";
 import { selectIsLoggedIn, selectToken } from "../../selectors/selectors";
-import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
+import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
 import {
   createStorageService,
   inMemoryStorage,
-} from "../../../infastructure/storage-service";
+} from "../../../../infrastructure/common/storage-service";
 
 describe("logout", () => {
   const preloadedState = {

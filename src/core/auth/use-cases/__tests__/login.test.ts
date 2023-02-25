@@ -8,10 +8,10 @@ import {
 import {
   inMemoryStorage,
   createStorageService,
-} from "../../../infastructure/storage-service";
-import { createClock } from "../../../infastructure/create-clock";
-import { buildInMemoryServices } from "../../../infastructure/all-services/all-services-in-memory";
-import { inMemoryAuthService } from "../../infrastructure/in-memory-services/in-memory-auth-service";
+} from "../../../../infrastructure/common/storage-service";
+import { createClock } from "../../../../infrastructure/common/create-clock";
+import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
+import { inMemoryAuthService } from "../../../../infrastructure/auth/in-memory-services/in-memory-auth-service";
 import { login } from "../login";
 import { STATUS } from "../../../utils/status-constants";
 import { spy } from "../../../../lib/spy";
