@@ -95,6 +95,25 @@ describe("Update Article", () => {
     expect(expectedErrorMsg).toBe("Something went wrong");
   });
 
+  it("should informs the user when the email notifications failed", async () => {
+    const { updateArticleAsync } = sutBuilder({
+      preloadedState,
+      errorNotification: {
+        statusCode: 400,
+        message: "Something went wrong",
+        status: "fail",
+      },
+    }).build();
+
+    const updatedArticleWithNotify = { ...updatedArticle, notify: true };
+
+    const { expectedErrorMsg } = await updateArticleAsync(
+      updatedArticleWithNotify
+    );
+
+    expect(expectedErrorMsg).toBe("Something went wrong");
+  });
+
   it("should not call the delete operation when one is already loading", async () => {
     const preloadedState = {
       articles: {

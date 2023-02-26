@@ -1,22 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../../..";
+import { AppDispatch, RootState } from "../../..";
 import { Article, ArticleWithoutId } from "../entities/article";
 import { ArticlesService } from "../port/aticles-service";
-import { EmailNotificationService } from "../port/email-notification-service";
 import { selectToken } from "../../auth/selectors/selectors";
 import { STATUS } from "../../utils/status-constants";
-import { formatDateDDMMYYYY } from "../../utils/date/format-date";
-import { selectFirstImg } from "../selectors/select-first-img/select-first-img";
+import { notifySubscribers } from "./notify-subscribers";
 
 export const postArticle = createAsyncThunk<
   Article,
   ArticleWithoutId,
   {
     state: RootState;
+    dispatch: AppDispatch;
     extra: {
       services: {
         articlesService: ArticlesService;
-        emailNotificationService: EmailNotificationService;
       };
     };
   }
@@ -26,8 +24,10 @@ export const postArticle = createAsyncThunk<
     articleToPost,
     {
       getState,
+      dispatch,
+      rejectWithValue,
       extra: {
-        services: { articlesService, emailNotificationService },
+        services: { articlesService },
       },
     }
   ) => {
@@ -37,18 +37,9 @@ export const postArticle = createAsyncThunk<
       selectToken(getState())
     );
     if (articleToPost.notify) {
-      await emailNotificationService.notifySubscribers(
-        {
-          id: postedArticle.id,
-          summary: postedArticle.summary,
-          topic: postedArticle.topic,
-          title: postedArticle.title,
-          timeToRead: postedArticle.timeToRead,
-          date: formatDateDDMMYYYY(new Date(postedArticle.date)),
-          img: selectFirstImg(postedArticle.content).src,
-        },
-        selectToken(getState())
-      );
+      return dispatch(notifySubscribers(postedArticle))
+        .unwrap()
+        .then(() => postedArticle);
     }
     return postedArticle;
   },

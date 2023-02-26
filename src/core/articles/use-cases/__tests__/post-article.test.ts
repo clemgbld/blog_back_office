@@ -10,6 +10,20 @@ describe("Post Article", () => {
     content: [contentBuilder({ children: [{ text: "new article posted." }] })],
   };
 
+  const articleToPostWithImage = {
+    title: "new article",
+    summary: "summary",
+    topic: "topic",
+    notify: true,
+    lightMode: true,
+    content: [
+      contentBuilder({
+        children: [{ text: "new article posted." }],
+      }),
+      { type: "img", url: "url" },
+    ],
+  };
+
   it("should post an article an add it to the list of articles", async () => {
     const { postArticleAsync, notifiySubscribersSpy } = sutBuilder({}).build();
 
@@ -37,19 +51,7 @@ describe("Post Article", () => {
 
   it("should send an notification email with the correct new article infos", async () => {
     const { postArticleAsync, notifiySubscribersSpy } = sutBuilder({}).build();
-    const articleToPostWithImage = {
-      title: "new article",
-      summary: "summary",
-      topic: "topic",
-      notify: true,
-      lightMode: true,
-      content: [
-        contentBuilder({
-          children: [{ text: "new article posted." }],
-        }),
-        { type: "img", url: "url" },
-      ],
-    };
+
     await postArticleAsync(articleToPostWithImage);
     expect(notifiySubscribersSpy.hasBeenCalled()).toBeTruthy();
 
@@ -91,6 +93,23 @@ describe("Post Article", () => {
     expect(status).toBe("rejected");
 
     expect(expectedErrorMsg).toBe("something went wrong");
+  });
+
+  it("should informs the user when notification subscribtion goes wrong", async () => {
+    const { postArticleAsync } = sutBuilder({
+      errorNotification: {
+        statusCode: 400,
+        message: "notification went wrong",
+        status: "fail",
+      },
+    }).build();
+    const { status, expectedErrorMsg } = await postArticleAsync(
+      articleToPostWithImage
+    );
+
+    expect(status).toBe("rejected");
+
+    expect(expectedErrorMsg).toBe("notification went wrong");
   });
 
   it("should not excute a post article operation when one operation is already loading", async () => {

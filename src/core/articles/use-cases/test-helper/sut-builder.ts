@@ -20,8 +20,10 @@ export const sutBuilder = ({
   existingArticles = [],
   error,
   preloadedState = {},
+  errorNotification,
 }: {
   existingArticles?: Article[];
+  errorNotification?: { statusCode: number; message: string; status: string };
   error?: { statusCode: number; message: string; status: string };
   preloadedState?: PreloadedState<RootState>;
 }) => ({
@@ -36,7 +38,9 @@ export const sutBuilder = ({
     };
 
     const articlesServices = inMemoryArticlesService(existingArticles, error);
-    const emailNotificationService = buildInMemoryEmailNotificationService();
+
+    const emailNotificationService =
+      buildInMemoryEmailNotificationService(errorNotification);
 
     const getArticlesSpy = spy(articlesServices.getArticles);
     const postArticleSpy = spy(articlesServices.postArticle);
