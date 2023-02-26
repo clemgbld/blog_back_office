@@ -76,10 +76,10 @@ export const articlesSlice = createSlice({
         articlesAdapter.removeOne(state.data, action.payload);
       })
 
-      .addMatcher(isPendingAction, (state, action) => {
+      .addMatcher(isPendingAction, (state) => {
         state.status = STATUS.PENDING;
       })
-      .addMatcher(isFulfilledAction, (state, action) => {
+      .addMatcher(isFulfilledAction, (state) => {
         state.status = STATUS.SUCCESS;
       })
       .addMatcher(isRejectedAction, (state, action) => {
