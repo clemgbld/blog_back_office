@@ -45,7 +45,7 @@ describe("Update Article", () => {
     ]);
     expect(notifiySubscribersSpy.hasBeenCalled()).toBeFalsy();
   });
-  console.log(new Date(166480348787489));
+
   it("should send an notification email with the correct new article infos", async () => {
     const { updateArticleAsync, notifiySubscribersSpy } = sutBuilder({
       preloadedState,
