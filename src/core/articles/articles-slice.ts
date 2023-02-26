@@ -2,7 +2,6 @@ import {
   createSlice,
   createEntityAdapter,
   EntityState,
-  AsyncThunk,
   AnyAction,
 } from "@reduxjs/toolkit";
 import { retrieveArticles } from "./use-cases/retrieve-articles";
@@ -11,6 +10,12 @@ import { updateArticle } from "./use-cases/update-article";
 import { deleteArticle } from "./use-cases/deleteArticle";
 import { Article } from "./entities/article";
 import { STATUS } from "../utils/status-constants";
+import {
+  PendingAction,
+  FulfilledAction,
+  RejectedAction,
+  AsyncThunkStatus,
+} from "../utils/rtk/types";
 
 export const articlesAdapter = createEntityAdapter<Article>();
 
@@ -28,38 +33,21 @@ export const initialState: InitialState = {
   error: undefined,
 };
 
-type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
+const isStatusAction =
+  <T extends AnyAction>(status: AsyncThunkStatus) =>
+  (action: T) =>
+    [
+      updateArticle[status].type,
+      retrieveArticles[status].type,
+      deleteArticle[status].type,
+      postArticle[status].type,
+    ].includes(action.type);
 
-type PendingAction = ReturnType<GenericAsyncThunk["pending"]>;
+const isPendingAction = isStatusAction<PendingAction>("pending");
 
-type FulfilledAction = ReturnType<GenericAsyncThunk["fulfilled"]>;
+const isFulfilledAction = isStatusAction<FulfilledAction>("fulfilled");
 
-function isPendingAction(action: AnyAction): action is PendingAction {
-  return [
-    updateArticle.pending.type,
-    retrieveArticles.pending.type,
-    deleteArticle.pending.type,
-    postArticle.pending.type,
-  ].includes(action.type);
-}
-
-function isFulfilledAction(action: AnyAction): action is FulfilledAction {
-  return [
-    updateArticle.fulfilled.type,
-    retrieveArticles.fulfilled.type,
-    deleteArticle.fulfilled.type,
-    postArticle.fulfilled.type,
-  ].includes(action.type);
-}
-
-function isRejectedAction(action: any) {
-  return [
-    updateArticle.rejected.type,
-    retrieveArticles.rejected.type,
-    deleteArticle.rejected.type,
-    postArticle.rejected.type,
-  ].includes(action.type);
-}
+const isRejectedAction = isStatusAction<RejectedAction>("rejected");
 
 export const articlesSlice = createSlice({
   name: "articles",
