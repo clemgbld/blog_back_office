@@ -11,7 +11,6 @@ import { updateArticle } from "./use-cases/update-article";
 import { deleteArticle } from "./use-cases/deleteArticle";
 import { Article } from "./entities/article";
 import { STATUS } from "../utils/status-constants";
-import { notifySubscribers } from "./use-cases/notify-subscribers";
 
 export const articlesAdapter = createEntityAdapter<Article>();
 
