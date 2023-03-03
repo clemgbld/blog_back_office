@@ -1,16 +1,10 @@
 import { createSlice,createEntityAdapter,EntityState } from "@reduxjs/toolkit";
+import { Email } from "./entities/email";
+import { retrieveSubscribersEmails } from "./use-cases/retrieve-subscribers-emails";
 
 
-type Email = {
-  id:string,
-  email:string
-}
 
 export const emailsAdapter = createEntityAdapter<Email>();
-
-
-
-
 
 
 type InitialState = {
@@ -29,4 +23,10 @@ export const emailsSlice = createSlice({
   name: "emails",
   initialState,
   reducers: {},
+  extraReducers(builder) {
+    builder.addCase(retrieveSubscribersEmails,(state,action)=>{
+      state.areEmailsRetrieved = true;
+      emailsAdapter.setAll(state.emails,action.payload);
+    })
+  },
 });
