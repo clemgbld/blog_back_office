@@ -11,17 +11,26 @@ describe("retrieve subscribers emails", () => {
     expect(store.getState().emails.status).toBe("idle");
   });
 
-  it('should retrieves subscribers emails', async () => {
-
-    const existingEmails = [{id:"1",email:"foo@example.com"},{id:"2",email:"bar@example.com"}];
+  it("should retrieves subscribers emails and give the auth token to the subscription service", async () => {
+    const existingEmails = [
+      { id: "1", email: "foo@example.com" },
+      { id: "2", email: "bar@example.com" },
+    ];
 
     const store = createStore({
-      
+      services: buildInMemoryServices({
+        subscriptionService: {
+          existingEmails,
+        },
+      }),
     });
 
-    store.dispatch(retrieveSubscribersEmails(existingEmails));
+    await store.dispatch(retrieveSubscribersEmails());
 
-    expect(selectAllEmails(store.getState())).toEqual([{id:"1",email:"foo@example.com"},{id:"2",email:"bar@example.com"}]);
+    expect(selectAllEmails(store.getState())).toEqual([
+      { id: "1", email: "foo@example.com" },
+      { id: "2", email: "bar@example.com" },
+    ]);
     expect(store.getState().emails.areEmailsRetrieved).toBe(true);
   });
 });

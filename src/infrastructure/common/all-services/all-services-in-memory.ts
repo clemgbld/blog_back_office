@@ -8,6 +8,11 @@ import { inMemoryAuthService } from "../../auth/in-memory-services/in-memory-aut
 import { createClock, Clock } from "../create-clock";
 import { Article } from "../../../core/articles/entities/article";
 import { buildInMemoryEmailNotificationService } from "../../articles/in-memory-services/in-memory-email-notification-service";
+import { Email } from "../../../core/emails/entities/email";
+
+const buildInMemorySubscriptionService = ({ emails }: { emails: Email[] }) => ({
+  getAllEmails: () => Promise.resolve(emails),
+});
 
 type BuildInMemoryServices = {
   emailNotificationService?: ReturnType<
@@ -19,6 +24,10 @@ type BuildInMemoryServices = {
     error?: { statusCode: number; message: string; status: string };
     buildInMemoryArticlesService?: typeof inMemoryArticlesService;
   };
+  subscriptionService?: {
+    existingEmails: Email[];
+  };
+
   authService?: {
     error?: { statusCode: number; message: string; status: string };
     inMemoryAuthService: typeof inMemoryAuthService;
@@ -33,6 +42,9 @@ export const buildInMemoryServices = ({
     articles: [],
     error: undefined,
     buildInMemoryArticlesService: inMemoryArticlesService,
+  },
+  subscriptionService = {
+    existingEmails: [],
   },
   clockService = createClock.createNull(),
   authService = { error: undefined, inMemoryAuthService },
@@ -49,4 +61,7 @@ export const buildInMemoryServices = ({
   authService: authService.inMemoryAuthService({ error: authService.error }),
   storageService,
   clockService,
+  subscriptionService: buildInMemorySubscriptionService({
+    emails: subscriptionService.existingEmails,
+  }),
 });
