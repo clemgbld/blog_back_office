@@ -1,13 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,createEntityAdapter,EntityState } from "@reduxjs/toolkit";
+
+
+type Email = {
+  id:string,
+  email:string
+}
+
+export const emailsAdapter = createEntityAdapter<Email>();
+
+
+
+
+
 
 type InitialState = {
-  emails: string[];
+  emails: EntityState<Email>;
   areEmailsRetrieved: boolean;
   status: string;
 };
 
 const initialState: InitialState = {
-  emails: [],
+  emails: emailsAdapter.getInitialState(),
   areEmailsRetrieved: false,
   status: "idle",
 };
