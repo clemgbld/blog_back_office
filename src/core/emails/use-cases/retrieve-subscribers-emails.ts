@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../..";
 import { Email } from "../entities/email";
 import { SubscriptionService } from "../port/subscription-service";
+import { selectToken } from "../../auth/selectors/selectors";
 
 export const retrieveSubscribersEmails = createAsyncThunk<
   Email[],
@@ -15,9 +16,10 @@ export const retrieveSubscribersEmails = createAsyncThunk<
   async (
     _,
     {
+      getState,
       extra: {
         services: { subscriptionService },
       },
     }
-  ) => subscriptionService.getAllEmails()
+  ) => subscriptionService.getAllEmails(selectToken(getState()))
 );

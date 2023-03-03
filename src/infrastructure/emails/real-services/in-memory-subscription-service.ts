@@ -2,9 +2,9 @@ import { Email } from "../../../core/emails/entities/email";
 import { SubscriptionService } from "../../../core/emails/port/subscription-service";
 
 export const buildInMemorySubscriptionService = ({
-  emails,
+  emails = [],
 }: {
-  emails: Email[];
+  emails?: Email[];
 }): SubscriptionService => ({
-  getAllEmails: () => Promise.resolve(emails),
+  getAllEmails: (token: string) => Promise.resolve(emails),
 });

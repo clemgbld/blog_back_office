@@ -2,6 +2,9 @@ import { createStore } from "../../../store";
 import { selectAllEmails } from "../selectors/selectors";
 import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
 import { retrieveSubscribersEmails } from "../retrieve-subscribers-emails";
+import { spy } from "../../../../lib/spy";
+import { buildInMemorySubscriptionService } from "../../../../infrastructure/emails/real-services/in-memory-subscription-service";
+import { STATUS } from "../../../utils/status-constants";
 
 describe("retrieve subscribers emails", () => {
   it("should have an empty subscribers emails list initially", () => {
@@ -11,7 +14,7 @@ describe("retrieve subscribers emails", () => {
     expect(store.getState().emails.status).toBe("idle");
   });
 
-  it("should retrieves subscribers emails and give the auth token to the subscription service", async () => {
+  it("should retrieves subscribers emails", async () => {
     const existingEmails = [
       { id: "1", email: "foo@example.com" },
       { id: "2", email: "bar@example.com" },
@@ -23,6 +26,13 @@ describe("retrieve subscribers emails", () => {
           existingEmails,
         },
       }),
+      preloadedState: {
+        auth: {
+          token: "fake-token",
+          isLoggedIn: true,
+          status: STATUS.SUCCESS,
+        },
+      },
     });
 
     await store.dispatch(retrieveSubscribersEmails());
@@ -32,5 +42,29 @@ describe("retrieve subscribers emails", () => {
       { id: "2", email: "bar@example.com" },
     ]);
     expect(store.getState().emails.areEmailsRetrieved).toBe(true);
+  });
+
+  it("should pass the auth token to the subcription service", async () => {
+    const getAllEmailsSpy = spy(
+      buildInMemorySubscriptionService({}).getAllEmails
+    );
+    const store = createStore({
+      services: buildInMemoryServices({
+        subscriptionService: {
+          getAllEmailsSpy,
+        },
+      }),
+      preloadedState: {
+        auth: {
+          token: "fake-token",
+          isLoggedIn: true,
+          status: STATUS.SUCCESS,
+        },
+      },
+    });
+
+    await store.dispatch(retrieveSubscribersEmails());
+
+    expect(getAllEmailsSpy.args()).toEqual([["fake-token"]]);
   });
 });

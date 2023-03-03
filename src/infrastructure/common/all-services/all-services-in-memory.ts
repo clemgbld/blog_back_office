@@ -22,7 +22,8 @@ type BuildInMemoryServices = {
     buildInMemoryArticlesService?: typeof inMemoryArticlesService;
   };
   subscriptionService?: {
-    existingEmails: Email[];
+    existingEmails?: Email[];
+    getAllEmailsSpy?: () => Promise<Email[]>;
   };
 
   authService?: {
@@ -58,7 +59,12 @@ export const buildInMemoryServices = ({
   authService: authService.inMemoryAuthService({ error: authService.error }),
   storageService,
   clockService,
-  subscriptionService: buildInMemorySubscriptionService({
-    emails: subscriptionService.existingEmails,
-  }),
+  subscriptionService: {
+    ...buildInMemorySubscriptionService({
+      emails: subscriptionService.existingEmails,
+    }),
+    ...(subscriptionService.getAllEmailsSpy && {
+      getAllEmails: subscriptionService.getAllEmailsSpy,
+    }),
+  },
 });
