@@ -83,4 +83,30 @@ describe("retrieve subscribers emails", () => {
     store.dispatch(retrieveSubscribersEmails());
     expect(store.getState().emails.status).toBe(STATUS.PENDING);
   });
+
+  it("should notify the user when the retrieving operation failed", async () => {
+    const error = {
+      statusCode: 404,
+      message: "Something when wrong.",
+      status: "fail",
+    };
+    const store = createStore({
+      services: buildInMemoryServices({
+        subscriptionService: {
+          error,
+        },
+      }),
+      preloadedState: {
+        auth: {
+          token: "fake-token",
+          isLoggedIn: true,
+          status: STATUS.SUCCESS,
+        },
+      },
+    });
+
+    await store.dispatch(retrieveSubscribersEmails());
+    expect(store.getState().emails.status).toBe(STATUS.REJECTED);
+    expect(store.getState().emails.error).toEqual(error.message);
+  });
 });

@@ -13,6 +13,7 @@ type InitialState = {
   emails: EntityState<Email>;
   areEmailsRetrieved: boolean;
   status: string;
+  error?: string;
 };
 
 const initialState: InitialState = {
@@ -33,6 +34,10 @@ export const emailsSlice = createSlice({
       })
       .addCase(retrieveSubscribersEmails.pending, (state) => {
         state.status = STATUS.PENDING;
+      })
+      .addCase(retrieveSubscribersEmails.rejected, (state, action) => {
+        state.status = STATUS.REJECTED;
+        state.error = action.error.message;
       });
   },
 });
