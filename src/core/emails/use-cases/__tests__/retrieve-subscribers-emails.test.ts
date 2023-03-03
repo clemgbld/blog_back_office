@@ -67,4 +67,20 @@ describe("retrieve subscribers emails", () => {
 
     expect(getAllEmailsSpy.args()).toEqual([["fake-token"]]);
   });
+
+  it("should have pending status while the retrieving operation is processing", () => {
+    const store = createStore({
+      services: buildInMemoryServices({}),
+      preloadedState: {
+        auth: {
+          token: "fake-token",
+          isLoggedIn: true,
+          status: STATUS.SUCCESS,
+        },
+      },
+    });
+
+    store.dispatch(retrieveSubscribersEmails());
+    expect(store.getState().emails.status).toBe(STATUS.PENDING);
+  });
 });

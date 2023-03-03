@@ -65,7 +65,7 @@ describe("login", () => {
     expect(selectAuthStatus(store.getState())).toBe("pending");
   });
 
-  it("should alert the user when therer is an login error", async () => {
+  it("should alert the user when there is an login error", async () => {
     const store = createStore({
       services: buildInMemoryServices({
         authService: { error, inMemoryAuthService },

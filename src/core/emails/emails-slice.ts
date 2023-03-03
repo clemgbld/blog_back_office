@@ -3,6 +3,7 @@ import {
   createEntityAdapter,
   EntityState,
 } from "@reduxjs/toolkit";
+import { STATUS } from "../utils/status-constants";
 import { Email } from "./entities/email";
 import { retrieveSubscribersEmails } from "./use-cases/retrieve-subscribers-emails";
 
@@ -25,9 +26,13 @@ export const emailsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(retrieveSubscribersEmails.fulfilled, (state, action) => {
-      state.areEmailsRetrieved = true;
-      emailsAdapter.setAll(state.emails, action.payload);
-    });
+    builder
+      .addCase(retrieveSubscribersEmails.fulfilled, (state, action) => {
+        state.areEmailsRetrieved = true;
+        emailsAdapter.setAll(state.emails, action.payload);
+      })
+      .addCase(retrieveSubscribersEmails.pending, (state) => {
+        state.status = STATUS.PENDING;
+      });
   },
 });
