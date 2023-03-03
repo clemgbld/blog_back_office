@@ -4,6 +4,7 @@ import { buildRestArticlesService } from "../../articles/rest-services/articles-
 import { buildRestAuthService } from "../../auth/rest-services/rest-auth-service";
 import { buildInMemoryServices } from "./all-services-in-memory";
 import { buildInMemoryEmailNotificationService } from "../../articles/in-memory-services/in-memory-email-notification-service";
+import { buildInMemorySubscriptionService } from "../../emails/real-services/in-memory-subscription-service";
 
 export const buildServices = (): ReturnType<typeof buildInMemoryServices> => ({
   storageService: createStorageService(localStorage),
@@ -11,4 +12,5 @@ export const buildServices = (): ReturnType<typeof buildInMemoryServices> => ({
   authService: buildRestAuthService(),
   articlesService: buildRestArticlesService(),
   emailNotificationService: buildInMemoryEmailNotificationService(),
+  subscriptionService: buildInMemorySubscriptionService({ emails: [] }),
 });

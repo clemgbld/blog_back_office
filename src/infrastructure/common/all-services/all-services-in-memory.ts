@@ -9,10 +9,7 @@ import { createClock, Clock } from "../create-clock";
 import { Article } from "../../../core/articles/entities/article";
 import { buildInMemoryEmailNotificationService } from "../../articles/in-memory-services/in-memory-email-notification-service";
 import { Email } from "../../../core/emails/entities/email";
-
-const buildInMemorySubscriptionService = ({ emails }: { emails: Email[] }) => ({
-  getAllEmails: () => Promise.resolve(emails),
-});
+import { buildInMemorySubscriptionService } from "../../emails/real-services/in-memory-subscription-service";
 
 type BuildInMemoryServices = {
   emailNotificationService?: ReturnType<
