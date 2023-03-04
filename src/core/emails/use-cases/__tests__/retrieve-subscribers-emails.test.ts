@@ -43,7 +43,9 @@ describe("retrieve subscribers emails", () => {
       { id: "1", email: "foo@example.com" },
       { id: "2", email: "bar@example.com" },
     ]);
+
     expect(store.getState().emails.areEmailsRetrieved).toBe(true);
+    expect(selectEmailsStatus(store.getState())).toEqual(STATUS.SUCCESS);
   });
 
   it("should pass the auth token to the subcription service", async () => {
