@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { SubscriptionService } from "../port/subscription-service";
+import { selectToken } from "../../auth/selectors/selectors";
 
 export const removeSubscriberEmail = createAsyncThunk<
   string,
@@ -20,7 +21,10 @@ export const removeSubscriberEmail = createAsyncThunk<
       },
     }
   ) => {
-    await subscriptionService.removeSubscriberEmail(id);
+    await subscriptionService.removeSubscriberEmail(
+      id,
+      selectToken(getState())
+    );
     return id;
   }
 );

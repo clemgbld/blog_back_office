@@ -24,7 +24,8 @@ type BuildInMemoryServices = {
   };
   subscriptionService?: {
     existingEmails?: Email[];
-    getAllEmailsSpy?: () => Promise<Email[]>;
+    getAllEmailsSpy?: any;
+    removeSubscriberEmailSpy?: any;
     error?: ServerBlogError;
   };
 
@@ -69,6 +70,9 @@ export const buildInMemoryServices = ({
     }),
     ...(subscriptionService.getAllEmailsSpy && {
       getAllEmails: subscriptionService.getAllEmailsSpy,
+    }),
+    ...(subscriptionService.removeSubscriberEmailSpy && {
+      removeSubscriberEmail: subscriptionService.removeSubscriberEmailSpy,
     }),
   },
 });

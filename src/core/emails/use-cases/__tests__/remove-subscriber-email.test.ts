@@ -3,6 +3,9 @@ import { STATUS } from "../../../utils/status-constants";
 import { removeSubscriberEmail } from "../remove-subscriber-email";
 import { selectAllEmails } from "../../selectors/selectors";
 import { selectEmailsStatus } from "../../selectors/selectors";
+import { buildInMemorySubscriptionService } from "../../../../infrastructure/emails/real-services/in-memory-subscription-service";
+import { spy } from "../../../../lib/spy";
+import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
 
 const preloadedState = {
   emails: {
@@ -14,6 +17,11 @@ const preloadedState = {
         1: { id: "1", email: "foo@example.com" },
       },
     },
+  },
+  auth: {
+    token: "fake-token",
+    isLoggedIn: true,
+    status: STATUS.SUCCESS,
   },
 };
 
@@ -31,5 +39,22 @@ describe("remove subscriber email", () => {
     expect(selectEmailsStatus(store.getState())).toEqual(STATUS.SUCCESS);
   });
 
-  it("should pass the token to removeSubscriber in subscription service", () => {});
+  it("should pass the token to removeSubscriber in subscription service", async () => {
+    const removeSubscriberEmailSpy = spy(
+      buildInMemorySubscriptionService({}).removeSubscriberEmail
+    );
+
+    const store = createStore({
+      services: buildInMemoryServices({
+        subscriptionService: {
+          removeSubscriberEmailSpy,
+        },
+      }),
+      preloadedState,
+    });
+
+    await store.dispatch(removeSubscriberEmail(articleToRemoveId));
+
+    expect(removeSubscriberEmailSpy.args()).toEqual([["1", "fake-token"]]);
+  });
 });
