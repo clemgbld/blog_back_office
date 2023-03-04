@@ -1,3 +1,4 @@
+import { toLower, trim } from "ramda";
 import { compose } from "@reduxjs/toolkit";
 
 export const removeDuplicate = <T>(array: T[]) => [...new Set(array)];
@@ -8,3 +9,5 @@ export const removeUndefinedAndDuplicate: <I, O>(arr: I[]) => O[] = compose(
   removeDuplicate,
   removeUndefined
 );
+
+export const trimToLower = compose(toLower, trim);

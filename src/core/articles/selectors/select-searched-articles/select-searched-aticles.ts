@@ -1,6 +1,8 @@
-import { Article } from "../../entities/article";
 import { compose } from "@reduxjs/toolkit";
 import { curry } from "ramda";
+import { Article } from "../../entities/article";
+import { NUMBER_OF_CHARS_TO_START_SEARCH } from "../../../utils/search-constants";
+import { trimToLower } from "../../../utils/helper";
 
 const extractTextField = (str: string) =>
   str.match(/"(text)":("([^""]+)"|\[[^[]+])/gim);
@@ -9,7 +11,7 @@ const replaceAllTextKeyByNothing = (str: string) =>
   str?.replace(/"text":/gi, ";");
 
 const isSearchvalueInText = (text: string, searchValue: string) =>
-  new RegExp(searchValue.toLowerCase().trim()).test(text?.toLowerCase());
+  new RegExp(trimToLower(searchValue)).test(text?.toLowerCase());
 
 const extractTextFromContent: (...args: any[]) => string = compose(
   replaceAllTextKeyByNothing,
@@ -20,7 +22,7 @@ const extractTextFromContent: (...args: any[]) => string = compose(
 
 export const searchSelector = curry(
   (searchTerms: string, articles: Article[]): Article[] =>
-    searchTerms.length < 3
+    searchTerms.length < NUMBER_OF_CHARS_TO_START_SEARCH
       ? articles
       : articles.filter(
           ({ timeToRead, title, summary = "", content }) =>

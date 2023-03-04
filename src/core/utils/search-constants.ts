@@ -1,0 +1,1 @@
+export const NUMBER_OF_CHARS_TO_START_SEARCH = 3;
