@@ -2,11 +2,18 @@ import {
   createSlice,
   createEntityAdapter,
   EntityState,
+  AnyAction,
 } from "@reduxjs/toolkit";
 import { STATUS } from "../utils/status-constants";
 import { Email } from "./entities/email";
 import { removeSubscriberEmail } from "./use-cases/remove-subscriber-email";
 import { retrieveSubscribersEmails } from "./use-cases/retrieve-subscribers-emails";
+import {
+  PendingAction,
+  FulfilledAction,
+  RejectedAction,
+  AsyncThunkStatus,
+} from "../utils/rtk/types";
 
 export const emailsAdapter = createEntityAdapter<Email>();
 
@@ -23,6 +30,20 @@ const initialState: InitialState = {
   status: "idle",
 };
 
+const isStatusAction =
+  <T extends AnyAction>(status: AsyncThunkStatus) =>
+  (action: T) =>
+    [
+      retrieveSubscribersEmails[status].type,
+      removeSubscriberEmail[status].type,
+    ].includes(action.type);
+
+const isPendingAction = isStatusAction<PendingAction>("pending");
+
+const isFulfilledAction = isStatusAction<FulfilledAction>("fulfilled");
+
+const isRejectedAction = isStatusAction<RejectedAction>("rejected");
+
 export const emailsSlice = createSlice({
   name: "emails",
   initialState,
@@ -30,27 +51,22 @@ export const emailsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(retrieveSubscribersEmails.fulfilled, (state, action) => {
-        state.status = STATUS.SUCCESS;
         state.areEmailsRetrieved = true;
         emailsAdapter.setAll(state.emails, action.payload);
       })
       .addCase(removeSubscriberEmail.fulfilled, (state, action) => {
-        state.status = STATUS.SUCCESS;
         emailsAdapter.removeOne(state.emails, action.payload);
       })
-      .addCase(removeSubscriberEmail.pending, (state, action) => {
+
+      .addMatcher(isPendingAction, (state) => {
         state.status = STATUS.PENDING;
       })
-      .addCase(retrieveSubscribersEmails.pending, (state) => {
-        state.status = STATUS.PENDING;
-      })
-      .addCase(retrieveSubscribersEmails.rejected, (state, action) => {
+      .addMatcher(isRejectedAction, (state, action) => {
         state.status = STATUS.REJECTED;
         state.error = action.error.message;
       })
-      .addCase(removeSubscriberEmail.rejected, (state, action) => {
-        state.status = STATUS.REJECTED;
-        state.error = action.error.message;
+      .addMatcher(isFulfilledAction, (state) => {
+        state.status = STATUS.SUCCESS;
       });
   },
 });
