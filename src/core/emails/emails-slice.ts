@@ -38,10 +38,17 @@ export const emailsSlice = createSlice({
         state.status = STATUS.SUCCESS;
         emailsAdapter.removeOne(state.emails, action.payload);
       })
+      .addCase(removeSubscriberEmail.pending, (state, action) => {
+        state.status = STATUS.PENDING;
+      })
       .addCase(retrieveSubscribersEmails.pending, (state) => {
         state.status = STATUS.PENDING;
       })
       .addCase(retrieveSubscribersEmails.rejected, (state, action) => {
+        state.status = STATUS.REJECTED;
+        state.error = action.error.message;
+      })
+      .addCase(removeSubscriberEmail.rejected, (state, action) => {
         state.status = STATUS.REJECTED;
         state.error = action.error.message;
       });

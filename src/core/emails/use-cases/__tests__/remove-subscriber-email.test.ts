@@ -6,6 +6,7 @@ import { selectEmailsStatus } from "../../selectors/selectors";
 import { buildInMemorySubscriptionService } from "../../../../infrastructure/emails/real-services/in-memory-subscription-service";
 import { spy } from "../../../../lib/spy";
 import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
+import { selectEmailsError } from "../../selectors/selectors";
 
 const preloadedState = {
   emails: {
@@ -56,5 +57,35 @@ describe("remove subscriber email", () => {
     await store.dispatch(removeSubscriberEmail(articleToRemoveId));
 
     expect(removeSubscriberEmailSpy.args()).toEqual([["1", "fake-token"]]);
+  });
+
+  it("should inform the user when the remove operation is loading", () => {
+    const store = createStore({
+      preloadedState,
+    });
+
+    store.dispatch(removeSubscriberEmail(articleToRemoveId));
+
+    expect(selectEmailsStatus(store.getState())).toEqual(STATUS.PENDING);
+  });
+
+  it("should inform the user when the remove operation failed", async () => {
+    const error = {
+      statusCode: 404,
+      message: "Something when wrong.",
+      status: "fail",
+    };
+    const store = createStore({
+      preloadedState,
+      services: buildInMemoryServices({
+        subscriptionService: {
+          error,
+        },
+      }),
+    });
+
+    await store.dispatch(removeSubscriberEmail(articleToRemoveId));
+    expect(selectEmailsStatus(store.getState())).toBe(STATUS.REJECTED);
+    expect(selectEmailsError(store.getState())).toEqual(error.message);
   });
 });

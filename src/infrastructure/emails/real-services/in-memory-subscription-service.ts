@@ -11,5 +11,6 @@ export const buildInMemorySubscriptionService = ({
 }): SubscriptionService => ({
   getAllEmails: async (token: string) =>
     error ? Promise.reject(error.message) : Promise.resolve(emails),
-  removeSubscriberEmail: async (id: string, token: string) => Promise.resolve(),
+  removeSubscriberEmail: async (id: string, token: string) =>
+    error ? Promise.reject(error.message) : Promise.resolve(),
 });
