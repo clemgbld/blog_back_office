@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const SEARCH_TERMS_STATE = {
+  ARTICLES: "searchTerms",
+  EMAILS: "emailsSearchTerms",
+};
+
 export const initialState = {
   isEditorInLightMode: true,
   searchTerms: "",
+  emailsSearchTerms: "",
 };
 
 export const uiSlice = createSlice({
@@ -16,7 +22,9 @@ export const uiSlice = createSlice({
       state.isEditorInLightMode = action.payload;
     },
     updateSearchTerms: (state, action) => {
-      state.searchTerms = action.payload;
+      const stateType: "searchTerms" | "emailsSearchTerms" =
+        action.payload.type;
+      state[stateType] = action.payload.searchTerms;
     },
   },
 });

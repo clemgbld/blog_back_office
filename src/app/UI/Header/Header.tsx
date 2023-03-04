@@ -10,6 +10,7 @@ import { EDITOR_THEME_MODE } from "./SwitchEditorTheme/constants";
 import { ROUTES } from "../../routing/constants";
 import { Logout } from "@styled-icons/material/Logout";
 import classNames from "./Header.module.scss";
+import { UI_TO_DOMAIN_STATE_MAPPING } from "./header-constants";
 
 type HeaderProps = {
   children: JSX.Element;
@@ -46,7 +47,12 @@ const Header: FC<HeaderProps> = ({ children }) => {
             className={classNames.nav_search}
             type="text"
             onChange={({ target: { value } }) =>
-              dispatch(updateSearchTerms(value))
+              dispatch(
+                updateSearchTerms({
+                  type: UI_TO_DOMAIN_STATE_MAPPING[pathname],
+                  searchTerms: value,
+                })
+              )
             }
           />
         )}
