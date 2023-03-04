@@ -9,3 +9,5 @@ export const selectAllEmails = (state: RootState) =>
   emailsSelectors.selectAll(state);
 
 export const selectEmailsStatus = (state: RootState) => state.emails.status;
+
+export const selectEmailsError = (state: RootState) => state.emails.error;

@@ -3,6 +3,7 @@ import { RootState } from "../../..";
 import { Email } from "../entities/email";
 import { SubscriptionService } from "../port/subscription-service";
 import { selectToken } from "../../auth/selectors/selectors";
+import { STATUS } from "../../utils/status-constants";
 
 export const retrieveSubscribersEmails = createAsyncThunk<
   Email[],
@@ -21,5 +22,12 @@ export const retrieveSubscribersEmails = createAsyncThunk<
         services: { subscriptionService },
       },
     }
-  ) => subscriptionService.getAllEmails(selectToken(getState()))
+  ) => subscriptionService.getAllEmails(selectToken(getState())),
+  {
+    condition: (_, { getState }) => {
+      const { emails } = getState();
+      if (emails.status === STATUS.PENDING || emails.areEmailsRetrieved)
+        return false;
+    },
+  }
 );

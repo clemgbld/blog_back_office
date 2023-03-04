@@ -6,6 +6,7 @@ import { spy } from "../../../../lib/spy";
 import { buildInMemorySubscriptionService } from "../../../../infrastructure/emails/real-services/in-memory-subscription-service";
 import { STATUS } from "../../../utils/status-constants";
 import { selectEmailsStatus } from "../../selectors/selectors";
+import { selectEmailsError } from "../../selectors/selectors";
 
 describe("retrieve subscribers emails", () => {
   it("should have an empty subscribers emails list initially", () => {
@@ -85,6 +86,64 @@ describe("retrieve subscribers emails", () => {
     expect(selectEmailsStatus(store.getState())).toBe(STATUS.PENDING);
   });
 
+  it("should not try to retireving subscribers emails when there is already a retrieving operation that is pending", async () => {
+    const getAllEmailsSpy = spy(
+      buildInMemorySubscriptionService({}).getAllEmails
+    );
+    const store = createStore({
+      services: buildInMemoryServices({
+        subscriptionService: {
+          getAllEmailsSpy,
+        },
+      }),
+      preloadedState: {
+        emails: {
+          emails: {},
+          status: STATUS.PENDING,
+          areEmailsRetrieved: false,
+        },
+        auth: {
+          token: "fake-token",
+          isLoggedIn: true,
+          status: STATUS.SUCCESS,
+        },
+      },
+    });
+
+    await store.dispatch(retrieveSubscribersEmails());
+
+    expect(getAllEmailsSpy.hasBeenCalled()).toBe(false);
+  });
+
+  it("should not try to retireving subscribers emails when they has been already retrieved", async () => {
+    const getAllEmailsSpy = spy(
+      buildInMemorySubscriptionService({}).getAllEmails
+    );
+    const store = createStore({
+      services: buildInMemoryServices({
+        subscriptionService: {
+          getAllEmailsSpy,
+        },
+      }),
+      preloadedState: {
+        emails: {
+          emails: {},
+          status: STATUS.SUCCESS,
+          areEmailsRetrieved: true,
+        },
+        auth: {
+          token: "fake-token",
+          isLoggedIn: true,
+          status: STATUS.SUCCESS,
+        },
+      },
+    });
+
+    await store.dispatch(retrieveSubscribersEmails());
+
+    expect(getAllEmailsSpy.hasBeenCalled()).toBe(false);
+  });
+
   it("should notify the user when the retrieving operation failed", async () => {
     const error = {
       statusCode: 404,
@@ -108,6 +167,6 @@ describe("retrieve subscribers emails", () => {
 
     await store.dispatch(retrieveSubscribersEmails());
     expect(selectEmailsStatus(store.getState())).toBe(STATUS.REJECTED);
-    expect(store.getState().emails.error).toEqual(error.message);
+    expect(selectEmailsError(store.getState())).toEqual(error.message);
   });
 });
