@@ -69,6 +69,31 @@ describe("remove subscriber email", () => {
     expect(selectEmailsStatus(store.getState())).toEqual(STATUS.PENDING);
   });
 
+  it("should not perform the remove operation when another operation is already excuting", async () => {
+    const removeSubscriberEmailSpy = spy(
+      buildInMemorySubscriptionService({}).removeSubscriberEmail
+    );
+
+    const store = createStore({
+      services: buildInMemoryServices({
+        subscriptionService: {
+          removeSubscriberEmailSpy,
+        },
+      }),
+      preloadedState: {
+        ...preloadedState,
+        emails: {
+          ...preloadedState.emails,
+          status: STATUS.PENDING,
+        },
+      },
+    });
+
+    await store.dispatch(removeSubscriberEmail(articleToRemoveId));
+
+    expect(removeSubscriberEmailSpy.hasBeenCalled()).toBe(false);
+  });
+
   it("should inform the user when the remove operation failed", async () => {
     const error = {
       statusCode: 404,
