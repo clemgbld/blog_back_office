@@ -6,6 +6,7 @@ export interface InputValues {
   topic?: string;
   description?: string;
   hide: boolean;
+  notify: false;
 }
 
 export const useArticlesForm = (
@@ -14,6 +15,7 @@ export const useArticlesForm = (
     topic: "",
     description: "",
     hide: false,
+    notify: false,
   },
   articleContent?: MyValue
 ) => {

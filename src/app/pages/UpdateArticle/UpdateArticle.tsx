@@ -48,7 +48,8 @@ const UpdateArticle = () => {
       title: articleToUpdate?.title || "",
       topic: articleToUpdate?.topic || "",
       description: articleToUpdate?.summary || "",
-      hide: !articleToUpdate?.hide || true,
+      hide: !articleToUpdate?.hide || false,
+      notify: false,
     },
     articleToUpdate?.content
   );
@@ -64,7 +65,8 @@ const UpdateArticle = () => {
         title: inputValues.title,
         summary: inputValues.description,
         topic: inputValues.topic,
-        hide: !inputValues.hide,
+        hide: inputValues.hide,
+        notify: inputValues.notify,
         date: articleToUpdate?.date || 0,
         lightMode: isEditorInLightMode,
         content,

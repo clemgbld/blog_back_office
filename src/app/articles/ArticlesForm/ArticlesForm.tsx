@@ -12,6 +12,8 @@ import classNames from "./ArticleForm.module.scss";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../routing/constants";
 
+type CheckBoxEnums = "notify" | "hide";
+
 type ArticlesFormProps = {
   onSubmit: (e: any) => Promise<void>;
 
@@ -50,8 +52,8 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
 
   const handleTopicChange = pipe(handleInputChange, handleTopicValidation);
 
-  const handleCheckBoxChange = () =>
-    setInputValues({ ...inputValues, hide: !inputValues.hide });
+  const handleCheckBoxChange = (field: CheckBoxEnums) => () =>
+    setInputValues({ ...inputValues, [field]: !inputValues[field] });
 
   const handleValueChange = useCallback(
     (content: MyValue) => setContent(content),
@@ -104,7 +106,20 @@ const ArticlesForm: FC<ArticlesFormProps> = ({
           name="publish"
           type="checkbox"
           checked={inputValues.hide}
-          onChange={handleCheckBoxChange}
+          onChange={handleCheckBoxChange("hide")}
+        />
+      </div>
+      <div className={classNames["form_checkbox-container"]}>
+        <label className={classNames["form_checkbox-label"]} htmlFor="notify">
+          Notify:
+        </label>
+        <input
+          className={classNames.form_checkbox}
+          id="notify"
+          name="notify"
+          type="checkbox"
+          checked={inputValues.notify}
+          onChange={handleCheckBoxChange("notify")}
         />
       </div>
       <div
