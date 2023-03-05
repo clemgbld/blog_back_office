@@ -47,7 +47,11 @@ const isRejectedAction = isStatusAction<RejectedAction>("rejected");
 export const emailsSlice = createSlice({
   name: "emails",
   initialState,
-  reducers: {},
+  reducers: {
+    resetEmailsError: (state) => {
+      state.error = undefined;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(retrieveSubscribersEmails.fulfilled, (state, action) => {
@@ -70,3 +74,5 @@ export const emailsSlice = createSlice({
       });
   },
 });
+
+export const { resetEmailsError } = emailsSlice.actions;
