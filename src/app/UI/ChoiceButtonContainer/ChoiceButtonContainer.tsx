@@ -1,19 +1,21 @@
 import { FC } from "react";
-import { stopPropagation } from "../../../UI/utils/stopPropagation";
-import { useModal } from "../../../UI/Modal/hooks/useModal";
+import { stopPropagation } from "../utils/stopPropagation";
+import { useModal } from "../Modal/hooks/useModal";
 import { pipe } from "ramda";
-import DefaultModal from "../../../UI/Modal/DefaultModal/DefaultModal";
-import Button from "../../../UI/Button/Button";
-import classNames from "./ArticleButtonContainer.module.scss";
+import DefaultModal from "../Modal/DefaultModal/DefaultModal";
+import Button from "../Button/Button";
+import classNames from "./ChoiceButtonContainer.module.scss";
 
-type ArticleButtonContainerProps = {
+type ChoiceButtonContainerProps = {
   onValidate: () => Promise<void>;
   action: string;
+  afterAction: string;
 };
 
-const ArticleButtonContainer: FC<ArticleButtonContainerProps> = ({
+const ChoiceButtonContainer: FC<ChoiceButtonContainerProps> = ({
   onValidate,
   action,
+  afterAction,
 }) => {
   const { isOpen, handleOpenModal, handleCloseModal } = useModal();
 
@@ -36,7 +38,7 @@ const ArticleButtonContainer: FC<ArticleButtonContainerProps> = ({
             <div className={classNames["modal__title-container"]}>
               <h3>{`${action} article`}</h3>
             </div>
-            <p>{`Are you sure you want to ${action.toLowerCase()} this article ?`}</p>
+            <p>{`Are you sure you want to ${action.toLowerCase()} ${afterAction}`}</p>
             <div className={classNames["modal__button-container"]}>
               <Button
                 className={classNames.modal__button}
@@ -61,4 +63,4 @@ const ArticleButtonContainer: FC<ArticleButtonContainerProps> = ({
   );
 };
 
-export default ArticleButtonContainer;
+export default ChoiceButtonContainer;

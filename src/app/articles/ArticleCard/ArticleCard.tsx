@@ -9,7 +9,7 @@ import { Coffee } from "@styled-icons/material";
 import { CalendarToday } from "@styled-icons/material";
 import { useModal } from "../../UI/Modal/hooks/useModal";
 import { renderContent } from "../render/renderContent";
-import ArticleButtonContainer from "./ArticleButtonContainer/ArticleButtonContainer";
+import ChoiceButtonContainer from "../../UI/ChoiceButtonContainer/ChoiceButtonContainer";
 import DefaultModal from "../../UI/Modal/DefaultModal/DefaultModal";
 import { ROUTES } from "../../routing/constants";
 import classNames from "./ArticleCard.module.scss";
@@ -77,13 +77,15 @@ const ArticleCard: FC<ArticleCardProps> = ({
             <img className={classNames.card__img} src={src} alt={alt} />
           </div>
           <div className={classNames.card__buttons}>
-            <ArticleButtonContainer
+            <ChoiceButtonContainer
               action="Delete"
               onValidate={deleteArticleHandler}
+              afterAction="this article ?"
             />
-            <ArticleButtonContainer
+            <ChoiceButtonContainer
               action={hide ? "Publish" : "Hide"}
               onValidate={toggleHideStatusHandler}
+              afterAction="this article ?"
             />
             <Link
               className={`${classNames.card__button} button`}
