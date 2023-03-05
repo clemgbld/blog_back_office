@@ -13,6 +13,7 @@ import {
   createClock,
   Clock,
 } from "../../../../infrastructure/common/create-clock";
+import { ServerBlogError } from "../../../../infrastructure/common/error/server-blog-error";
 
 let clock: Clock;
 
@@ -25,9 +26,7 @@ describe("Home", () => {
     articles: Article[],
     preloadedState: any = undefined,
     pages: number | undefined = undefined,
-    error:
-      | { statusCode: number; message: string; status: string }
-      | undefined = undefined
+    error: ServerBlogError | undefined = undefined
   ) => {
     const store = createStore({
       preloadedState,
