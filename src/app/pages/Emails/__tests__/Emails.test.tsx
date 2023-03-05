@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ClockContext } from "../../../context/ClockContext";
@@ -70,11 +70,23 @@ const renderEmails = (
   );
 };
 
-describe("Emails", () => {
-  it("should display a fallback text when there is no articles", async () => {
-    renderEmails();
-    const fallbackText = await screen.findByText("No emails...");
+const fetchEmails = async () => await screen.findByText("foo@example.com");
 
-    expect(fallbackText).toBeInTheDocument();
+describe("Emails", () => {
+  describe("get emails", () => {
+    it("should display a fallback text when there is no articles", async () => {
+      renderEmails();
+      const fallbackText = await screen.findByText("No emails...");
+
+      expect(fallbackText).toBeInTheDocument();
+    });
+
+    it("should sucessfully fetch emails", async () => {
+      renderEmails({ existingEmails });
+
+      const email = await fetchEmails();
+
+      expect(email).toBeInTheDocument();
+    });
   });
 });
