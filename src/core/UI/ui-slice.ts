@@ -11,6 +11,8 @@ export const initialState = {
   emailsSearchTerms: "",
 };
 
+type SearchTermsEnums = "searchTerms" | "emailsSearchTerms";
+
 export const uiSlice = createSlice({
   name: "ui",
   initialState,
@@ -22,9 +24,8 @@ export const uiSlice = createSlice({
       state.isEditorInLightMode = action.payload;
     },
     updateSearchTerms: (state, action) => {
-      const stateType: "searchTerms" | "emailsSearchTerms" =
-        action.payload.type;
-      state[stateType] = action.payload.searchTerms;
+      state[action.payload.type as SearchTermsEnums] =
+        action.payload.searchTerms;
     },
   },
 });
