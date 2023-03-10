@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../..";
+import { AppDispatch, RootState } from "../../..";
 import {
   selectAllEmails,
   selectEmailsStatus,
   selectEmailsError,
 } from "../../../core/emails/selectors/selectors";
+import { selectSearchedEmails } from "../../../core/emails/selectors/select-searched-emails/select-searched-emails";
 import { retrieveSubscribersEmails } from "../../../core/emails/use-cases/retrieve-subscribers-emails";
 import { resetEmailsError } from "../../../core/emails/emails-slice";
 import Spinner from "../../UI/Spinner/Spinner";
@@ -17,6 +18,14 @@ const Emails = () => {
   const emailsFromStore = useSelector(selectAllEmails);
   const emailsStatus = useSelector(selectEmailsStatus);
   const emailsErrorMessage = useSelector(selectEmailsError);
+  const emailsSearchTerms = useSelector(
+    ({ ui: { emailsSearchTerms } }: RootState) => emailsSearchTerms
+  );
+
+  const filteredEmails = useMemo(
+    () => selectSearchedEmails(emailsSearchTerms, emailsFromStore),
+    [emailsSearchTerms, emailsFromStore]
+  );
 
   useEffect(() => {
     dispatch(retrieveSubscribersEmails());
@@ -30,11 +39,11 @@ const Emails = () => {
       errorMessage={emailsErrorMessage}
     >
       <>
-        {emailsFromStore.length === 0 && <div>No emails...</div>}
+        {filteredEmails.length === 0 && <div>No emails...</div>}
         <div>
           <div>
-            {emailsFromStore.length > 0 &&
-              emailsFromStore.map(({ email, id }) => (
+            {filteredEmails.length > 0 &&
+              filteredEmails.map(({ email, id }) => (
                 <div key={id}>
                   <p>{email}</p>
                 </div>

@@ -41,7 +41,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
             alt="logo app"
           />
         </div>
-        {pathname === ROUTES.HOME && (
+        {[ROUTES.HOME, ROUTES.EMAILS].includes(pathname) && (
           <input
             placeholder="search"
             className={classNames.nav_search}

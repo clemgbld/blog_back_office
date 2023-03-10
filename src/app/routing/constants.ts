@@ -3,4 +3,5 @@ export const ROUTES = {
   AUTH: "/auth",
   CREATE: "/create",
   UPDATE: "/update",
+  EMAILS: "/emails",
 };

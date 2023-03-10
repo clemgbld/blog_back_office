@@ -163,7 +163,7 @@ describe("Home", () => {
     });
   });
 
-  describe("search functionality", () => {
+  describe("search feature", () => {
     it("should filter in only the first article", async () => {
       renderHome([fakeArticle1, fakeArticle2]);
 

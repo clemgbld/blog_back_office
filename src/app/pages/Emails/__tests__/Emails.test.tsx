@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ClockContext } from "../../../context/ClockContext";
@@ -97,10 +98,11 @@ describe("Emails", () => {
       const email = await fetchEmails();
 
       expect(email).toBeInTheDocument();
+      expect(screen.getByText("bar@example.com")).toBeInTheDocument();
       expect(screen.queryByText("No emails...")).not.toBeInTheDocument();
     });
 
-    it.only("should display a notification when emails fetching goes wrong", async () => {
+    it("should display a notification when emails fetching goes wrong", async () => {
       const { store } = renderEmails({
         existingEmails,
         error: {
@@ -123,6 +125,18 @@ describe("Emails", () => {
       });
 
       expect(store.getState().emails.error).toBeUndefined();
+    });
+
+    describe("search feature", () => {
+      it("should filter in only the first email", async () => {
+        renderEmails({ existingEmails });
+
+        await fetchEmails();
+
+        userEvent.type(screen.getByRole("textbox"), "foo@example.com");
+
+        expect(screen.queryByText("bar@example.com")).not.toBeInTheDocument();
+      });
     });
   });
 });
