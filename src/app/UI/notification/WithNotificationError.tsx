@@ -8,7 +8,7 @@ import classNames from "./WithNotificationError.module.scss";
 type WithNotificationErrorProps = {
   children: JSX.Element;
   errorMessage: string | undefined;
-  resetErrorMessage: () => any;
+  resetErrorMessage: () => void;
 };
 
 const TIME_DURIND_SHOW_NOTIFICATION = 5000;

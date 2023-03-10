@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ClockContext } from "../../../context/ClockContext";
@@ -68,6 +68,8 @@ const renderEmails = (
       </ClockContext.Provider>
     </Provider>
   );
+
+  return { store };
 };
 
 const fetchEmails = async () => await screen.findByText("foo@example.com");
@@ -81,10 +83,12 @@ describe("Emails", () => {
       expect(fallbackText).toBeInTheDocument();
     });
 
-    it("should should display a spinner while fetching emails", () => {
+    it("should should display a spinner while fetching emails", async () => {
       renderEmails({ existingEmails });
 
       expect(screen.getByRole("progressbar")).toBeInTheDocument();
+
+      await fetchEmails();
     });
 
     it("should sucessfully fetch emails", async () => {
@@ -94,6 +98,31 @@ describe("Emails", () => {
 
       expect(email).toBeInTheDocument();
       expect(screen.queryByText("No emails...")).not.toBeInTheDocument();
+    });
+
+    it.only("should display a notification when emails fetching goes wrong", async () => {
+      const { store } = renderEmails({
+        existingEmails,
+        error: {
+          statusCode: 404,
+          message: "Something went wrong",
+          status: "fail",
+        },
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      });
+
+      clock.advanceNullAsync(5000);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Something went wrong")
+        ).not.toBeInTheDocument();
+      });
+
+      expect(store.getState().emails.error).toBeUndefined();
     });
   });
 });
