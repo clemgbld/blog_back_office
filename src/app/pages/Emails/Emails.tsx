@@ -8,10 +8,12 @@ import {
 } from "../../../core/emails/selectors/selectors";
 import { selectSearchedEmails } from "../../../core/emails/selectors/select-searched-emails/select-searched-emails";
 import { retrieveSubscribersEmails } from "../../../core/emails/use-cases/retrieve-subscribers-emails";
+import { removeSubscriberEmail } from "../../../core/emails/use-cases/remove-subscriber-email";
 import { resetEmailsError } from "../../../core/emails/emails-slice";
 import Spinner from "../../UI/Spinner/Spinner";
 import { STATUS } from "../../../core/utils/status-constants";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
+import ChoiceButtonContainer from "../../UI/ChoiceButtonContainer/ChoiceButtonContainer";
 
 const Emails = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -26,6 +28,10 @@ const Emails = () => {
     () => selectSearchedEmails(emailsSearchTerms, emailsFromStore),
     [emailsSearchTerms, emailsFromStore]
   );
+
+  const removeSubscriberEmailHandler = async (id: string) => {
+    await dispatch(removeSubscriberEmail(id));
+  };
 
   useEffect(() => {
     dispatch(retrieveSubscribersEmails());
@@ -46,6 +52,11 @@ const Emails = () => {
               filteredEmails.map(({ email, id }) => (
                 <div key={id}>
                   <p>{email}</p>
+                  <ChoiceButtonContainer
+                    action="Delete"
+                    onValidate={() => removeSubscriberEmailHandler(id)}
+                    afterAction="this email ?"
+                  />
                 </div>
               ))}
           </div>

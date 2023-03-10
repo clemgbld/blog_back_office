@@ -139,4 +139,22 @@ describe("Emails", () => {
       });
     });
   });
+
+  describe("delete emails", () => {
+    it("should be able to delete an email", async () => {
+      renderEmails({ existingEmails });
+
+      await fetchEmails();
+
+      const deleteEmailButton = screen.getAllByText("Delete")[0];
+
+      userEvent.click(deleteEmailButton);
+
+      userEvent.click(screen.getByText("validate"));
+
+      await waitFor(() => {
+        expect(screen.queryByText("foo@example.com")).not.toBeInTheDocument();
+      });
+    });
+  });
 });
