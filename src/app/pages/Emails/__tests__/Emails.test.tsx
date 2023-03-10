@@ -81,12 +81,19 @@ describe("Emails", () => {
       expect(fallbackText).toBeInTheDocument();
     });
 
+    it("should should display a spinner while fetching emails", () => {
+      renderEmails({ existingEmails });
+
+      expect(screen.getByRole("progressbar")).toBeInTheDocument();
+    });
+
     it("should sucessfully fetch emails", async () => {
       renderEmails({ existingEmails });
 
       const email = await fetchEmails();
 
       expect(email).toBeInTheDocument();
+      expect(screen.queryByText("No emails...")).not.toBeInTheDocument();
     });
   });
 });
