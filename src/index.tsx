@@ -48,6 +48,12 @@ const store: Store = chooseAppMode({
     services: buildInMemoryServices({
       articlesService: { articles: [fakeArticle1, fakeArticle2], error },
       authService: { error: error, inMemoryAuthService },
+      subscriptionService: {
+        existingEmails: [
+          { id: "1", email: "foo@example.com" },
+          { id: "2", email: "bar@example.com" },
+        ],
+      },
       storageService,
     }),
   }),

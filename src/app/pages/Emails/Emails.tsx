@@ -14,6 +14,8 @@ import Spinner from "../../UI/Spinner/Spinner";
 import { STATUS } from "../../../core/utils/status-constants";
 import WithNotificationError from "../../UI/notification/WithNotificationError";
 import ChoiceButtonContainer from "../../UI/ChoiceButtonContainer/ChoiceButtonContainer";
+import Title from "../../UI/Title/Title";
+import classes from "./Emails.module.scss";
 
 const Emails = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -46,11 +48,12 @@ const Emails = () => {
     >
       <>
         {filteredEmails.length === 0 && <div>No emails...</div>}
-        <div>
-          <div>
+        <div className="page_form-layout">
+          <Title title="Emails Management Dashboard" />
+          <div className={classes.emails__container}>
             {filteredEmails.length > 0 &&
               filteredEmails.map(({ email, id }) => (
-                <div key={id}>
+                <div key={id} className={classes.email}>
                   <p>{email}</p>
                   <ChoiceButtonContainer
                     action="Delete"
