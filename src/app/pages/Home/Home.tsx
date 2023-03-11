@@ -103,7 +103,7 @@ const Home: FC<HomeProps> = ({ articlesPerPages = ARTICLES_PER_PAGE }) => {
       errorMessage={errorMessage}
     >
       <div data-testid="home" className="page_form-layout">
-        <Title title="Dashboard" />
+        <Title title="Articles Management Dashboard" />
         {articlesToDisplay.length === 0 && (
           <p className={classNames.home__empty}>No article yet...</p>
         )}
