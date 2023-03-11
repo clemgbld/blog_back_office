@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "./core/auth/selectors/selectors";
-
 import Header from "./app/UI/Header/Header";
 import Home from "./app/pages/Home/Home";
 import CreateArticle from "./app/pages/CreateArticle/CreateArticle";
 import UpdateArticle from "./app/pages/UpdateArticle/UpdateArticle";
+import Emails from "./app/pages/Emails/Emails";
 import Auth from "./app/pages/Auth/Auth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./app/routing/ProtectedRoute/ProtectedRoute";
@@ -50,6 +50,16 @@ function App() {
             <ProtectedRoute isAllowed={isLoggedIn} redirectPath={ROUTES.AUTH}>
               <Header>
                 <UpdateArticle />
+              </Header>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={ROUTES.EMAILS}
+          element={
+            <ProtectedRoute isAllowed={isLoggedIn} redirectPath={ROUTES.AUTH}>
+              <Header>
+                <Emails />
               </Header>
             </ProtectedRoute>
           }

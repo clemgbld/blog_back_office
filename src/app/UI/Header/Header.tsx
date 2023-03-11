@@ -69,11 +69,14 @@ const Header: FC<HeaderProps> = ({ children }) => {
           />
         )}
         <div className={classNames.nav__right}>
-          {pathname === ROUTES.HOME && (
-            <Link className={classNames.nav__link} to="/create">
+          {[ROUTES.HOME, ROUTES.EMAILS].includes(pathname) && (
+            <Link className={classNames.nav__link} to={ROUTES.CREATE}>
               Create an article
             </Link>
           )}
+          <Link className={classNames.nav__link} to={ROUTES.EMAILS}>
+            Emails
+          </Link>
           <button className={classNames.nav__button} onClick={logoutHandler}>
             <Logout />
           </button>

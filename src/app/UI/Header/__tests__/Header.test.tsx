@@ -50,6 +50,14 @@ const setup = () => {
               </Header>
             }
           />
+          <Route
+            path="emails"
+            element={
+              <Header>
+                <div>Emails page</div>
+              </Header>
+            }
+          />
           <Route path="auth" element={<Auth />} />
         </Routes>
       </BrowserRouter>
@@ -122,10 +130,22 @@ describe("Header", () => {
     expect(screen.getByText("Create")).toBeInTheDocument();
   });
 
-  it("should not render the link in another page than the home", () => {
+  it("should go to the emails page when we click on the emails link", () => {
+    setup();
+    userEvent.click(screen.getByText("Emails"));
+    expect(screen.getByText("Emails page")).toBeInTheDocument();
+  });
+
+  it("should not render the create link in create the create page", () => {
     window.history.pushState({}, "", "/create");
     setup();
     expect(screen.queryByText("Create an article")).not.toBeInTheDocument();
+  });
+
+  it("should render the link in the emails page", () => {
+    window.history.pushState({}, "", "/emails");
+    setup();
+    expect(screen.getByText("Create an article")).toBeInTheDocument();
   });
 
   it("should be a able to logout the user", async () => {
