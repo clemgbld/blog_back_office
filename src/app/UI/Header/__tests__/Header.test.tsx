@@ -103,7 +103,15 @@ describe("Header", () => {
     expect(screen.getByTestId("light-mode")).toBeInTheDocument();
   });
 
-  it("should no render theme mode switch", () => {
+  it("should not render theme mode in home page switch", () => {
+    setup();
+
+    expect(screen.queryByTestId("dark-mode")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("light-mode")).not.toBeInTheDocument();
+  });
+
+  it("should not render theme mode in emails page", () => {
+    window.history.pushState({}, "", "/emails");
     setup();
 
     expect(screen.queryByTestId("dark-mode")).not.toBeInTheDocument();
@@ -134,6 +142,18 @@ describe("Header", () => {
     setup();
     userEvent.click(screen.getByText("Emails"));
     expect(screen.getByText("Emails page")).toBeInTheDocument();
+  });
+
+  it("should not render the emails link into the emails page", () => {
+    window.history.pushState({}, "", "/emails");
+    setup();
+    expect(screen.queryByText("Emails")).not.toBeInTheDocument();
+  });
+
+  it("should render the emails link into the create page", () => {
+    window.history.pushState({}, "", "/create");
+    setup();
+    expect(screen.getByText("Emails")).toBeInTheDocument();
   });
 
   it("should not render the create link in create the create page", () => {

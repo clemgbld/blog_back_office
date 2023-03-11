@@ -56,27 +56,31 @@ const Header: FC<HeaderProps> = ({ children }) => {
             }
           />
         )}
-        {pathname !== ROUTES.HOME && isEditorInLightMode && (
-          <SwitchEditorTheme
-            mode={EDITOR_THEME_MODE.LIGHT}
-            onClick={() => dispatch(toggleEditorTheme())}
-          />
-        )}
-        {pathname !== ROUTES.HOME && !isEditorInLightMode && (
-          <SwitchEditorTheme
-            mode={EDITOR_THEME_MODE.DARK}
-            onClick={() => dispatch(toggleEditorTheme())}
-          />
-        )}
+        {![ROUTES.HOME, ROUTES.EMAILS].includes(pathname) &&
+          isEditorInLightMode && (
+            <SwitchEditorTheme
+              mode={EDITOR_THEME_MODE.LIGHT}
+              onClick={() => dispatch(toggleEditorTheme())}
+            />
+          )}
+        {![ROUTES.HOME, ROUTES.EMAILS].includes(pathname) &&
+          !isEditorInLightMode && (
+            <SwitchEditorTheme
+              mode={EDITOR_THEME_MODE.DARK}
+              onClick={() => dispatch(toggleEditorTheme())}
+            />
+          )}
         <div className={classNames.nav__right}>
           {[ROUTES.HOME, ROUTES.EMAILS].includes(pathname) && (
             <Link className={classNames.nav__link} to={ROUTES.CREATE}>
               Create an article
             </Link>
           )}
-          <Link className={classNames.nav__link} to={ROUTES.EMAILS}>
-            Emails
-          </Link>
+          {[ROUTES.HOME, ROUTES.CREATE].includes(pathname) && (
+            <Link className={classNames.nav__link} to={ROUTES.EMAILS}>
+              Emails
+            </Link>
+          )}
           <button className={classNames.nav__button} onClick={logoutHandler}>
             <Logout />
           </button>
