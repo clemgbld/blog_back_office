@@ -5,5 +5,4 @@ export type NotificationInfos = Omit<
   "hide" | "content" | "lightMode" | "date"
 > & {
   img?: string;
-  date: string;
 };

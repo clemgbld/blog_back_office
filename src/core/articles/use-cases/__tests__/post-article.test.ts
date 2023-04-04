@@ -63,7 +63,6 @@ describe("Post Article", () => {
           topic: "topic",
           title: "new article",
           timeToRead: "7 min read",
-          date: "01/01/1970",
           img: "url",
         },
         "fake-token",

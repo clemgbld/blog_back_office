@@ -64,7 +64,6 @@ describe("Update Article", () => {
           summary: "summary",
           title: "article updated",
           img: "url",
-          date: "20/07/7245",
           timeToRead: "7 min read",
         },
         "fake-token",
