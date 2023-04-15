@@ -123,7 +123,7 @@ describe("articles service", () => {
     });
   });
 
-  describe("delete articles", () => {
+  describe("delete article", () => {
     it("should delete an article and pass the token in the call", async () => {
       const articlesService = buildRestArticlesService();
       const id = await articlesService.deleteArticle(FAKE_ID, token);
