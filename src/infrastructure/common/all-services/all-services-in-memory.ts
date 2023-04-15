@@ -9,7 +9,7 @@ import { createClock, Clock } from "../create-clock";
 import { Article } from "../../../core/articles/entities/article";
 import { buildInMemoryEmailNotificationService } from "../../articles/in-memory-services/in-memory-email-notification-service";
 import { Email } from "../../../core/emails/entities/email";
-import { buildInMemorySubscriptionService } from "../../emails/real-services/in-memory-subscription-service";
+import { buildInMemorySubscriptionService } from "../../emails/in-memory-services/in-memory-subscription-service";
 import { ServerBlogError } from "../error/server-blog-error";
 
 type BuildInMemoryServices = {

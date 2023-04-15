@@ -3,7 +3,7 @@ import { selectAllEmails } from "../../selectors/selectors";
 import { buildInMemoryServices } from "../../../../infrastructure/common/all-services/all-services-in-memory";
 import { retrieveSubscribersEmails } from "../retrieve-subscribers-emails";
 import { spy } from "../../../../lib/spy";
-import { buildInMemorySubscriptionService } from "../../../../infrastructure/emails/real-services/in-memory-subscription-service";
+import { buildInMemorySubscriptionService } from "../../../../infrastructure/emails/in-memory-services/in-memory-subscription-service";
 import { STATUS } from "../../../utils/status-constants";
 import { selectEmailsStatus } from "../../selectors/selectors";
 import { selectEmailsError } from "../../selectors/selectors";
