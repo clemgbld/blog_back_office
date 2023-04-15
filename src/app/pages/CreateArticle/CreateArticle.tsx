@@ -42,7 +42,7 @@ const CreateArticle = () => {
         title: inputValues.title,
         summary: inputValues.description,
         topic: inputValues.topic,
-        hide: inputValues.hide,
+        hide: !inputValues.hide,
         notify: inputValues.notify,
         lightMode: isEditorInLightMode,
         content,
