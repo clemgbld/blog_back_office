@@ -2,6 +2,7 @@ import { rest, RestRequest } from "msw";
 import { setupServer } from "msw/node";
 import { BLOG_BASE_URL } from "../../../common/rest-service/constants";
 import { SUBSCRIPTION_ENDPOINT } from "../../../common/subscription/constants";
+import { DELETE_ENDPOINT } from "../constants";
 import { buildRestSubscriptionService } from "../subscription-service";
 
 let request: RestRequest;
@@ -28,7 +29,7 @@ const server = setupServer(
     );
   }),
   rest.delete(
-    `${BLOG_BASE_URL}${SUBSCRIPTION_ENDPOINT}/delete/${FAKE_ID}`,
+    `${BLOG_BASE_URL}${SUBSCRIPTION_ENDPOINT}${DELETE_ENDPOINT}/${FAKE_ID}`,
     (req, res, ctx) => {
       request = req;
       return res(ctx.status(204));
