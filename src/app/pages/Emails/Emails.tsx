@@ -39,7 +39,12 @@ const Emails = () => {
     dispatch(retrieveSubscribersEmails());
   }, [dispatch]);
 
-  if (emailsStatus === STATUS.PENDING) return <Spinner />;
+  if (emailsStatus === STATUS.PENDING)
+    return (
+      <div className="page_form-layout">
+        <Spinner />
+      </div>
+    );
 
   return (
     <WithNotificationError
@@ -47,9 +52,9 @@ const Emails = () => {
       errorMessage={emailsErrorMessage}
     >
       <>
-        {filteredEmails.length === 0 && <div>No emails...</div>}
         <div className="page_form-layout">
           <Title title="Emails Management Dashboard" />
+          {filteredEmails.length === 0 && <div>No emails...</div>}
           <div className={classes.emails__container}>
             {filteredEmails.length > 0 &&
               filteredEmails.map(({ email, id }) => (
