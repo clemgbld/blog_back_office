@@ -2,20 +2,23 @@ import { rest, RestRequest } from "msw";
 import { setupServer } from "msw/node";
 import { BLOG_BASE_URL } from "../../../common/rest-service/constants";
 import { buildRestEmailNotificationService } from "../email-notification-service";
+import { NOTIFY_ENDPOINT } from "../constants";
+import { SUBSCRIPTION_ENDPOINT } from "../../../common/subscription/constants";
 
 let request: RestRequest;
 
-const token = "FAKE_TOKEN";
-
 const server = setupServer(
-  rest.post(`${BLOG_BASE_URL}/subscription/notify`, (req, res, ctx) => {
-    request = req;
-    return res(
-      ctx.json({
-        status: "success",
-      })
-    );
-  })
+  rest.post(
+    `${BLOG_BASE_URL}${SUBSCRIPTION_ENDPOINT}${NOTIFY_ENDPOINT}`,
+    (req, res, ctx) => {
+      request = req;
+      return res(
+        ctx.json({
+          status: "success",
+        })
+      );
+    }
+  )
 );
 
 beforeAll(() => {
