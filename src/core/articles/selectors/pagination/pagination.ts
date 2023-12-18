@@ -18,7 +18,10 @@ export const selectArticlesOnPage = curry(
     numOfArticlesPerPages: number,
     articles: ReturnType<typeof allArticlesFormatted>
   ) =>
-    articles.slice(selectedPage - 1, selectedPage - 1 + numOfArticlesPerPages)
+    articles.slice(
+      numOfArticlesPerPages * (selectedPage - 1),
+      numOfArticlesPerPages * selectedPage
+    )
 );
 
 export const shycronisePaginationWithOtherFilters = curry(

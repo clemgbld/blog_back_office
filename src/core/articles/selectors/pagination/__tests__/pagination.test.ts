@@ -58,17 +58,126 @@ describe("select articles on a given page", () => {
     ).toEqual([articleBuilder({ id: 3, date: "" })]);
   });
 
-  it("should pass the acceptance test", () => {
+  it("should pass the acceptance tests", () => {
     expect(
-      selectArticlesOnPage(1, 2, [
+      selectArticlesOnPage(1, 10, [
         articleBuilder({ id: 1, date: "" }),
         articleBuilder({ id: 2, date: "" }),
         articleBuilder({ id: 3, date: "" }),
         articleBuilder({ id: 4, date: "" }),
+        articleBuilder({ id: 5, date: "" }),
+        articleBuilder({ id: 6, date: "" }),
+        articleBuilder({ id: 7, date: "" }),
+        articleBuilder({ id: 8, date: "" }),
+        articleBuilder({ id: 9, date: "" }),
+        articleBuilder({ id: 10, date: "" }),
+        articleBuilder({ id: 11, date: "" }),
       ])
     ).toEqual([
       articleBuilder({ id: 1, date: "" }),
       articleBuilder({ id: 2, date: "" }),
+      articleBuilder({ id: 3, date: "" }),
+      articleBuilder({ id: 4, date: "" }),
+      articleBuilder({ id: 5, date: "" }),
+      articleBuilder({ id: 6, date: "" }),
+      articleBuilder({ id: 7, date: "" }),
+      articleBuilder({ id: 8, date: "" }),
+      articleBuilder({ id: 9, date: "" }),
+      articleBuilder({ id: 10, date: "" }),
+    ]);
+
+    expect(
+      selectArticlesOnPage(2, 10, [
+        articleBuilder({ id: 1, date: "" }),
+        articleBuilder({ id: 2, date: "" }),
+        articleBuilder({ id: 3, date: "" }),
+        articleBuilder({ id: 4, date: "" }),
+        articleBuilder({ id: 5, date: "" }),
+        articleBuilder({ id: 6, date: "" }),
+        articleBuilder({ id: 7, date: "" }),
+        articleBuilder({ id: 8, date: "" }),
+        articleBuilder({ id: 9, date: "" }),
+        articleBuilder({ id: 10, date: "" }),
+        articleBuilder({ id: 11, date: "" }),
+      ])
+    ).toEqual([articleBuilder({ id: 11, date: "" })]);
+
+    expect(
+      selectArticlesOnPage(2, 10, [
+        articleBuilder({ id: 1, date: "" }),
+        articleBuilder({ id: 2, date: "" }),
+        articleBuilder({ id: 3, date: "" }),
+        articleBuilder({ id: 4, date: "" }),
+        articleBuilder({ id: 5, date: "" }),
+        articleBuilder({ id: 6, date: "" }),
+        articleBuilder({ id: 7, date: "" }),
+        articleBuilder({ id: 8, date: "" }),
+        articleBuilder({ id: 9, date: "" }),
+        articleBuilder({ id: 10, date: "" }),
+        articleBuilder({ id: 11, date: "" }),
+        articleBuilder({ id: 12, date: "" }),
+        articleBuilder({ id: 13, date: "" }),
+        articleBuilder({ id: 14, date: "" }),
+        articleBuilder({ id: 15, date: "" }),
+      ])
+    ).toEqual([
+      articleBuilder({ id: 11, date: "" }),
+      articleBuilder({ id: 12, date: "" }),
+      articleBuilder({ id: 13, date: "" }),
+      articleBuilder({ id: 14, date: "" }),
+      articleBuilder({ id: 15, date: "" }),
+    ]);
+
+    expect(
+      selectArticlesOnPage(2, 5, [
+        articleBuilder({ id: 1, date: "" }),
+        articleBuilder({ id: 2, date: "" }),
+        articleBuilder({ id: 3, date: "" }),
+        articleBuilder({ id: 4, date: "" }),
+        articleBuilder({ id: 5, date: "" }),
+        articleBuilder({ id: 6, date: "" }),
+        articleBuilder({ id: 7, date: "" }),
+        articleBuilder({ id: 8, date: "" }),
+        articleBuilder({ id: 9, date: "" }),
+        articleBuilder({ id: 10, date: "" }),
+        articleBuilder({ id: 11, date: "" }),
+        articleBuilder({ id: 12, date: "" }),
+        articleBuilder({ id: 13, date: "" }),
+        articleBuilder({ id: 14, date: "" }),
+        articleBuilder({ id: 15, date: "" }),
+      ])
+    ).toEqual([
+      articleBuilder({ id: 6, date: "" }),
+      articleBuilder({ id: 7, date: "" }),
+      articleBuilder({ id: 8, date: "" }),
+      articleBuilder({ id: 9, date: "" }),
+      articleBuilder({ id: 10, date: "" }),
+    ]);
+
+    expect(
+      selectArticlesOnPage(3, 5, [
+        articleBuilder({ id: 1, date: "" }),
+        articleBuilder({ id: 2, date: "" }),
+        articleBuilder({ id: 3, date: "" }),
+        articleBuilder({ id: 4, date: "" }),
+        articleBuilder({ id: 5, date: "" }),
+        articleBuilder({ id: 6, date: "" }),
+        articleBuilder({ id: 7, date: "" }),
+        articleBuilder({ id: 8, date: "" }),
+        articleBuilder({ id: 9, date: "" }),
+        articleBuilder({ id: 10, date: "" }),
+        articleBuilder({ id: 11, date: "" }),
+        articleBuilder({ id: 12, date: "" }),
+        articleBuilder({ id: 13, date: "" }),
+        articleBuilder({ id: 14, date: "" }),
+        articleBuilder({ id: 15, date: "" }),
+      ])
+    ).toEqual([
+      articleBuilder({ id: 11, date: "" }),
+      articleBuilder({ id: 12, date: "" }),
+      articleBuilder({ id: 13, date: "" }),
+      articleBuilder({ id: 14, date: "" }),
+      articleBuilder({ id: 15, date: "" }),
     ]);
   });
 });
